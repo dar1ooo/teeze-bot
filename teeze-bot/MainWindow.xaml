@@ -266,7 +266,7 @@
                         <Button x:Name="CreateTask" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Create Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                         <Button x:Name="ImportTask" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Import Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                     </Grid>
-                    <Button Grid.Row="1" Content="CHECKOUT" Click="Checkout_Click" ></Button>
+                    <Button Grid.Row="1" Content="CHECKOUT" Click="Checkout_Click" Margin="250" ></Button>
                 </Grid>
                 <Grid Name="ProxiesPage" Visibility="Hidden" Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -276,37 +276,60 @@
                 </Grid>
                 <Grid Name="ProfilesPage" Visibility="Hidden" Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="35"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="35px" />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Button Content="New Profile" Grid.Row="0" Grid.Column="5" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
-                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="0" BorderBrush="White" Margin="2,2,2,0" MinWidth="80">
-                        <Label Content="Number" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                    </Border>
-                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="1" BorderBrush="White" Margin="0,2,2,0" MinWidth="140">
-                        <Label Content="Name" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                    </Border>
-                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="2" BorderBrush="White" Margin="0,2,2,0" MinWidth="120">
-                        <Label Content="Date Created" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                    </Border>
-                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="3" BorderBrush="White" Margin="0,2,2,0" MinWidth="80">
-                        <Label Content="Country" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                    </Border>
-                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="4" BorderBrush="White" Margin="0,2,2,0" >
-                        <Label Content="" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                    </Border>
-                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="5" BorderBrush="White" Margin="0,2,2,0" MinWidth="120">
-                        <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                    </Border>
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="8*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80px" />
+                            <ColumnDefinition Width="80px" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="85px" />
+                            <ColumnDefinition Width="85px" />
+                            <ColumnDefinition Width="85px" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="New Profile" Grid.Row="1" Grid.Column="5" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="0" BorderBrush="White" Margin="2,2,2,0" MinWidth="80">
+                            <Label Content="Number" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="1" BorderBrush="White" Margin="0,2,2,0" MinWidth="140">
+                            <Label Content="Name" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="2" BorderBrush="White" Margin="0,2,2,0" MinWidth="120">
+                            <Label Content="Date Created" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="3" BorderBrush="White" Margin="0,2,2,0" MinWidth="80">
+                            <Label Content="Country" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="4" BorderBrush="White" Margin="0,2,2,0">
+                            <Label Content="" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="5" BorderBrush="White" Margin="0,2,2,0" MinWidth="120">
+                            <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                    </Grid>
 
                     <!--Popup for Profiles creation-->
                     <!--<Label Grid.Column="1" Grid.Row="1" Content="First Name" Foreground="DeepSkyBlue" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="12"></Label>
