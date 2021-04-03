@@ -167,8 +167,8 @@
                     <Label Content="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Red" Width="20" Height="20"></Label>
                     <Label Content="✖" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Red" Width="20" Height="20"></Label>
 
-                    <Button x:Name="Minimize" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="9" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" BorderThickness="0" Background="#09161f" Content="−" Foreground="DeepSkyBlue" FontSize="12" FontFamily="Fonts/Dosis" FontWeight="UltraBold" ></Button>
-                    <Button x:Name="Close" Click="close_Application_Click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="1,0,0,0" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="10" FontFamily="Fonts/Dosis" FontWeight="Medium"></Button>
+                    <Button x:Name="Minimize" Click="minimize_app_Click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="9" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" BorderThickness="0" Background="#09161f" Content="−" Foreground="DeepSkyBlue" FontSize="12" FontFamily="Fonts/Dosis" FontWeight="UltraBold" ></Button>
+                    <Button x:Name="Close" Click="close_app_click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="1,0,0,0" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="10" FontFamily="Fonts/Dosis" FontWeight="Medium"></Button>
 
                 </Grid>
 
