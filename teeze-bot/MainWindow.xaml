@@ -120,7 +120,7 @@
         </Style>
     </Window.Resources>
 
-    <Border CornerRadius="8" BorderThickness="10" BorderBrush="#0e2433" >
+    <Border CornerRadius="8" BorderThickness="10" BorderBrush="#0e2433" MouseDown="Border_MouseDown" >
 
 
         <!--MainGrid-->

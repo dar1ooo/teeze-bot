@@ -21,5 +21,11 @@ namespace teeze_bot
         {
             this.WindowState = WindowState.Minimized;
         }
+
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            this.DragMove();
+        }
     }
 }
