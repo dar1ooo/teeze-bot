@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace teeze_bot
 {
@@ -13,6 +14,7 @@ namespace teeze_bot
         }
 
         #region BasicFeatures
+
         private void close_app_click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
@@ -25,9 +27,14 @@ namespace teeze_bot
 
         private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
-            this.DragMove();
+            bool mouseIsDown = System.Windows.Input.Mouse.LeftButton == MouseButtonState.Pressed;
+            if (mouseIsDown)
+            {
+                base.OnMouseLeftButtonDown(e);
+                this.DragMove();
+            }
         }
-        #endregion
+
+        #endregion BasicFeatures
     }
 }
