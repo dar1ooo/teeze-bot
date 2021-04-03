@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:teeze_bot"
         mc:Ignorable="d"
-        Title="TeezeBot" Height="450" Width="800"
+        Title="TeezeBot" Height="600" Width="1024"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -155,20 +155,20 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <!--Tasks-->
-                    <Label Content="5" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="White" Width="20" Height="20"></Label>
-                    <Label Content="↻" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="White" Width="20" Height="20" FontWeight="UltraBold"></Label>
+                    <Label Content="5" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="White" Width="30" Height="40"></Label>
+                    <Label Content="↻" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="White" Width="20" Height="40" FontWeight="UltraBold" Margin="0,0,1,0"></Label>
                     <!--Cart-->
-                    <Label Content="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Orange" Width="20" Height="20"></Label>
-                    <Label Content="🛒" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Orange" Width="20" Height="20"></Label>
+                    <Label Content="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Orange" Width="30" Height="40"></Label>
+                    <Label Content="🛒" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Orange" Width="20" Height="40" Margin="0,0,1,0"></Label>
                     <!---->
-                    <Label Content="0" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Green" Width="20" Height="20"></Label>
-                    <Label Content="✓" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Green" Width="20" Height="20"></Label>
+                    <Label Content="0" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Green" Width="30" Height="40"></Label>
+                    <Label Content="✓" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Green" Width="20" Height="40"  Margin="0,0,1,0"></Label>
                     <!--Failures-->
-                    <Label Content="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Red" Width="20" Height="20"></Label>
-                    <Label Content="✖" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Red" Width="20" Height="20"></Label>
+                    <Label Content="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Red" Width="30" Height="40"></Label>
+                    <Label Content="✖" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Red" Width="20" Height="40"></Label>
 
-                    <Button x:Name="Minimize" Click="minimize_app_Click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="9" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" BorderThickness="0" Background="#09161f" Content="−" Foreground="DeepSkyBlue" FontSize="12" FontFamily="Fonts/Dosis" FontWeight="UltraBold" ></Button>
-                    <Button x:Name="Close" Click="close_app_click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="1,0,0,0" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="10" FontFamily="Fonts/Dosis" FontWeight="Medium"></Button>
+                    <Button x:Name="Minimize" Click="minimize_app_Click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="9" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="20" BorderThickness="0" Background="#09161f" Content="−" Foreground="DeepSkyBlue" FontSize="12" FontFamily="Fonts/Dosis" FontWeight="UltraBold" ></Button>
+                    <Button x:Name="Close" Click="close_app_click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="20" Margin="1,0,0,0" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="10" FontFamily="Fonts/Dosis" FontWeight="Medium"></Button>
                 </Grid>
                 <!--Splashpages-->
                 <Grid Name="TaskPage" Visibility="Hidden" Grid.Row="1">
@@ -187,14 +187,44 @@
                 </Grid>
                 <Grid Name="ProfilesPage" Visibility="Visible" Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
+                    <Button Content="New Profile" Grid.Row="0" Grid.Column="5" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,8,0,8" Style="{DynamicResource RoundedButtonStyle}"></Button>
+                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="0" BorderBrush="White" Margin="2,2,2,0" MinWidth="80">
+                        <Label Content="Number" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                    </Border>
+                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="1" BorderBrush="White" Margin="0,2,2,0" MinWidth="140">
+                        <Label Content="Name" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                    </Border>
+                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="2" BorderBrush="White" Margin="0,2,2,0" MinWidth="120">
+                        <Label Content="Date Created" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                    </Border>
+                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="3" BorderBrush="White" Margin="0,2,2,0" MinWidth="80">
+                        <Label Content="Country" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                    </Border>
+                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="4" BorderBrush="White" Margin="0,2,2,0" >
+                        <Label Content="" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                    </Border>
+                    <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="5" BorderBrush="White" Margin="0,2,2,0" MinWidth="120">
+                        <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                    </Border>
+
+                    <!--Popup for Profiles creation-->
+                    <!--<Label Grid.Column="1" Grid.Row="1" Content="First Name" Foreground="DeepSkyBlue" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="12"></Label>
+                    <TextBox Name="FirstNameBox" Grid.Column="1" Grid.Row="2" Background="#09161f" Foreground="DeepSkyBlue" Width="120" Height="30"></TextBox>
+
+                    <Label Grid.Column="3" Grid.Row="1" Content="Last Name" Foreground="DeepSkyBlue" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontSize="12"></Label>
+                    <TextBox Name="LastNameBox" Grid.Column="3" Grid.Row="2" Background="#09161f" Foreground="DeepSkyBlue" Width="120" Height="30"></TextBox>-->
                 </Grid>
                 <Grid Name="AccountsPage" Visibility="Hidden" Grid.Row="1">
                     
@@ -274,7 +304,7 @@
                         </Button.Style>
                     </Button>-->
 
-                    <Button Name="Tasks" BorderThickness="0" Background="#09161f" Content="Tasks" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,8,0,8" Style="{DynamicResource RoundedButtonStyle}" Click="Tasks_Click" ></Button>
+                    <Button Name="Tasks" BorderThickness="0" Background="#09161f" Content="Tasks" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,8,0,8" Style="{DynamicResource RoundedButtonStyle}"></Button>
                 </Grid>
                 <Grid Name="ProxiesGrid" Grid.Row="3">
                     <Button Name="Proxies" BorderThickness="0" Background="#09161f" Content="Proxies" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,8,0,8" Style="{DynamicResource RoundedButtonStyle}" ></Button>
