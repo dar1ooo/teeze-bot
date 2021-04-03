@@ -12,6 +12,7 @@ namespace teeze_bot
             InitializeComponent();
         }
 
+        #region BasicFeatures
         private void close_app_click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
@@ -27,5 +28,6 @@ namespace teeze_bot
             base.OnMouseLeftButtonDown(e);
             this.DragMove();
         }
+        #endregion
     }
 }
