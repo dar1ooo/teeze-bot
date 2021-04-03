@@ -243,7 +243,7 @@
                         </Button.Style>
                     </Button>-->
 
-                    <Button Name="Tasks" BorderThickness="0" Background="#09161f" Content="Tasks" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,8,0,8" Style="{DynamicResource RoundedButtonStyle}" ></Button>
+                    <Button Name="Tasks" BorderThickness="0" Background="#09161f" Content="Tasks" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,8,0,8" Style="{DynamicResource RoundedButtonStyle}" Click="Tasks_Click" ></Button>
                 </Grid>
                 <Grid Name="ProxiesGrid" Grid.Row="3">
                     <Button Name="Proxies" BorderThickness="0" Background="#09161f" Content="Proxies" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,8,0,8" Style="{DynamicResource RoundedButtonStyle}" ></Button>
