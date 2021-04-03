@@ -169,7 +169,38 @@
 
                     <Button x:Name="Minimize" Click="minimize_app_Click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="9" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" BorderThickness="0" Background="#09161f" Content="−" Foreground="DeepSkyBlue" FontSize="12" FontFamily="Fonts/Dosis" FontWeight="UltraBold" ></Button>
                     <Button x:Name="Close" Click="close_app_click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="20" Width="20" Margin="1,0,0,0" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="10" FontFamily="Fonts/Dosis" FontWeight="Medium"></Button>
+                </Grid>
+                <!--Splashpages-->
+                <Grid Name="TaskPage" Visibility="Hidden" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition>
+                            
+                        </ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Name="ProxiesPage" Visibility="Hidden" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
 
+                </Grid>
+                <Grid Name="ProfilesPage" Visibility="Visible" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        
+                    </Grid.RowDefinitions>
+                </Grid>
+                <Grid Name="AccountsPage" Visibility="Hidden" Grid.Row="1">
+                    
+                </Grid>
+                <Grid Name="SettingsPage" Visibility="Hidden" Grid.Row="1">
+                    
                 </Grid>
 
                 <Grid.Background>
