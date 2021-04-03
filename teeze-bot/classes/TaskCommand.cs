@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace teeze_bot.classes
 {
-    class Class1
+    public class TaskCommand
     {
+        public IWebDriver driver;
+
+        public void OpenChrome()
+        {
+            driver = new ChromeDriver();
+            driver.Url = "https://www.zalando.ch/herrenschuhe-sneaker/";
+        }
     }
 }

@@ -1,17 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using teeze_bot.classes;
 
 namespace teeze_bot
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        public TaskCommand task = new TaskCommand();
 
         #region BasicFeatures
 
