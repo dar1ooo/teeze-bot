@@ -246,7 +246,7 @@
                         <RowDefinition Height="35px" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Grid>
+                    <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="8*" />
@@ -267,6 +267,38 @@
                         <Button x:Name="ImportTask" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Import Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                     </Grid>
                     <Button Grid.Row="1" Content="CHECKOUT" Click="Checkout_Click" Margin="250" ></Button>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.10*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.16*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.16*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.16*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.10*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.16*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="0" BorderBrush="White" Margin="2,2,2,0" MinWidth="80">
+                            <Label Content="Product" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="1" BorderBrush="White" Margin="0,2,2,0" MinWidth="140">
+                            <Label Content="Sizes" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="2" BorderBrush="White" Margin="0,2,2,0" MinWidth="120">
+                            <Label Content="Profile" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="3" BorderBrush="White" Margin="0,2,2,0" MinWidth="80">
+                            <Label Content="Proxie" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="4" BorderBrush="White" Margin="0,2,2,0">
+                            <Label Content="Status" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="5" BorderBrush="White" Margin="0,2,2,0" MinWidth="120">
+                            <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                    </Grid>
                 </Grid>
                 <Grid Name="ProxiesPage" Visibility="Hidden" Grid.Row="1">
                     <Grid.ColumnDefinitions>
