@@ -4,13 +4,82 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="TeezeBot" Height="450" Width="800"
+        Title="TeezeBot" MinHeight="600" MinWidth="1024"
+        Height="600" Width="1024"
+        MaxHeight="1000" MaxWidth="1424"
         WindowStyle="None"
-        ResizeMode="NoResize"
+        ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent">
     <Window.Resources>
+        <Style TargetType="{x:Type ResizeGrip}">
+            <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+            <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ResizeGrip}">
+                        <Grid SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Visibility" Value="Hidden" />
+        </Style>
+        <Style x:Key="TaskButtons" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FFDDDDDD" />
+            <Setter Property="BorderBrush" Value="#FF707070" />
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="10" Margin="2,2,2,2" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#03080b" />
+                                <Setter Property="BorderBrush" TargetName="border" Value="#03080b" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#09161f" />
+                                <Setter Property="BorderBrush" TargetName="border" Value="#09161f" />
+                            </Trigger>
+                            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFBCDDEE" />
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="border" Value="#FFF4F4F4" />
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5" />
+                                <Setter Property="Foreground" Value="#FF838383" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="RoundedButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle">
                 <Setter.Value>
@@ -159,7 +228,7 @@
                     <Label Content="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Orange" Width="20" Height="20"></Label>
                     <Label Content="🛒" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Orange" Width="20" Height="20"></Label>
                     <!---->
-                    <Label Content="0" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Green" Width="20" Height="20"></Label>
+                    <Label x:Name="CheckoutCounter" Content="0" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Green" Width="20" Height="20"></Label>
                     <Label Content="✓" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Green" Width="20" Height="20"></Label>
                     <!--Failures-->
                     <Label Content="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Red" Width="20" Height="20"></Label>
@@ -171,9 +240,33 @@
                 <!--Splashpages-->
                 <Grid Name="TaskPage" Visibility="Visible" Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition>
-                        </ColumnDefinition>
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35px" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="8*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80px" />
+                            <ColumnDefinition Width="80px" />
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="85px" />
+                            <ColumnDefinition Width="85px" />
+                            <ColumnDefinition Width="85px" />
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="StartAll" Grid.Column="3" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Start All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="StopAll" Grid.Column="4" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Stop All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="DeleteAll" Grid.Column="5" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Delete All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="CreateTask" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Create Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="ImportTask" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Import Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                    </Grid>
+                    <Button x:Name="Checkout" Grid.Row="1" Content="CHECKOUT" Click="Checkout_Click" ></Button>
                 </Grid>
                 <Grid Name="ProxiesPage" Visibility="Hidden" Grid.Row="1">
                     <Grid.ColumnDefinitions>

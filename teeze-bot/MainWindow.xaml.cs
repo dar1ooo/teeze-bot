@@ -12,6 +12,8 @@ namespace teeze_bot
             InitializeComponent();
         }
 
+        public int checkoutCounter = 0;
+
         public TaskCommand task = new TaskCommand();
 
         #region BasicFeatures
@@ -88,5 +90,11 @@ namespace teeze_bot
         }
 
         #endregion BasicFeatures
+
+        private void Checkout_Click(object sender, RoutedEventArgs e)
+        {
+            checkoutCounter++;
+            CheckoutCounter.Content = checkoutCounter;
+        }
     }
 }
