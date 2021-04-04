@@ -24,6 +24,12 @@
             </Style.Resources>
             <Setter Property="BorderThickness" Value="0px" />
             <Setter Property="Background" Value="#FF324A5B" />
+            <Setter Property="Foreground" Value="Wheat" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="MinWidth" Value="150" />
+            <Setter Property="MinHeight" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="8,0,0,0" />
         </Style>
         <!--#endregion-->
 
@@ -237,6 +243,7 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="#03080b" />
                                 <Setter Property="BorderBrush" TargetName="border" Value="#03080b" />
+                                <Setter Property="Cursor" Value="Hand" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="#09161f" />
@@ -293,6 +300,7 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="#03080b" />
                                 <Setter Property="BorderBrush" TargetName="border" Value="#03080b" />
+                                <Setter Property="Cursor" Value="Hand" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="#09161f" />
@@ -349,6 +357,7 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="#03080b" />
                                 <Setter Property="BorderBrush" TargetName="border" Value="#03080b" />
+                                <Setter Property="Cursor" Value="Hand" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="#09161f" />
@@ -434,7 +443,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <!--#region Top Bar Options-->
-                    <Grid Grid.Row="0" x:Name="TaskPageOptions" Visibility="Hidden">
+                    <Grid Grid.Row="0" x:Name="TaskPageOptions" Visibility="Visible">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="8*" />
@@ -448,16 +457,16 @@
                             <ColumnDefinition Width="85px" />
                             <ColumnDefinition Width="85px" />
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="StartAll" Grid.Column="3" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Start All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
-                        <Button x:Name="StopAll" Grid.Column="4" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Stop All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
-                        <Button x:Name="DeleteAll" Grid.Column="5" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Delete All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
-                        <Button x:Name="CreateTask" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Create Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateTask_Click"></Button>
-                        <Button x:Name="ImportTask" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Import Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="StartAllOption" Grid.Column="3" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Start All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="StopAllOption" Grid.Column="4" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Stop All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="DeleteAllOption" Grid.Column="5" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Delete All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="CreateTaskOption" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Create Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateTaskOption_Click"></Button>
+                        <Button x:Name="ImportTaskOption" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Import Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                     </Grid>
                     <!--#endregion-->
 
                     <!--#region Tasks List-->
-                    <Grid Grid.Row="1" x:Name="TaskPageList" Visibility="Hidden">
+                    <Grid Grid.Row="1" x:Name="TaskPageList" Visibility="Visible">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -496,11 +505,11 @@
                     <!--#endregion-->
 
                     <!--#region Create Task Window-->
-                    <Grid Grid.Row="1" x:Name="CreateTaskWindow" Visibility="Visible">
+                    <Grid Grid.Row="1" x:Name="CreateTaskWindow" Visibility="Hidden">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.15*" />
+                            <RowDefinition Height="0.10*" />
                             <RowDefinition />
-                            <RowDefinition Height="0.15*" />
+                            <RowDefinition Height="0.10*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.15*" />
@@ -517,10 +526,14 @@
                                 <RowDefinition Height="25px" />
                                 <RowDefinition Height="40px" />
                                 <RowDefinition Height="15px" />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
+                                <RowDefinition Height="25px" />
+                                <RowDefinition Height="40px" />
+                                <RowDefinition Height="15px" />
+                                <RowDefinition Height="25px" />
+                                <RowDefinition Height="40px" />
+                                <RowDefinition Height="25px" />
+                                <RowDefinition Height="40px" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20px" />
@@ -529,15 +542,22 @@
                                 <ColumnDefinition Width="25px" />
                                 <ColumnDefinition Width="20px" />
                             </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="14" Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="CreateTask" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Create" Margin="50,0,0,0" Click="CreateTask_Click" />
+                            </Grid>
                             <Label Grid.Row="1" Grid.Column="1" Content="Create Task" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
-                            <Button x:Name="CancelCreateTask" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="25px" Width="25px" VerticalAlignment="Center" Margin="0,0,20,0" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Click="CancelCreateTask_Click" Grid.ColumnSpan="2"></Button>
+                            <Button x:Name="CancelCreateTask" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="20px" Width="20px" VerticalAlignment="Center" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="13" FontFamily="Fonts/Dosis" FontWeight="Medium" Click="CancelCreateTask_Click" Margin="0,0,2.5,0"></Button>
 
                             <Label Grid.Row="2" Grid.Column="1" Content="Store" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <Label Grid.Row="2" Grid.Column="2" Content="Size" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <ComboBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                            <ComboBox x:Name="newTask_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
                                 <ComboBoxItem Content="Titolo" />
                             </ComboBox>
-                            <ComboBox Grid.Row="3" Grid.Column="2" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                            <ComboBox x:Name="newTask_Size" Grid.Row="3" Grid.Column="2" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
                                 <ComboBoxItem Content="US 6.5" />
                                 <ComboBoxItem Content="US 7.0" />
                                 <ComboBoxItem Content="US 7.5" />
@@ -556,7 +576,27 @@
                             </ComboBox>
 
                             <Label Grid.Row="5" Grid.Column="1" Content="Product" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <TextBox Grid.Column="1" Grid.Row="6"></TextBox>
+                            <TextBox x:Name="newTask_Product" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2"></TextBox>
+
+                            <Label Grid.Row="8" Grid.Column="1" Content="Profile" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <Label Grid.Row="8" Grid.Column="2" Content="Proxy" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <ComboBox x:Name="newTask_Profile" Grid.Row="9" Grid.Column="1" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                                <ComboBoxItem Content="Mario the kek" />
+                            </ComboBox>
+                            <ComboBox x:Name="newTask_Proxy" Grid.Row="9" Grid.Column="2" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                                <ComboBoxItem Content="chupapi muñañyo" />
+                            </ComboBox>
+
+                            <Label Grid.Row="11" Grid.Column="1" Content="Account" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <ComboBox x:Name="newTask_Account" Grid.Row="12" Grid.Column="1" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                                <ComboBoxItem Content="CHING CHENG CHONG" />
+                            </ComboBox>
+                            <Label x:Name="newTask_errorStore" Visibility="Hidden" Grid.Row="4" Grid.Column="1" Content="Please select a store" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorSize" Visibility="Hidden" Grid.Row="4" Grid.Column="2" Content="Please select a size" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorProduct" Visibility="Hidden" Grid.Row="7" Grid.Column="1" Content="Please enter a product" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorProfile" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please select a profile" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorProxy" Visibility="Hidden" Grid.Row="10" Grid.Column="2" Content="Please select a proxy" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorAccount" Visibility="Hidden" Grid.Row="13" Grid.Column="1" Content="Please select an account" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Grid.Background>
                                 <SolidColorBrush Color="#081D26" />
                             </Grid.Background>
