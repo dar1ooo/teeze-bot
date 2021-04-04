@@ -401,7 +401,7 @@
                         <GradientStop Color="#24330e" Offset="1.0"></GradientStop>
                     </LinearGradientBrush>
                     <!--<LinearGradientBrush>
-                        <GradientStop Color="#245141" Offset="0.0"></GradientStop>
+                        <GradientStop Color="#245A46" Offset="-0.2"></GradientStop>
                         <GradientStop Color="#243F51" Offset="0.2"></GradientStop>
                         <GradientStop Color="#3E2D7C" Offset="1.9"></GradientStop>
                     </LinearGradientBrush>-->
