@@ -12,8 +12,6 @@ namespace teeze_bot
             InitializeComponent();
         }
 
-        public int checkoutCounter = 0;
-
         public TaskCommand task = new TaskCommand();
 
         #region BasicFeatures
@@ -89,12 +87,30 @@ namespace teeze_bot
             }
         }
 
+        private void CreateTaskOption_Click(object sender, RoutedEventArgs e)
+        {
+            CreateTaskWindow.Visibility = Visibility.Visible;
+            TaskPageOptions.Visibility = Visibility.Hidden;
+            TaskPageList.Visibility = Visibility.Hidden;
+        }
+
+        private void CancelCreateTask_Click(object sender, RoutedEventArgs e)
+        {
+            CreateTaskWindow.Visibility = Visibility.Hidden;
+            TaskPageOptions.Visibility = Visibility.Visible;
+            TaskPageList.Visibility = Visibility.Visible;
+        }
+
         #endregion BasicFeatures
 
-        private void Checkout_Click(object sender, RoutedEventArgs e)
+        private void CreateTask_Click(object sender, RoutedEventArgs e)
         {
-            checkoutCounter++;
-            CheckoutCounter.Content = checkoutCounter;
+            newTask_errorStore.Visibility = newTask_Store.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorSize.Visibility = newTask_Size.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorProduct.Visibility = newTask_Product.Text.Length == 0 || newTask_Product.Text == "" ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorProfile.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorAccount.Visibility = newTask_Account.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
         }
     }
 }
