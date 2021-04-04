@@ -225,17 +225,17 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <!--Tasks-->
-                    <Label Content="5" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="White" Width="30" Height="40"></Label>
-                    <Label Content="↻" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="White" Width="20" Height="40" FontWeight="UltraBold" Margin="0,0,1,0"></Label>
+                    <Label Content="5" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="10" Background="#09161f" FontWeight="Bold" Foreground="White" Width="30" Height="40"></Label>
+                    <Label Content="↻" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="11" Background="#09161f" Foreground="White" Width="20" Height="40" FontWeight="UltraBold" Margin="0,0,1,0"></Label>
                     <!--Cart-->
-                    <Label Content="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Orange" Width="30" Height="40"></Label>
+                    <Label Content="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="10" Background="#09161f" FontWeight="Bold" Foreground="Orange" Width="30" Height="40"></Label>
                     <Label Content="🛒" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Orange" Width="20" Height="40" Margin="0,0,1,0"></Label>
                     <!--Checkout-->
-                    <Label x:Name="CheckoutCounter" Content="0" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Green" Width="30" Height="40"></Label>
-                    <Label Content="✓" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Green" Width="20" Height="40"  Margin="0,0,1,0"></Label>
+                    <Label x:Name="CheckoutCounter" Content="0" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="10" FontWeight="Bold" Background="#09161f" Foreground="Green" Width="30" Height="40"></Label>
+                    <Label Content="✓" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15" Background="#09161f" FontWeight="Bold" Foreground="Green" Width="20" Height="40"  Margin="0,0,1,0"></Label>
                     <!--Failures-->
-                    <Label Content="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="8" Background="#09161f" Foreground="Red" Width="30" Height="40"></Label>
-                    <Label Content="✖" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Red" Width="20" Height="40"></Label>
+                    <Label Content="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="10" FontWeight="Bold" Background="#09161f" Foreground="Red" Width="30" Height="40"></Label>
+                    <Label Content="✖" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Red" FontWeight="Bold" Width="20" Height="40"></Label>
 
                     <Button x:Name="Minimize" Click="minimize_app_Click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="9" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="20" BorderThickness="0" Background="#09161f" Content="−" Foreground="DeepSkyBlue" FontSize="12" FontFamily="Fonts/Dosis" FontWeight="UltraBold" ></Button>
                     <Button x:Name="Close" Click="close_app_click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="20" Margin="1,0,0,0" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="10" FontFamily="Fonts/Dosis" FontWeight="Medium"></Button>
@@ -395,16 +395,16 @@
 
                 <!--#region Background-->
                 <Grid.Background>
-                    <LinearGradientBrush>
+                    <!--<LinearGradientBrush>
                         <GradientStop Color="#330e24" Offset="0.0"></GradientStop>
                         <GradientStop Color="#0e2433" Offset=" 0.5"></GradientStop>
                         <GradientStop Color="#24330e" Offset="1.0"></GradientStop>
-                    </LinearGradientBrush>
-                    <!--<LinearGradientBrush>
+                    </LinearGradientBrush>-->
+                    <LinearGradientBrush>
                         <GradientStop Color="#245A46" Offset="-0.2"></GradientStop>
                         <GradientStop Color="#243F51" Offset="0.2"></GradientStop>
                         <GradientStop Color="#3E2D7C" Offset="1.9"></GradientStop>
-                    </LinearGradientBrush>-->
+                    </LinearGradientBrush>
                 </Grid.Background>
                 <!--#endregion-->
             </Grid>
