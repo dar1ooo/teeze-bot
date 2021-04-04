@@ -279,28 +279,32 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.10*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.16*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.16*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.16*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.12*"></ColumnDefinition>
                             <ColumnDefinition Width="0.10*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.16*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.12*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.12*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.12*"></ColumnDefinition>
+                            <ColumnDefinition Width="0.10*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="0" BorderBrush="Gray" Margin="2,2,2,0" MinWidth="80">
+                            <Label Content="Site" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        </Border>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="1" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
                             <Label Content="Product" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="1" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="140">
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="2" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
                             <Label Content="Sizes" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="2" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="120">
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="3" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="110">
                             <Label Content="Profile" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="3" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
-                            <Label Content="Proxie" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="4" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
+                            <Label Content="Proxies" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="4" BorderBrush="Gray" Margin="0,2,2,0">
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="5" BorderBrush="Gray" Margin="0,2,2,0">
                             <Label Content="Status" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="5" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="120">
+                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="6" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="100">
                             <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
                     </Grid>
