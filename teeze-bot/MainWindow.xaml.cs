@@ -12,8 +12,6 @@ namespace teeze_bot
             InitializeComponent();
         }
 
-        public int checkoutCounter = 0;
-
         public TaskCommand task = new TaskCommand();
 
         #region BasicFeatures
@@ -91,10 +89,18 @@ namespace teeze_bot
 
         #endregion BasicFeatures
 
-        private void Checkout_Click(object sender, RoutedEventArgs e)
+        private void CancelCreateTask_Click(object sender, RoutedEventArgs e)
         {
-            checkoutCounter++;
-            CheckoutCounter.Content = checkoutCounter;
+            CreateTaskWindow.Visibility = Visibility.Hidden;
+            TaskPageOptions.Visibility = Visibility.Visible;
+            TaskPageList.Visibility = Visibility.Visible;
+        }
+
+        private void CreateTask_Click(object sender, RoutedEventArgs e)
+        {
+            CreateTaskWindow.Visibility = Visibility.Visible;
+            TaskPageOptions.Visibility = Visibility.Hidden;
+            TaskPageList.Visibility = Visibility.Hidden;
         }
     }
 }
