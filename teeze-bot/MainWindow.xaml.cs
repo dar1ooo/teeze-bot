@@ -100,6 +100,20 @@ namespace teeze_bot
             TaskPageOptions.Visibility = Visibility.Visible;
             TaskPageList.Visibility = Visibility.Visible;
         }
+        private void CreateProfileOption_Click(object sender, RoutedEventArgs e)
+        {
+            CreateProfileWindow.Visibility = Visibility.Visible;
+            ProfilePageOptions.Visibility = Visibility.Hidden;
+            ProfilePageList.Visibility = Visibility.Hidden;
+
+        }
+        private void CancleCreateProfile_Click(object sender, RoutedEventArgs e)
+        {
+            CreateProfileWindow.Visibility = Visibility.Hidden;
+            ProfilePageOptions.Visibility = Visibility.Visible;
+            ProfilePageList.Visibility = Visibility.Visible;
+        }
+
 
         #endregion BasicFeatures
 
@@ -110,7 +124,21 @@ namespace teeze_bot
             newTask_errorProduct.Visibility = newTask_Product.Text.Length == 0 || newTask_Product.Text == "" ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProfile.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-            newTask_errorAccount.Visibility = newTask_Account.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
         }
+
+        private void CreateProfile_Click(object sender, RoutedEventArgs e)
+        {
+            newProfile_errorFirstname.Visibility = newProfile_Firstname.Text.Length == 0 || newProfile_Firstname.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorLastname.Visibility = newProfile_Lastname.Text.Length == 0 || newProfile_Lastname.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorEmail.Visibility = newProfile_EMail.Text.Length == 0 || newProfile_EMail.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorPhone.Visibility = newProfile_Phone.Text.Length == 0 || newProfile_Phone.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorAdresse1.Visibility = newProfile_Adress1.Text.Length == 0 || newProfile_Adress1.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorCity.Visibility = newProfile_City.Text.Length == 0 || newProfile_City.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorZip.Visibility = newProfile_ZIP.Text.Length == 0 || newProfile_ZIP.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorCountry.Visibility = newProfile_Country.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+
+        }
+
+        
     }
 }
