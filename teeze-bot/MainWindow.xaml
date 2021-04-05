@@ -434,7 +434,7 @@
                 <!--#endregion-->
 
                 <!--#region Tasks Page-->
-                <Grid x:Name="TaskPage" Visibility="Hidden" Grid.Row="1">
+                <Grid x:Name="TaskPage" Visibility="Visible" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -596,6 +596,7 @@
                             <Label x:Name="newTask_errorProduct" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="7" Grid.Column="1" Content="Please enter a product" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newTask_errorProfile" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please select a profile" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newTask_errorProxy" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="2" Content="Please select a proxy" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorAccount" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="1" Content="Please select an Account" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Grid.Background>
                                 <SolidColorBrush Color="#081D26" />
                             </Grid.Background>
@@ -606,7 +607,7 @@
                 <!--#endregion-->
 
                 <!--#region Proxies Page-->
-                <Grid x:Name="ProxiesPage" Visibility="Visible" Grid.Row="1">
+                <Grid x:Name="ProxiesPage" Visibility="Hidden" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.25*"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
@@ -749,7 +750,7 @@
 
                             <Label Grid.Row="8" Grid.Column="1" Content="Adress 1" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <Label Grid.Row="8" Grid.Column="2" Content="Adress 2 (Optional)" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            
+
                             <TextBox x:Name="newProfile_Adress1" Grid.Row="9" Grid.Column="1"></TextBox>
                             <TextBox x:Name="newProfile_Adress2" Grid.Row="9" Grid.Column="2"></TextBox>
 
@@ -760,17 +761,17 @@
                             <TextBox x:Name="newProfile_ZIP" Grid.Row="12" Grid.Column="2"></TextBox>
 
                             <Label Grid.Row="13" Grid.Column="1" Content="Country" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray"></Label>
-                            
+
                             <ComboBox x:Name="newProfile_Country" Grid.Row="14" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
                                 <ComboBoxItem Content="Switzerland" />
-                                <ComboBoxItem Content="Austria"/>
-                                <ComboBoxItem Content="France"/>
-                                <ComboBoxItem Content="Germany"/>
+                                <ComboBoxItem Content="Austria" />
+                                <ComboBoxItem Content="France" />
+                                <ComboBoxItem Content="Germany" />
                                 <ComboBoxItem Content="Italy" />
-                                <ComboBoxItem Content="Portugal"/>
+                                <ComboBoxItem Content="Portugal" />
                                 <ComboBoxItem Content="Spain"></ComboBoxItem>
                                 <ComboBoxItem Content="Sweden"></ComboBoxItem>
-                                <ComboBoxItem Content="United Kingdom"/>
+                                <ComboBoxItem Content="United Kingdom" />
                             </ComboBox>
 
                             <Label x:Name="newProfile_errorFirstname" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="4" Grid.Column="1" Content="Please enter a First Name" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
