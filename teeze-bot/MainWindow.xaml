@@ -434,7 +434,7 @@
                 <!--#endregion-->
 
                 <!--#region Tasks Page-->
-                <Grid x:Name="TaskPage" Visibility="Visible" Grid.Row="1">
+                <Grid x:Name="TaskPage" Visibility="Hidden" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -606,7 +606,7 @@
                 <!--#endregion-->
 
                 <!--#region Proxies Page-->
-                <Grid x:Name="ProxiesPage" Visibility="Hidden" Grid.Row="1">
+                <Grid x:Name="ProxiesPage" Visibility="Visible" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.25*"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
@@ -620,9 +620,11 @@
                     <Border BorderThickness="0.5" Grid.Row="1" Grid.Column="0" BorderBrush="Gray" Margin="4,4,4,4">
                         <Label Content="Proxies" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="DeepSkyBlue"></Label>
                     </Border>
-                    <Border CornerRadius="20" Grid.Row="2" Grid.Column="0">
+                    <Border CornerRadius="5" BorderThickness="10" BorderBrush="#081D26" Grid.Row="2" Grid.Column="0" Margin="4,2,3,2">
                         <Grid x:Name="SideListProxy">
-
+                            <Grid.Background>
+                                <SolidColorBrush Color="#081D26" />
+                            </Grid.Background>
                         </Grid>
                     </Border>
                 </Grid>
@@ -746,7 +748,7 @@
                             <TextBox x:Name="newProfile_Phone" Grid.Column="2" Grid.Row="6"></TextBox>
 
                             <Label Grid.Row="8" Grid.Column="1" Content="Adress 1" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <Label Grid.Row="8" Grid.Column="2" Content="Adress 2" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <Label Grid.Row="8" Grid.Column="2" Content="Adress 2 (Optional)" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             
                             <TextBox x:Name="newProfile_Adress1" Grid.Row="9" Grid.Column="1"></TextBox>
                             <TextBox x:Name="newProfile_Adress2" Grid.Row="9" Grid.Column="2"></TextBox>
@@ -778,7 +780,7 @@
                             <Label x:Name="newProfile_errorAdresse1" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please enter a Adress" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newProfile_errorCity" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="1" Content="Please enter a City" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newProfile_errorZip" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="2" Content="Please enter a Zip-Code" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
-                            <Label x:Name="newProfile_errorCountry" Visibility="Hidden" Grid.Row="14" Grid.Column="2" Content="Please select a Country" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newProfile_errorCountry"  HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="15" Grid.Column="1" Content="Please select a Country" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Grid.Background>
                                 <SolidColorBrush Color="#081D26" />
                             </Grid.Background>
