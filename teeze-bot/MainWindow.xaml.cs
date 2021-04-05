@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using teeze_bot.classes;
@@ -12,7 +13,8 @@ namespace teeze_bot
             InitializeComponent();
         }
 
-        public TaskCommand task = new TaskCommand();
+        private int taskIdCounter = 1;
+        private TitoloTask titoloTask = new TitoloTask();
 
         #region BasicFeatures
 
@@ -92,13 +94,27 @@ namespace teeze_bot
             CreateTaskWindow.Visibility = Visibility.Visible;
             TaskPageOptions.Visibility = Visibility.Hidden;
             TaskPageList.Visibility = Visibility.Hidden;
+
+            //reset Form Inputs
+            newTask_Store.SelectedIndex = -1;
+            newTask_Size.SelectedIndex = -1;
+            newTask_Product.Text = "";
+            newTask_Profile.SelectedIndex = -1;
+            newTask_Proxy.SelectedIndex = -1;
+            newTask_Account.SelectedIndex = -1;
+            newTask_AccountLabel.Visibility = Visibility.Visible;
+            newTask_Account.Visibility = Visibility.Visible;
+            newTask_errorStore.Visibility = Visibility.Hidden;
+            newTask_errorSize.Visibility = Visibility.Hidden;
+            newTask_errorProduct.Visibility = Visibility.Hidden;
+            newTask_errorProfile.Visibility = Visibility.Hidden;
+            newTask_errorProxy.Visibility = Visibility.Hidden;
+            newTask_errorAccount.Visibility = Visibility.Hidden;
         }
 
         private void CancelCreateTask_Click(object sender, RoutedEventArgs e)
         {
-            CreateTaskWindow.Visibility = Visibility.Hidden;
-            TaskPageOptions.Visibility = Visibility.Visible;
-            TaskPageList.Visibility = Visibility.Visible;
+            CloseCreateTaskWindow();
         }
         private void CreateProfileOption_Click(object sender, RoutedEventArgs e)
         {
@@ -113,19 +129,7 @@ namespace teeze_bot
             ProfilePageOptions.Visibility = Visibility.Visible;
             ProfilePageList.Visibility = Visibility.Visible;
         }
-
-
-        #endregion BasicFeatures
-
-        private void CreateTask_Click(object sender, RoutedEventArgs e)
-        {
-            newTask_errorStore.Visibility = newTask_Store.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-            newTask_errorSize.Visibility = newTask_Size.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-            newTask_errorProduct.Visibility = newTask_Product.Text.Length == 0 || newTask_Product.Text == "" ? Visibility.Visible : Visibility.Hidden;
-            newTask_errorProfile.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-            newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-        }
-
+        
         private void CreateProfile_Click(object sender, RoutedEventArgs e)
         {
             newProfile_errorFirstname.Visibility = newProfile_Firstname.Text.Length == 0 || newProfile_Firstname.Text == "" ? Visibility : Visibility.Hidden;
@@ -139,6 +143,81 @@ namespace teeze_bot
 
         }
 
-        
+
+        #endregion BasicFeatures
+
+        #region Create Task
+
+        private void CreateTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsFormValid())
+            {
+                switch (newTask_Store.SelectedIndex)
+                {
+                    case 0:
+                        GatherInfo();
+                        CloseCreateTaskWindow();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void CloseCreateTaskWindow()
+        {
+            CreateTaskWindow.Visibility = Visibility.Hidden;
+            TaskPageOptions.Visibility = Visibility.Visible;
+            TaskPageList.Visibility = Visibility.Visible;
+        }
+
+        private bool IsFormValid()
+        {
+            newTask_errorStore.Visibility = newTask_Store.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorSize.Visibility = newTask_Size.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorProduct.Visibility = newTask_Product.Text.Length == 0 || newTask_Product.Text == "" ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorProfile.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;    
+            newTask_errorAccount.Visibility = newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
+
+            if (newTask_Store.SelectedIndex != -1 && newTask_Size.SelectedIndex != -1 && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1 && (newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Hidden))
+                return true;
+            else
+                return false;
+        }
+
+        private void SelectStore(object sender, SelectionChangedEventArgs e)
+        {
+            if (newTask_Store.SelectedIndex == 0)
+            {
+                newTask_AccountLabel.Visibility = Visibility.Hidden;
+                newTask_Account.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private TaskInfo GatherInfo()
+        {
+            var item = (ComboBoxItem)newTask_Store.SelectedValue;
+            string Store = (string)item.Content;
+            item = (ComboBoxItem)newTask_Size.SelectedValue;
+            double ShoeSize = Convert.ToDouble(item.Content);
+            string Product = newTask_Product.Text.ToString();
+            item = (ComboBoxItem)newTask_Profile.SelectedValue;
+            string Profile = (string)item.Content;
+            item = (ComboBoxItem)newTask_Proxy.SelectedValue;
+            string Proxy = (string)item.Content;
+            item = (ComboBoxItem)newTask_Account.SelectedValue;
+            string Account = "";
+            if (item != null)
+            {
+                Account = (string)item.Content;
+            }
+            TaskInfo taskinfo = new TaskInfo(taskIdCounter, Store, ShoeSize, Product, Profile, Proxy, Account);
+            taskIdCounter++;
+            return taskinfo;
+        }
+
+        #endregion Create Task
     }
 }
