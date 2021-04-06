@@ -13,8 +13,11 @@ namespace teeze_bot
             InitializeComponent();
         }
 
+        public TaskInfo taskInfo = new TaskInfo();
+        public Profile profile = new Profile();
+
         private int taskIdCounter = 1;
-        private TitoloTask titoloTask = new TitoloTask();
+        private int profileCounter = 1;
 
         #region BasicFeatures
 
@@ -89,6 +92,129 @@ namespace teeze_bot
             }
         }
 
+        #endregion BasicFeatures
+
+        #region Create Profile
+
+        private void CreateProfileOption_Click(object sender, RoutedEventArgs e)
+        {
+            newProfile_Firstname.Text = "";
+            newProfile_Lastname.Text = "";
+            newProfile_EMail.Text = "";
+            newProfile_Phone.Text = "";
+            newProfile_Address1.Text = "";
+            newProfile_Address2.Text = "";
+            newProfile_City.Text = "";
+            newProfile_ZIP.Text = "";
+            newProfile_Country.SelectedIndex = -1;
+            CreateProfileWindow.Visibility = Visibility.Visible;
+            ProfilePageOptions.Visibility = Visibility.Hidden;
+            newProfile_errorFirstname.Visibility = Visibility.Hidden;
+            newProfile_errorLastname.Visibility = Visibility.Hidden;
+            newProfile_errorEmail.Visibility = Visibility.Hidden;
+            newProfile_errorPhone.Visibility = Visibility.Hidden;
+            newProfile_errorAddresse1.Visibility = Visibility.Hidden;
+            newProfile_errorCity.Visibility = Visibility.Hidden;
+            newProfile_errorZip.Visibility = Visibility.Hidden;
+            newProfile_errorCountry.Visibility = Visibility.Hidden;
+        }
+
+        private void CancleCreateProfile_Click(object sender, RoutedEventArgs e)
+        {
+            CloseCreateProfileWindow();
+        }
+
+        private void CreateProfile_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsProfileFormValid())
+            {
+                GatherProfileInfos();
+                CloseCreateProfileWindow();
+                AddProfileToList();
+            }
+        }
+
+        private bool IsProfileFormValid()
+        {
+            newProfile_errorFirstname.Visibility = newProfile_Firstname.Text.Length == 0 || newProfile_Firstname.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorLastname.Visibility = newProfile_Lastname.Text.Length == 0 || newProfile_Lastname.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorEmail.Visibility = newProfile_EMail.Text.Length == 0 || newProfile_EMail.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorPhone.Visibility = newProfile_Phone.Text.Length == 0 || newProfile_Phone.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorAddresse1.Visibility = newProfile_Address1.Text.Length == 0 || newProfile_Address1.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorCity.Visibility = newProfile_City.Text.Length == 0 || newProfile_City.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorZip.Visibility = newProfile_ZIP.Text.Length == 0 || newProfile_ZIP.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorCountry.Visibility = newProfile_Country.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+
+            if (newProfile_Firstname.Text.Length != 0 && newProfile_Lastname.Text.Length != 0 && newProfile_EMail.Text.Length != 0 && newProfile_Phone.Text.Length != 0 && newProfile_Address1.Text.Length != 0 && newProfile_City.Text.Length != 0 && newProfile_ZIP.Text.Length != 0 && newProfile_City.Text.Length != 0)
+                return true;
+            else
+                return false;
+        }
+
+        private void GatherProfileInfos()
+        {
+            var item = (ComboBoxItem)newProfile_Country.SelectedValue;
+            string country = (string)item.Content;
+            string firstname = newProfile_Firstname.Text;
+            string lastname = newProfile_Lastname.Text;
+            string eMail = newProfile_EMail.Text;
+            string phone = newProfile_Phone.Text;
+            string address1 = newProfile_Address1.Text;
+            string address2 = newProfile_Address2.Text;
+            if (address2 == null)
+            {
+                address2 = "";
+            }
+            string city = newProfile_City.Text;
+            string zip = newProfile_ZIP.Text;
+            profile.AddProfileInfos(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country);
+            profileCounter++;
+        }
+
+        private void CloseCreateProfileWindow()
+        {
+            CreateProfileWindow.Visibility = Visibility.Hidden;
+            ProfilePageOptions.Visibility = Visibility.Visible;
+            ProfilePageList.Visibility = Visibility.Visible;
+        }
+
+        private void AddProfileToList()
+        {
+            var profileNumber = new TextBlock()
+            {
+                Text = profile.ProfileNumber.ToString()
+            };
+            profileListNumber.Items.Add(profileNumber);
+
+            var profileName = new TextBlock()
+            {
+                Text = string.Join(" ", profile.Firstname, profile.Lastname)
+            };
+            profileListName.Items.Add(profileName);
+
+            var dateCreated = new TextBlock()
+            {
+                Text = DateTime.Now.ToString("M-d-yyyy")
+            };
+            profileListDateCreated.Items.Add(dateCreated);
+
+            var profileCountry = new TextBlock()
+            {
+                Text = profile.Country
+            };
+            profileListCountry.Items.Add(profileCountry);
+
+            var profileActions = new Button()
+            {
+                Content = "Delete"
+            };
+            profileListActions.Items.Add(profileActions);
+        }
+
+        #endregion Create Profile
+
+        #region Create Task
+
         private void CreateTaskOption_Click(object sender, RoutedEventArgs e)
         {
             CreateTaskWindow.Visibility = Visibility.Visible;
@@ -116,47 +242,17 @@ namespace teeze_bot
         {
             CloseCreateTaskWindow();
         }
-        private void CreateProfileOption_Click(object sender, RoutedEventArgs e)
-        {
-            CreateProfileWindow.Visibility = Visibility.Visible;
-            ProfilePageOptions.Visibility = Visibility.Hidden;
-            ProfilePageList.Visibility = Visibility.Hidden;
-
-        }
-        private void CancleCreateProfile_Click(object sender, RoutedEventArgs e)
-        {
-            CreateProfileWindow.Visibility = Visibility.Hidden;
-            ProfilePageOptions.Visibility = Visibility.Visible;
-            ProfilePageList.Visibility = Visibility.Visible;
-        }
-        
-        private void CreateProfile_Click(object sender, RoutedEventArgs e)
-        {
-            newProfile_errorFirstname.Visibility = newProfile_Firstname.Text.Length == 0 || newProfile_Firstname.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorLastname.Visibility = newProfile_Lastname.Text.Length == 0 || newProfile_Lastname.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorEmail.Visibility = newProfile_EMail.Text.Length == 0 || newProfile_EMail.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorPhone.Visibility = newProfile_Phone.Text.Length == 0 || newProfile_Phone.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorAdresse1.Visibility = newProfile_Adress1.Text.Length == 0 || newProfile_Adress1.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorCity.Visibility = newProfile_City.Text.Length == 0 || newProfile_City.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorZip.Visibility = newProfile_ZIP.Text.Length == 0 || newProfile_ZIP.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorCountry.Visibility = newProfile_Country.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-
-        }
-
-
-        #endregion BasicFeatures
-
-        #region Create Task
 
         private void CreateTask_Click(object sender, RoutedEventArgs e)
         {
-            if (IsFormValid())
+            if (IsTaskFormValid())
             {
                 switch (newTask_Store.SelectedIndex)
                 {
                     case 0:
-                        GatherInfo();
+                        GatherTaskInfo();
                         CloseCreateTaskWindow();
+                        AddTaskToTaskList();
                         break;
 
                     default:
@@ -172,13 +268,13 @@ namespace teeze_bot
             TaskPageList.Visibility = Visibility.Visible;
         }
 
-        private bool IsFormValid()
+        private bool IsTaskFormValid()
         {
             newTask_errorStore.Visibility = newTask_Store.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorSize.Visibility = newTask_Size.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProduct.Visibility = newTask_Product.Text.Length == 0 || newTask_Product.Text == "" ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProfile.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-            newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;    
+            newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorAccount.Visibility = newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
 
             if (newTask_Store.SelectedIndex != -1 && newTask_Size.SelectedIndex != -1 && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1 && (newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Hidden))
@@ -196,7 +292,7 @@ namespace teeze_bot
             }
         }
 
-        private TaskInfo GatherInfo()
+        private void GatherTaskInfo()
         {
             var item = (ComboBoxItem)newTask_Store.SelectedValue;
             string Store = (string)item.Content;
@@ -213,9 +309,53 @@ namespace teeze_bot
             {
                 Account = (string)item.Content;
             }
-            TaskInfo taskinfo = new TaskInfo(taskIdCounter, Store, ShoeSize, Product, Profile, Proxy, Account);
+            taskInfo.AddInfos(taskIdCounter, Store, ShoeSize, Product, Profile, Proxy, Account);
             taskIdCounter++;
-            return taskinfo;
+        }
+
+        private void AddTaskToTaskList()
+        {
+            var taskStore = new TextBlock()
+            {
+                Text = taskInfo.Store
+            };
+            taskListStore.Items.Add(taskStore);
+
+            var taskProduct = new TextBlock()
+            {
+                Text = taskInfo.Product
+            };
+            taskListProduct.Items.Add(taskProduct);
+
+            var taskSize = new TextBlock()
+            {
+                Text = taskInfo.ShoeSize.ToString()
+            };
+            taskListSizes.Items.Add(taskSize);
+
+            var taskProfile = new TextBlock()
+            {
+                Text = taskInfo.Profile
+            };
+            taskListProfile.Items.Add(taskProfile);
+
+            var taskProxies = new TextBlock()
+            {
+                Text = taskInfo.Proxy
+            };
+            taskListProxies.Items.Add(taskProxies);
+
+            var taskStatus = new TextBlock()
+            {
+                Text = taskInfo.Status
+            };
+            taskListStatus.Items.Add(taskStatus);
+
+            var taskActions = new Button()
+            {
+                Content = "start"
+            };
+            taskListActions.Items.Add(taskActions);
         }
 
         #endregion Create Task

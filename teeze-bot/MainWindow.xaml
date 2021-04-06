@@ -383,7 +383,7 @@
 
     <Border CornerRadius="8" BorderThickness="10" BorderBrush="#0e2433" MouseDown="Border_MouseDown">
 
-        <!--MainGrid-->
+        <!--Main Grid-->
         <Grid x:Name="MainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -481,7 +481,7 @@
                             <ColumnDefinition Width="0.10*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="0" BorderBrush="Gray" Margin="2,2,2,0" MinWidth="80">
-                            <Label Content="Site" Foreground="DeepSkyBlue" FontSize="12"></Label>
+                            <Label Content="Store" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
                         <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="1" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
                             <Label Content="Product" Foreground="DeepSkyBlue" FontSize="12"></Label>
@@ -501,6 +501,13 @@
                         <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="6" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="100">
                             <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
+                        <ListBox x:Name="taskListStore" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="taskListProduct" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="taskListSizes" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="taskListProfile" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="taskListProxies" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="taskListStatus" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="taskListActions" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="1" />
                     </Grid>
                     <!--#endregion-->
 
@@ -688,6 +695,11 @@
                         <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="5" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="120">
                             <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
                         </Border>
+                        <ListBox x:Name="profileListNumber" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="profileListName" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="profileListDateCreated" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="profileListCountry" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" />
+                        <ListBox x:Name="profileListActions" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="1" />
                     </Grid>
                     <!--#region Create Profile Window-->
                     <Grid Grid.Row="1" x:Name="CreateProfileWindow" Visibility="Hidden">
@@ -748,11 +760,11 @@
                             <TextBox x:Name="newProfile_EMail" Grid.Column="1" Grid.Row="6"></TextBox>
                             <TextBox x:Name="newProfile_Phone" Grid.Column="2" Grid.Row="6"></TextBox>
 
-                            <Label Grid.Row="8" Grid.Column="1" Content="Adress 1" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <Label Grid.Row="8" Grid.Column="2" Content="Adress 2 (Optional)" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <Label Grid.Row="8" Grid.Column="1" Content="Address 1" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <Label Grid.Row="8" Grid.Column="2" Content="Address 2 (Optional)" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
 
-                            <TextBox x:Name="newProfile_Adress1" Grid.Row="9" Grid.Column="1"></TextBox>
-                            <TextBox x:Name="newProfile_Adress2" Grid.Row="9" Grid.Column="2"></TextBox>
+                            <TextBox x:Name="newProfile_Address1" Grid.Row="9" Grid.Column="1"></TextBox>
+                            <TextBox x:Name="newProfile_Address2" Grid.Row="9" Grid.Column="2"></TextBox>
 
                             <Label Grid.Row="11" Grid.Column="1" Content="City" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray"></Label>
                             <Label Grid.Row="11" Grid.Column="2" Content="Zip" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray"></Label>
@@ -778,7 +790,7 @@
                             <Label x:Name="newProfile_errorLastname" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="4" Grid.Column="2" Content="Please enter a Last Name" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newProfile_errorEmail" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="7" Grid.Column="1" Content="Please enter a E-Mail" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newProfile_errorPhone" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="7" Grid.Column="2" Content="Please enter a Phone number" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
-                            <Label x:Name="newProfile_errorAdresse1" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please enter a Adress" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newProfile_errorAddresse1" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please enter a Address" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newProfile_errorCity" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="1" Content="Please enter a City" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newProfile_errorZip" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="2" Content="Please enter a Zip-Code" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newProfile_errorCountry"  HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="15" Grid.Column="1" Content="Please select a Country" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
