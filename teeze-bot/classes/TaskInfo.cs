@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace teeze_bot.classes
+﻿namespace teeze_bot.classes
 {
     public class TaskInfo
     {
@@ -13,8 +9,13 @@ namespace teeze_bot.classes
         public string Profile;
         public string Proxy;
         public string Account;
+        public string Status;
 
-        public TaskInfo(int taskId, string store, double shoeSize, string product, string profile, string proxy, string account)
+        public TaskInfo()
+        {
+        }
+
+        public void AddInfos(int taskId, string store, double shoeSize, string product, string profile, string proxy, string account)
         {
             TaskId = taskId;
             Store = store;
@@ -23,6 +24,7 @@ namespace teeze_bot.classes
             Profile = profile;
             Proxy = proxy;
             Account = account;
+            Status = "waiting";
         }
     }
 }
