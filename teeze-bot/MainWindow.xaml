@@ -383,7 +383,7 @@
 
     <Border CornerRadius="8" BorderThickness="10" BorderBrush="#0e2433" MouseDown="Border_MouseDown">
 
-        <!--MainGrid-->
+        <!--Main Grid-->
         <Grid x:Name="MainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
