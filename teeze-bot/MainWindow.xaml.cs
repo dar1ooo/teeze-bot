@@ -109,6 +109,7 @@ namespace teeze_bot
             newProfile_Country.SelectedIndex = -1;
             CreateProfileWindow.Visibility = Visibility.Visible;
             ProfilePageOptions.Visibility = Visibility.Hidden;
+            ProfilePageList.Visibility = Visibility.Hidden;
             newProfile_errorFirstname.Visibility = Visibility.Hidden;
             newProfile_errorLastname.Visibility = Visibility.Hidden;
             newProfile_errorEmail.Visibility = Visibility.Hidden;
@@ -315,43 +316,43 @@ namespace teeze_bot
 
         private void AddTaskToTaskList()
         {
-            var taskStore = new TextBlock()
+            TextBlock taskStore = new TextBlock()
             {
                 Text = taskInfo.Store
             };
             taskListStore.Items.Add(taskStore);
 
-            var taskProduct = new TextBlock()
+            TextBlock taskProduct = new TextBlock()
             {
                 Text = taskInfo.Product
             };
             taskListProduct.Items.Add(taskProduct);
 
-            var taskSize = new TextBlock()
+            TextBlock taskSize = new TextBlock()
             {
                 Text = taskInfo.ShoeSize.ToString()
             };
             taskListSizes.Items.Add(taskSize);
 
-            var taskProfile = new TextBlock()
+            TextBlock taskProfile = new TextBlock()
             {
                 Text = taskInfo.Profile
             };
             taskListProfile.Items.Add(taskProfile);
 
-            var taskProxies = new TextBlock()
+            TextBlock taskProxies = new TextBlock()
             {
                 Text = taskInfo.Proxy
             };
             taskListProxies.Items.Add(taskProxies);
 
-            var taskStatus = new TextBlock()
+            TextBlock taskStatus = new TextBlock()
             {
                 Text = taskInfo.Status
             };
             taskListStatus.Items.Add(taskStatus);
 
-            var taskActions = new Button()
+            Button taskActions = new Button()
             {
                 Content = "start"
             };
