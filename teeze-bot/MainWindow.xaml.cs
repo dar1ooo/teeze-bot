@@ -13,8 +13,8 @@ namespace teeze_bot
             InitializeComponent();
         }
 
-        public TaskInfo taskInfo = new TaskInfo();
-        public Profile profile = new Profile();
+        private TaskInfo taskInfo = new TaskInfo();
+        private Profile profile = new Profile();
 
         private int taskIdCounter = 1;
         private int profileCounter = 1;
