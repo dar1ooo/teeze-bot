@@ -18,11 +18,11 @@
         <Style TargetType="{x:Type ListBox}">
             <Setter Property="Foreground" Value="Wheat" />
             <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Background" Value="Transparent" />
         </Style>
         <Style TargetType="{x:Type ListBoxItem}">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <Setter Property="Padding" Value="2,0,0,0" />
             <Setter Property="Template">
@@ -48,7 +48,7 @@
                                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Background" Value="Transparent" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -72,6 +72,45 @@
             <Setter Property="MinHeight" Value="35" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Padding" Value="8,0,0,0" />
+        </Style>
+        <Style x:Key="MyWaterMarkStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Border Background="#FF324A5B" BorderBrush="Transparent" BorderThickness="0" />
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
+                            <Label Margin="8,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center"
+                           Visibility="Collapsed" Foreground="Wheat" FontFamily="Arial" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value="" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Visible" />
+                            </MultiTrigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="Visibility" TargetName="WaterMarkLabel" Value="Hidden" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="0px" />
+            <Setter Property="Background" Value="#FF324A5B" />
+            <Setter Property="Foreground" Value="Wheat" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="MinWidth" Value="150" />
+            <Setter Property="MinHeight" Value="35" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="8,0,0,0" />
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8" />
+                    <Setter Property="Margin" Value="5,2,5,2" />
+                </Style>
+            </Style.Resources>
         </Style>
         <!--#endregion-->
 
@@ -197,8 +236,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-            </Style.Triggers>
         </Style>
         <Style x:Key="theComboBoxItem" TargetType="{x:Type ComboBoxItem}">
             <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -625,7 +662,7 @@
                             </ComboBox>
 
                             <Label Grid.Row="5" Grid.Column="1" Content="Product" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <TextBox x:Name="newTask_Product" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2"></TextBox>
+                            <TextBox x:Name="newTask_Product" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource MyWaterMarkStyle}" Tag="Search Category" Text="{Binding CategorySearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextSearch.Text="Search Category"></TextBox>
 
                             <Label Grid.Row="8" Grid.Column="1" Content="Profile" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <Label Grid.Row="8" Grid.Column="2" Content="Proxy" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
