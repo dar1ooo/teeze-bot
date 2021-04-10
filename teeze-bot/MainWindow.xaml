@@ -538,7 +538,7 @@
                         </Grid.ColumnDefinitions>
                         <Button x:Name="StartAllOption" Grid.Column="3" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Start All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                         <Button x:Name="StopAllOption" Grid.Column="4" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Stop All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
-                        <Button x:Name="DeleteAllOption" Grid.Column="5" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Delete All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="DeleteAllOption" Grid.Column="5" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Delete All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="DeleteAllOption_Click"></Button>
                         <Button x:Name="CreateTaskOption" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Create Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateTaskOption_Click"></Button>
                         <Button x:Name="ImportTaskOption" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Import Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                     </Grid>
@@ -757,7 +757,7 @@
                             <ColumnDefinition Width="85px" />
                         </Grid.ColumnDefinitions>
                         <Button Content="New Profile" Grid.Row="1" Grid.Column="5" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateProfileOption_Click"></Button>
-                        <Button Content="Delete All" Grid.Row="1" Grid.Column="4" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button Content="Delete All" Grid.Row="1" Grid.Column="4" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="Button_Click"></Button>
                     </Grid>
                     <Grid Grid.Row="1" x:Name="ProfilePageList">
                         <Grid.RowDefinitions>
