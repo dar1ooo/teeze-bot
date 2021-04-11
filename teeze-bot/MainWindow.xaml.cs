@@ -16,8 +16,8 @@ namespace teeze_bot
         private TaskInfo taskInfo = new TaskInfo();
         private Profile profile = new Profile();
 
-        private int taskIdCounter = 1;
-        private int profileCounter = 1;
+        private int taskIdCounter = 0;
+        private int profileCounter = 0;
 
         #region BasicFeatures
 
@@ -168,8 +168,8 @@ namespace teeze_bot
             }
             string city = newProfile_City.Text;
             string zip = newProfile_ZIP.Text;
-            profile.AddProfileInfos(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country);
             profileCounter++;
+            profile.AddProfileInfos(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country);
         }
 
         private void CloseCreateProfileWindow()
@@ -210,6 +210,16 @@ namespace teeze_bot
                 Content = "Delete"
             };
             profileListActions.Items.Add(profileActions);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            profileListNumber.Items.Clear();
+            profileListName.Items.Clear();
+            profileListDateCreated.Items.Clear();
+            profileListCountry.Items.Clear();
+            profileListActions.Items.Clear();
+            profileCounter = 0;
         }
 
         #endregion Create Profile
@@ -310,8 +320,8 @@ namespace teeze_bot
             {
                 Account = (string)item.Content;
             }
-            taskInfo.AddInfos(taskIdCounter, Store, ShoeSize, Product, Profile, Proxy, Account);
             taskIdCounter++;
+            taskInfo.AddInfos(taskIdCounter, Store, ShoeSize, Product, Profile, Proxy, Account);
         }
 
         private void AddTaskToTaskList()
@@ -357,6 +367,18 @@ namespace teeze_bot
                 Content = "start"
             };
             taskListActions.Items.Add(taskActions);
+        }
+
+        private void DeleteAllOption_Click(object sender, RoutedEventArgs e)
+        {
+            taskListStore.Items.Clear();
+            taskListProduct.Items.Clear();
+            taskListSizes.Items.Clear();
+            taskListProfile.Items.Clear();
+            taskListProxies.Items.Clear();
+            taskListStatus.Items.Clear();
+            taskListActions.Items.Clear();
+            taskIdCounter = 1;
         }
 
         #endregion Create Task
