@@ -766,7 +766,7 @@
                             <ColumnDefinition Width="85px" />
                         </Grid.ColumnDefinitions>
                         <Button Content="New Profile" Grid.Row="1" Grid.Column="5" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateProfileOption_Click"></Button>
-                        <Button Content="Delete All" Grid.Row="1" Grid.Column="4" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="Button_Click"></Button>
+                        <Button Content="Delete All" Grid.Row="1" Grid.Column="4" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="DeleteAllProfiles"></Button>
                     </Grid>
                     <Grid Grid.Row="1" x:Name="ProfilePageList">
                         <Grid.RowDefinitions>

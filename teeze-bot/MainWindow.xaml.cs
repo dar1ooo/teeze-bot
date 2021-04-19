@@ -15,6 +15,7 @@ namespace teeze_bot
         private TaskInfo taskInfo = new TaskInfo();
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private Profile profile = new Profile();
+        private List<Profile> profileList = new List<Profile>();
 
         private int taskIdCounter = 0;
         private int profileCounter = 0;
@@ -30,11 +31,13 @@ namespace teeze_bot
         public void TeezeOpened()
         {
             ReadTasksFromJSON();
+            ReadProfilesFromJSON();
         }
 
         private void TeezeClosed(object sender, CancelEventArgs e)
         {
             SaveTasksToJSON();
+            SaveProfilesToJSON();
         }
 
         #endregion Teeze Opened and Closed
@@ -152,6 +155,7 @@ namespace teeze_bot
                 GatherProfileInfos();
                 CloseCreateProfileWindow();
                 AddProfileToList();
+                SaveProfilesToJSON();
             }
         }
 
@@ -188,8 +192,9 @@ namespace teeze_bot
             }
             string city = newProfile_City.Text;
             string zip = newProfile_ZIP.Text;
+            string dateCreated = DateTime.Now.ToString("M-d-yyyy");
             profileCounter++;
-            profile.AddProfileInfos(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country);
+            profile.AddProfileInfos(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated);
         }
 
         private void CloseCreateProfileWindow()
@@ -227,19 +232,55 @@ namespace teeze_bot
 
             var profileActions = new Button()
             {
-                Content = "Delete"
+                Content = "delete"
             };
             profileListActions.Items.Add(profileActions);
+            profileList.Add(profile);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void DeleteAllProfiles(object sender, RoutedEventArgs e)
         {
             profileListNumber.Items.Clear();
             profileListName.Items.Clear();
             profileListDateCreated.Items.Clear();
             profileListCountry.Items.Clear();
             profileListActions.Items.Clear();
+            profileList.Clear();
+            SaveProfilesToJSON();
             profileCounter = 0;
+        }
+
+        private void SaveProfilesToJSON()
+        {
+            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json", JsonConvert.SerializeObject(profileList, Formatting.Indented));
+        }
+
+        public void ReadProfilesFromJSON()
+        {
+            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json"))
+            {
+                string json = r.ReadToEnd();
+                profileList = JsonConvert.DeserializeObject<List<Profile>>(json);
+            }
+            profileCounter = 0;
+
+            foreach (Profile profile in profileList)
+            {
+                profileListNumber.Items.Add(profile.ProfileNumber);
+                var profileName = new TextBlock()
+                {
+                    Text = string.Join(" ", profile.Firstname, profile.Lastname)
+                };
+                profileListName.Items.Add(profileName);
+                profileListDateCreated.Items.Add(profile.DateCreated);
+                profileListCountry.Items.Add(profile.Country);
+                Button taskActions = new Button()
+                {
+                    Content = "delete"
+                };
+                profileListActions.Items.Add(taskActions);
+                profileCounter++;
+            }
         }
 
         #endregion Create Profile
@@ -408,12 +449,12 @@ namespace teeze_bot
 
         private void SaveTasksToJSON()
         {
-            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTask.json", JsonConvert.SerializeObject(taskList, Formatting.Indented));
+            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTasks.json", JsonConvert.SerializeObject(taskList, Formatting.Indented));
         }
 
         public void ReadTasksFromJSON()
         {
-            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTask.json"))
+            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTasks.json"))
             {
                 string json = r.ReadToEnd();
                 taskList = JsonConvert.DeserializeObject<List<TaskInfo>>(json);
