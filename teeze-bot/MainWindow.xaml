@@ -949,7 +949,7 @@
                         <Label x:Name="UserNameLable" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="DeepSkyBlue" FontSize="12" FontFamily="Fonts/Dosis" FontWeight="Medium" >SMResell</Label>
                     </Grid>
                 </Border>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Margin="0,2,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30px" />
                         <RowDefinition Height="30px" />
@@ -994,19 +994,19 @@
                     </Border>
                 </Grid>
                 <Grid x:Name="TasksGrid" Grid.Row="2">
-                    <Button x:Name="Tasks" BorderThickness="0" Background="#09161f" Content="Tasks" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
+                    <Button x:Name="Tasks" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Tasks" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
                 <Grid x:Name="ProxiesGrid" Grid.Row="3">
-                    <Button x:Name="Proxies" BorderThickness="0" Background="#09161f" Content="Proxies" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
+                    <Button x:Name="Proxies" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Proxies" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
                 <Grid x:Name="ProfilesGrid" Grid.Row="4">
-                    <Button x:Name="Profiles" BorderThickness="0" Background="#09161f" Content="Profiles" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
+                    <Button x:Name="Profiles" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Profiles" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
                 <Grid x:Name="AccountsGrid" Grid.Row="5">
-                    <Button x:Name="Accounts" BorderThickness="0" Background="#09161f" Content="Accounts" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
+                    <Button x:Name="Accounts" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Accounts" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
                 <Grid x:Name="SettingsGrid" Grid.Row="7">
-                    <Button x:Name="Settings" BorderThickness="0" Background="#09161f" Content="Settings" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
+                    <Button x:Name="Settings" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Settings" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
             </Grid>
             <!--#endregion-->
