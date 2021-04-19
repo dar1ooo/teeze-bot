@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,16 +12,32 @@ namespace teeze_bot
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
         private TaskInfo taskInfo = new TaskInfo();
+        private List<TaskInfo> taskList = new List<TaskInfo>();
         private Profile profile = new Profile();
 
         private int taskIdCounter = 0;
         private int profileCounter = 0;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            TeezeOpened();
+        }
+
+        #region Teeze Opened and Closed
+
+        public void TeezeOpened()
+        {
+            ReadTasksFromJSON();
+        }
+
+        private void TeezeClosed(object sender, CancelEventArgs e)
+        {
+            SaveTasksToJSON();
+        }
+
+        #endregion Teeze Opened and Closed
 
         #region BasicFeatures
 
@@ -264,6 +284,7 @@ namespace teeze_bot
                         GatherTaskInfo();
                         CloseCreateTaskWindow();
                         AddTaskToTaskList();
+                        SaveTasksToJSON();
                         break;
 
                     default:
@@ -367,6 +388,8 @@ namespace teeze_bot
                 Content = "start"
             };
             taskListActions.Items.Add(taskActions);
+
+            taskList.Add(taskInfo);
         }
 
         private void DeleteAllOption_Click(object sender, RoutedEventArgs e)
@@ -378,7 +401,40 @@ namespace teeze_bot
             taskListProxies.Items.Clear();
             taskListStatus.Items.Clear();
             taskListActions.Items.Clear();
-            taskIdCounter = 1;
+            taskList.Clear();
+            SaveTasksToJSON();
+            taskIdCounter = 0;
+        }
+
+        private void SaveTasksToJSON()
+        {
+            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTask.json", JsonConvert.SerializeObject(taskList, Formatting.Indented));
+        }
+
+        public void ReadTasksFromJSON()
+        {
+            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTask.json"))
+            {
+                string json = r.ReadToEnd();
+                taskList = JsonConvert.DeserializeObject<List<TaskInfo>>(json);
+            }
+            taskIdCounter = 0;
+
+            foreach (TaskInfo taskinfo in taskList)
+            {
+                taskListStore.Items.Add(taskinfo.Store);
+                taskListProduct.Items.Add(taskinfo.Product);
+                taskListSizes.Items.Add(taskinfo.ShoeSize);
+                taskListProfile.Items.Add(taskinfo.Profile);
+                taskListProxies.Items.Add(taskinfo.Proxy);
+                taskListStatus.Items.Add("inactive");
+                Button taskActions = new Button()
+                {
+                    Content = "start"
+                };
+                taskListActions.Items.Add(taskActions);
+                taskIdCounter++;
+            }
         }
 
         #endregion Create Task
