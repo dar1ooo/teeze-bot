@@ -295,7 +295,7 @@ namespace teeze_bot
 
             //reset Form Inputs
             newTask_Store.SelectedIndex = -1;
-            newTask_Size.SelectedIndex = -1;
+            newTask_Sizes.Text = "";
             newTask_Product.Text = "";
             newTask_Profile.SelectedIndex = -1;
             newTask_Proxy.SelectedIndex = -1;
@@ -303,7 +303,7 @@ namespace teeze_bot
             newTask_AccountLabel.Visibility = Visibility.Visible;
             newTask_Account.Visibility = Visibility.Visible;
             newTask_errorStore.Visibility = Visibility.Hidden;
-            newTask_errorSize.Visibility = Visibility.Hidden;
+            newTask_errorSizes.Visibility = Visibility.Hidden;
             newTask_errorProduct.Visibility = Visibility.Hidden;
             newTask_errorProfile.Visibility = Visibility.Hidden;
             newTask_errorProxy.Visibility = Visibility.Hidden;
@@ -344,13 +344,13 @@ namespace teeze_bot
         private bool IsTaskFormValid()
         {
             newTask_errorStore.Visibility = newTask_Store.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-            newTask_errorSize.Visibility = newTask_Size.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorSizes.Visibility = newTask_Sizes.Text == "" ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProduct.Visibility = newTask_Product.Text.Length == 0 || newTask_Product.Text == "" ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProfile.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorAccount.Visibility = newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
 
-            if (newTask_Store.SelectedIndex != -1 && newTask_Size.SelectedIndex != -1 && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1 && (newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Hidden))
+            if (newTask_Store.SelectedIndex != -1 && newTask_Sizes.Text != "" && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1 && (newTask_Account.Visibility == Visibility.Hidden || newTask_Account.SelectedIndex != -1 && newTask_Account.Visibility == Visibility.Visible))
                 return true;
             else
                 return false;
@@ -369,8 +369,7 @@ namespace teeze_bot
         {
             var item = (ComboBoxItem)newTask_Store.SelectedValue;
             string Store = (string)item.Content;
-            item = (ComboBoxItem)newTask_Size.SelectedValue;
-            double ShoeSize = Convert.ToDouble(item.Content);
+            string ShoeSizes = (newTask_Sizes.Text.ToString());
             string Product = newTask_Product.Text.ToString();
             item = (ComboBoxItem)newTask_Profile.SelectedValue;
             string Profile = (string)item.Content;
@@ -382,12 +381,22 @@ namespace teeze_bot
             {
                 Account = (string)item.Content;
             }
+            if (newTask_Account.Visibility == Visibility.Hidden)
+            {
+                Account = "";
+            }
             taskIdCounter++;
-            taskInfo.AddInfos(taskIdCounter, Store, ShoeSize, Product, Profile, Proxy, Account);
+            taskInfo.AddInfos(taskIdCounter, Store, ShoeSizes, Product, Profile, Proxy, Account);
         }
 
         private void AddTaskToTaskList()
         {
+            TextBlock taskNumber = new TextBlock()
+            {
+                Text = taskInfo.TaskId.ToString()
+            };
+            taskListId.Items.Add(taskNumber);
+
             TextBlock taskStore = new TextBlock()
             {
                 Text = taskInfo.Store
@@ -402,7 +411,7 @@ namespace teeze_bot
 
             TextBlock taskSize = new TextBlock()
             {
-                Text = taskInfo.ShoeSize.ToString()
+                Text = taskInfo.ShoeSizes.ToString()
             };
             taskListSizes.Items.Add(taskSize);
 
@@ -463,9 +472,10 @@ namespace teeze_bot
 
             foreach (TaskInfo taskinfo in taskList)
             {
+                taskListId.Items.Add(taskinfo.TaskId.ToString());
                 taskListStore.Items.Add(taskinfo.Store);
                 taskListProduct.Items.Add(taskinfo.Product);
-                taskListSizes.Items.Add(taskinfo.ShoeSize);
+                taskListSizes.Items.Add(taskinfo.ShoeSizes);
                 taskListProfile.Items.Add(taskinfo.Profile);
                 taskListProxies.Items.Add(taskinfo.Proxy);
                 taskListStatus.Items.Add("inactive");

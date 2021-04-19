@@ -4,18 +4,18 @@
     {
         public int TaskId;
         public string Store;
-        public double ShoeSize;
+        public string ShoeSizes;
         public string Product;
         public string Profile;
         public string Proxy;
         public string Account;
         public string Status;
 
-        public void AddInfos(int taskId, string store, double shoeSize, string product, string profile, string proxy, string account)
+        public void AddInfos(int taskId, string store, string shoeSize, string product, string profile, string proxy, string account)
         {
             TaskId = taskId;
             Store = store;
-            ShoeSize = shoeSize;
+            ShoeSizes = shoeSize;
             Product = product;
             Profile = profile;
             Proxy = proxy;

@@ -1,8 +1,38 @@
 [
   {
-    "TaskId": 1,
+    "TaskId": 4,
     "Store": "Titolo",
-    "ShoeSize": 7.0,
+    "ShoeSizes": "asdasd",
+    "Product": "asd",
+    "Profile": "Mario the kek",
+    "Proxy": "chupapi muñañyo",
+    "Account": "",
+    "Status": "waiting"
+  },
+  {
+    "TaskId": 4,
+    "Store": "Titolo",
+    "ShoeSizes": "asdasd",
+    "Product": "asd",
+    "Profile": "Mario the kek",
+    "Proxy": "chupapi muñañyo",
+    "Account": "",
+    "Status": "waiting"
+  },
+  {
+    "TaskId": 4,
+    "Store": "Titolo",
+    "ShoeSizes": "asdasd",
+    "Product": "asd",
+    "Profile": "Mario the kek",
+    "Proxy": "chupapi muñañyo",
+    "Account": "",
+    "Status": "waiting"
+  },
+  {
+    "TaskId": 4,
+    "Store": "Titolo",
+    "ShoeSizes": "asdasd",
     "Product": "asd",
     "Profile": "Mario the kek",
     "Proxy": "chupapi muñañyo",
