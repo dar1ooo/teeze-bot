@@ -23,6 +23,8 @@ namespace teeze_bot
         public MainWindow()
         {
             InitializeComponent();
+            taskIdCounter = 0;
+            profileCounter = 0;
             TeezeOpened();
         }
 
@@ -387,6 +389,7 @@ namespace teeze_bot
             }
             taskIdCounter++;
             taskInfo.AddInfos(taskIdCounter, Store, ShoeSizes, Product, Profile, Proxy, Account);
+            taskList.Add(taskInfo);
         }
 
         private void AddTaskToTaskList()
@@ -438,8 +441,6 @@ namespace teeze_bot
                 Content = "start"
             };
             taskListActions.Items.Add(taskActions);
-
-            taskList.Add(taskInfo);
         }
 
         private void DeleteAllOption_Click(object sender, RoutedEventArgs e)
@@ -451,6 +452,7 @@ namespace teeze_bot
             taskListProxies.Items.Clear();
             taskListStatus.Items.Clear();
             taskListActions.Items.Clear();
+            taskListId.Items.Clear();
             taskList.Clear();
             SaveTasksToJSON();
             taskIdCounter = 0;

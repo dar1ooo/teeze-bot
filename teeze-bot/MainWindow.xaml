@@ -4,14 +4,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
- Title="TeezeBot" MinHeight="600" MinWidth="1024"
- Height="600" Width="1024"
- MaxHeight="1000" MaxWidth="1424"
- WindowStyle="None"
- ResizeMode="CanResizeWithGrip"
- WindowStartupLocation="CenterScreen"
- AllowsTransparency="True"
- Background="Transparent"
+        Title="TeezeBot" MinHeight="600" MinWidth="1024"
+        Height="600" Width="1024"
+        MaxHeight="1000" MaxWidth="1424"
+        WindowStyle="None"
+        ResizeMode="CanResizeWithGrip"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
         Closing="TeezeClosed">
     <!--#region Styles and Resources-->
     <Window.Resources>
@@ -58,6 +58,7 @@
             </Setter>
         </Style>
         <!--#endregion-->
+
         <!--#region Textbox-->
         <Style TargetType="{x:Type TextBox}">
             <Style.Resources>
@@ -82,8 +83,7 @@
                         <Grid>
                             <Border Background="#FF324A5B" BorderBrush="Transparent" BorderThickness="0" />
                             <ScrollViewer x:Name="PART_ContentHost" Margin="5,0,0,0" VerticalAlignment="Center" />
-                            <Label Margin="8,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center"
-   Visibility="Collapsed" Foreground="Wheat" FontFamily="Arial" />
+                            <Label Margin="8,0,0,0" x:Name="WaterMarkLabel" Content="{TemplateBinding Tag}" VerticalAlignment="Center" Visibility="Collapsed" Foreground="Wheat" FontFamily="Arial" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <MultiTrigger>
@@ -127,21 +127,21 @@
                                 <ColumnDefinition Width="32" />
                             </Grid.ColumnDefinitions>
                             <Border
-   x:Name="Border"
-   Grid.ColumnSpan="2"
-   CornerRadius="8"
-   Background="{TemplateBinding Background}"
-   BorderBrush="Gray"
-   BorderThickness="0" />
+  x:Name="Border"
+  Grid.ColumnSpan="2"
+  CornerRadius="8"
+  Background="{TemplateBinding Background}"
+  BorderBrush="Gray"
+  BorderThickness="0" />
 
                             <Path
-   x:Name="Arrow"
-   Grid.Column="1"
-   Fill="{TemplateBinding Foreground}"
-   Stroke="{TemplateBinding Foreground}"
-   HorizontalAlignment="Center"
-   VerticalAlignment="Center"
-   Data="M 0 0 L 4 4 L 8 0 Z" />
+  x:Name="Arrow"
+  Grid.Column="1"
+  Fill="{TemplateBinding Foreground}"
+  Stroke="{TemplateBinding Foreground}"
+  HorizontalAlignment="Center"
+  VerticalAlignment="Center"
+  Data="M 0 0 L 4 4 L 8 0 Z" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -169,53 +169,53 @@
                     <ControlTemplate TargetType="ComboBox">
                         <Grid>
                             <ToggleButton
-   Cursor="Hand"
-   Name="ToggleButton"
-   BorderBrush="{TemplateBinding BorderBrush}"
-   Background="{TemplateBinding Background}"
-   Foreground="{TemplateBinding Foreground}"
-   Style="{StaticResource ComboBoxToggleButton}"
-   Grid.Column="2"
-   Focusable="false"
-   IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-   ClickMode="Press" />
+  Cursor="Hand"
+  Name="ToggleButton"
+  BorderBrush="{TemplateBinding BorderBrush}"
+  Background="{TemplateBinding Background}"
+  Foreground="{TemplateBinding Foreground}"
+  Style="{StaticResource ComboBoxToggleButton}"
+  Grid.Column="2"
+  Focusable="false"
+  IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+  ClickMode="Press" />
 
                             <ContentPresenter
-   Name="ContentSite"
-   IsHitTestVisible="False"
-   Content="{TemplateBinding SelectionBoxItem}"
-   ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-   ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-   Margin="10,3,30,3"
-   VerticalAlignment="Center"
-   HorizontalAlignment="Left" />
+  Name="ContentSite"
+  IsHitTestVisible="False"
+  Content="{TemplateBinding SelectionBoxItem}"
+  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+  Margin="10,3,30,3"
+  VerticalAlignment="Center"
+  HorizontalAlignment="Left" />
                             <TextBox x:Name="PART_EditableTextBox"
-   Style="{x:Null}"
-   Template="{StaticResource ComboBoxTextBox}"
-   HorizontalAlignment="Left"
-   VerticalAlignment="Center"
-   Margin="3,3,23,3"
-   Focusable="True"
-   Visibility="Hidden"
-   IsReadOnly="{TemplateBinding IsReadOnly}" />
+  Style="{x:Null}"
+  Template="{StaticResource ComboBoxTextBox}"
+  HorizontalAlignment="Left"
+  VerticalAlignment="Center"
+  Margin="3,3,23,3"
+  Focusable="True"
+  Visibility="Hidden"
+  IsReadOnly="{TemplateBinding IsReadOnly}" />
                             <Popup
-   Name="Popup"
-   Placement="Bottom"
-   IsOpen="{TemplateBinding IsDropDownOpen}"
-   AllowsTransparency="True"
-   Focusable="False"
-   PopupAnimation="Slide">
+  Name="Popup"
+  Placement="Bottom"
+  IsOpen="{TemplateBinding IsDropDownOpen}"
+  AllowsTransparency="True"
+  Focusable="False"
+  PopupAnimation="Slide">
                                 <Grid
-   Name="DropDown"
-   SnapsToDevicePixels="True"
-   MinWidth="{TemplateBinding ActualWidth}"
-   MaxHeight="{TemplateBinding MaxDropDownHeight}">
+  Name="DropDown"
+  SnapsToDevicePixels="True"
+  MinWidth="{TemplateBinding ActualWidth}"
+  MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                     <Border
-   CornerRadius="8"
-   x:Name="DropDownBorder"
-   Background="#737373"
-   BorderThickness="0"
-   BorderBrush="#737373" />
+  CornerRadius="8"
+  x:Name="DropDownBorder"
+  Background="#737373"
+  BorderThickness="0"
+  BorderBrush="#737373" />
                                     <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
                                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                     </ScrollViewer>
@@ -249,15 +249,15 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ComboBoxItem">
                         <Border
-  Name="Border"
-  Padding="5"
-  Margin="2"
-  BorderThickness="0,0,0,0"
-  CornerRadius="0"
-  Background="Transparent"
-  BorderBrush="Transparent">
+ Name="Border"
+ Padding="5"
+ Margin="2"
+ BorderThickness="0,0,0,0"
+ CornerRadius="0"
+ Background="Transparent"
+ BorderBrush="Transparent">
                             <TextBlock TextAlignment="Left">
-   <ContentPresenter />
+  <ContentPresenter />
                             </TextBlock>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -496,34 +496,13 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-
-                    <!--Tasks-->
-                    <!--
-                    <Label Content="5" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="10" Background="#09161f" FontWeight="Bold" Foreground="White" Width="30" Height="40"></Label>
-                    <Label Content="↻" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="11" Background="#09161f" Foreground="White" Width="20" Height="40" FontWeight="UltraBold" Margin="0,0,1,0"></Label>
-                    -->
-                    <!--Cart-->
-                    <!--
-                    <Label Content="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="10" Background="#09161f" FontWeight="Bold" Foreground="Orange" Width="30" Height="40"></Label>
-                    <Label Content="🛒" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Orange" Width="20" Height="40" Margin="0,0,1,0"></Label>
-                    -->
-                    <!--Checkout-->
-                    <!--
-                    <Label x:Name="CheckoutCounter" Content="0" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="10" FontWeight="Bold" Background="#09161f" Foreground="Green" Width="30" Height="40"></Label>
-                    <Label Content="✓" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15" Background="#09161f" FontWeight="Bold" Foreground="Green" Width="20" Height="40"  Margin="0,0,1,0"></Label>
-                    -->
-                    <!--Failures-->
-                    <!--
-                    <Label Content="0" Grid.Column="6" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  FontSize="10" FontWeight="Bold" Background="#09161f" Foreground="Red" Width="30" Height="40"></Label>
-                    <Label Content="✖" Grid.Column="7" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="8" Background="#09161f" Foreground="Red" FontWeight="Bold" Width="20" Height="40"></Label>-->
-
                     <Button x:Name="Minimize" Click="minimize_app_Click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="9" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="20" BorderThickness="0" Background="#09161f" Content="−" Foreground="DeepSkyBlue" FontSize="12" FontFamily="Fonts/Dosis" FontWeight="UltraBold" ></Button>
                     <Button x:Name="Close" Click="close_app_click" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Center" Height="40" Width="20" Margin="1,0,0,0" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="10" FontFamily="Fonts/Dosis" FontWeight="Medium"></Button>
                 </Grid>
                 <!--#endregion-->
 
                 <!--#region Tasks Page-->
-                <Grid x:Name="TaskPage" Visibility="Hidden" Grid.Row="1">
+                <Grid x:Name="TaskPage" Visibility="Visible" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -549,8 +528,8 @@
                         <Button x:Name="StartAllOption" Grid.Column="3" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Start All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                         <Button x:Name="StopAllOption" Grid.Column="4" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Stop All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                         <Button x:Name="DeleteAllOption" Grid.Column="5" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Delete All" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="DeleteAllOption_Click"></Button>
-                        <Button x:Name="CreateTaskOption" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Create Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateTaskOption_Click"></Button>
-                        <Button x:Name="ImportTaskOption" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Import Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button x:Name="CreateTaskOption" Grid.Column="0" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="New Task" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateTaskOption_Click"></Button>
+                        <Button x:Name="ImportTaskOption" Grid.Column="1" Grid.Row="1" BorderThickness="0" Background="#09161f" Content="Import" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
                     </Grid>
                     <!--#endregion-->
 
@@ -755,8 +734,9 @@
                             <ColumnDefinition Width="85px" />
                             <ColumnDefinition Width="85px" />
                         </Grid.ColumnDefinitions>
-                        <Button Content="New Profile" Grid.Row="1" Grid.Column="5" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateProfileOption_Click"></Button>
-                        <Button Content="Delete All" Grid.Row="1" Grid.Column="4" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="DeleteAllProfiles"></Button>
+                        <Button Content="New Profile" Grid.Row="1" Grid.Column="0" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="CreateProfileOption_Click"></Button>
+                        <Button Content="Import" Grid.Row="1" Grid.Column="1" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}"></Button>
+                        <Button Content="Delete All" Grid.Row="1" Grid.Column="5" BorderThickness="0" Background="#09161f" Foreground="DeepSkyBlue" FontSize="11" FontFamily="Fonts/Dosis" FontWeight="Medium" Padding="0,0,0,0" Style="{DynamicResource TaskButtons}" Click="DeleteAllProfiles"></Button>
                     </Grid>
                     <Grid Grid.Row="1" x:Name="ProfilePageList">
                         <Grid.RowDefinitions>
@@ -795,6 +775,7 @@
                         <ListBox x:Name="profileListCountry" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" />
                         <ListBox x:Name="profileListActions" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="1" />
                     </Grid>
+
                     <!--#region Create Profile Window-->
                     <Grid Grid.Row="1" x:Name="CreateProfileWindow" Visibility="Hidden">
                         <Grid.RowDefinitions>
@@ -902,7 +883,7 @@
                 <!--#endregion-->
 
                 <!--#region Settings Page-->
-                <Grid x:Name="SettingsPage" Visibility="Visible" Grid.Row="1">
+                <Grid x:Name="SettingsPage" Visibility="Hidden" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition Width="5*"></ColumnDefinition>
