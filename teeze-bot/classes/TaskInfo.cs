@@ -11,10 +11,6 @@
         public string Account;
         public string Status;
 
-        public TaskInfo()
-        {
-        }
-
         public void AddInfos(int taskId, string store, double shoeSize, string product, string profile, string proxy, string account)
         {
             TaskId = taskId;

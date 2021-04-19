@@ -12,8 +12,9 @@
         public string City;
         public string ZIP;
         public string Country;
+        public string DateCreated;
 
-        public void AddProfileInfos(int profileNumber, string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country)
+        public void AddProfileInfos(int profileNumber, string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country, string dateCreated)
         {
             ProfileNumber = profileNumber;
             Firstname = firstname;
@@ -25,6 +26,7 @@
             City = city;
             ZIP = zip;
             Country = country;
+            DateCreated = dateCreated;
         }
     }
 }
