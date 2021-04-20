@@ -46,6 +46,20 @@
             <Setter Property="BorderBrush" Value="Gray" />
             <Setter Property="FontSize" Value="15" />
             <Setter Property="MinHeight" Value="15" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewColumnHeader">
+                        <Border Name="Border" Padding="2" SnapsToDevicePixels="true" BorderBrush="Transparent" Background="Transparent">
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <!--#endregion-->
 
