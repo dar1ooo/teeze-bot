@@ -12,9 +12,7 @@ namespace teeze_bot
 {
     public partial class MainWindow : Window
     {
-        private TaskInfo taskInfo = new TaskInfo();
         private List<TaskInfo> taskList = new List<TaskInfo>();
-        private Profile profile = new Profile();
         private List<Profile> profileList = new List<Profile>();
 
         private int taskIdCounter = 0;
@@ -23,8 +21,6 @@ namespace teeze_bot
         public MainWindow()
         {
             InitializeComponent();
-            taskIdCounter = 0;
-            profileCounter = 0;
             TeezeOpened();
         }
 
@@ -156,7 +152,6 @@ namespace teeze_bot
             {
                 GatherProfileInfos();
                 CloseCreateProfileWindow();
-                AddProfileToList();
                 SaveProfilesToJSON();
             }
         }
@@ -196,7 +191,8 @@ namespace teeze_bot
             string zip = newProfile_ZIP.Text;
             string dateCreated = DateTime.Now.ToString("M-d-yyyy");
             profileCounter++;
-            profile.AddProfileInfos(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated);
+            profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated));
+            profilesListView.ItemsSource = profileList;
         }
 
         private void CloseCreateProfileWindow()
@@ -206,50 +202,13 @@ namespace teeze_bot
             ProfilePageList.Visibility = Visibility.Visible;
         }
 
-        private void AddProfileToList()
-        {
-            var profileNumber = new TextBlock()
-            {
-                Text = profile.ProfileNumber.ToString()
-            };
-            profileListNumber.Items.Add(profileNumber);
-
-            var profileName = new TextBlock()
-            {
-                Text = string.Join(" ", profile.Firstname, profile.Lastname)
-            };
-            profileListName.Items.Add(profileName);
-
-            var dateCreated = new TextBlock()
-            {
-                Text = DateTime.Now.ToString("M-d-yyyy")
-            };
-            profileListDateCreated.Items.Add(dateCreated);
-
-            var profileCountry = new TextBlock()
-            {
-                Text = profile.Country
-            };
-            profileListCountry.Items.Add(profileCountry);
-
-            var profileActions = new Button()
-            {
-                Content = "delete"
-            };
-            profileListActions.Items.Add(profileActions);
-            profileList.Add(profile);
-        }
-
         private void DeleteAllProfiles(object sender, RoutedEventArgs e)
         {
-            profileListNumber.Items.Clear();
-            profileListName.Items.Clear();
-            profileListDateCreated.Items.Clear();
-            profileListCountry.Items.Clear();
-            profileListActions.Items.Clear();
             profileList.Clear();
             SaveProfilesToJSON();
             profileCounter = 0;
+            profilesListView.ItemsSource = null;
+            profilesListView.Items.Clear();
         }
 
         private void SaveProfilesToJSON()
@@ -265,24 +224,29 @@ namespace teeze_bot
                 profileList = JsonConvert.DeserializeObject<List<Profile>>(json);
             }
             profileCounter = 0;
+            profilesListView.ItemsSource = profileList;
+            profileCounter = profileList.Count;
+        }
 
-            foreach (Profile profile in profileList)
-            {
-                profileListNumber.Items.Add(profile.ProfileNumber);
-                var profileName = new TextBlock()
-                {
-                    Text = string.Join(" ", profile.Firstname, profile.Lastname)
-                };
-                profileListName.Items.Add(profileName);
-                profileListDateCreated.Items.Add(profile.DateCreated);
-                profileListCountry.Items.Add(profile.Country);
-                Button taskActions = new Button()
-                {
-                    Content = "delete"
-                };
-                profileListActions.Items.Add(taskActions);
-                profileCounter++;
-            }
+        public void ProfileListViewSizeChanged(object sender, RoutedEventArgs e)
+        {
+            ListView listView = sender as ListView;
+            GridView gView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var col1 = 0.05;
+            var col2 = 0.16714;
+            var col3 = 0.15714;
+            var col4 = 0.15714;
+            var col5 = 0.30714;
+            var col6 = 0.16714;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
+            gView.Columns[2].Width = workingWidth * col3;
+            gView.Columns[3].Width = workingWidth * col4;
+            gView.Columns[4].Width = workingWidth * col5;
+            gView.Columns[5].Width = workingWidth * col6;
         }
 
         #endregion Create Profile
@@ -294,8 +258,6 @@ namespace teeze_bot
             CreateTaskWindow.Visibility = Visibility.Visible;
             TaskPageOptions.Visibility = Visibility.Hidden;
             TaskPageList.Visibility = Visibility.Hidden;
-
-            //reset Form Inputs
             newTask_Store.SelectedIndex = -1;
             newTask_Sizes.Text = "";
             newTask_Product.Text = "";
@@ -326,7 +288,6 @@ namespace teeze_bot
                     case 0:
                         GatherTaskInfo();
                         CloseCreateTaskWindow();
-                        AddTaskToTaskList();
                         SaveTasksToJSON();
                         break;
 
@@ -388,74 +349,17 @@ namespace teeze_bot
                 Account = "";
             }
             taskIdCounter++;
-            taskInfo.AddInfos(taskIdCounter, Store, ShoeSizes, Product, Profile, Proxy, Account);
-            taskList.Add(taskInfo);
-        }
-
-        private void AddTaskToTaskList()
-        {
-            TextBlock taskNumber = new TextBlock()
-            {
-                Text = taskInfo.TaskId.ToString()
-            };
-            taskListId.Items.Add(taskNumber);
-
-            TextBlock taskStore = new TextBlock()
-            {
-                Text = taskInfo.Store
-            };
-            taskListStore.Items.Add(taskStore);
-
-            TextBlock taskProduct = new TextBlock()
-            {
-                Text = taskInfo.Product
-            };
-            taskListProduct.Items.Add(taskProduct);
-
-            TextBlock taskSize = new TextBlock()
-            {
-                Text = taskInfo.ShoeSizes.ToString()
-            };
-            taskListSizes.Items.Add(taskSize);
-
-            TextBlock taskProfile = new TextBlock()
-            {
-                Text = taskInfo.Profile
-            };
-            taskListProfile.Items.Add(taskProfile);
-
-            TextBlock taskProxies = new TextBlock()
-            {
-                Text = taskInfo.Proxy
-            };
-            taskListProxies.Items.Add(taskProxies);
-
-            TextBlock taskStatus = new TextBlock()
-            {
-                Text = taskInfo.Status
-            };
-            taskListStatus.Items.Add(taskStatus);
-
-            Button taskActions = new Button()
-            {
-                Content = "start"
-            };
-            taskListActions.Items.Add(taskActions);
+            taskList.Add(new TaskInfo(taskIdCounter, Store, ShoeSizes, Product, Profile, Proxy, Account));
+            taskListView.ItemsSource = taskList;
         }
 
         private void DeleteAllOption_Click(object sender, RoutedEventArgs e)
         {
-            taskListStore.Items.Clear();
-            taskListProduct.Items.Clear();
-            taskListSizes.Items.Clear();
-            taskListProfile.Items.Clear();
-            taskListProxies.Items.Clear();
-            taskListStatus.Items.Clear();
-            taskListActions.Items.Clear();
-            taskListId.Items.Clear();
             taskList.Clear();
             SaveTasksToJSON();
             taskIdCounter = 0;
+            taskListView.ItemsSource = null;
+            taskListView.Items.Clear();
         }
 
         private void SaveTasksToJSON()
@@ -471,23 +375,33 @@ namespace teeze_bot
                 taskList = JsonConvert.DeserializeObject<List<TaskInfo>>(json);
             }
             taskIdCounter = 0;
+            taskListView.ItemsSource = taskList;
+            taskIdCounter = taskList.Count;
+        }
 
-            foreach (TaskInfo taskinfo in taskList)
-            {
-                taskListId.Items.Add(taskinfo.TaskId.ToString());
-                taskListStore.Items.Add(taskinfo.Store);
-                taskListProduct.Items.Add(taskinfo.Product);
-                taskListSizes.Items.Add(taskinfo.ShoeSizes);
-                taskListProfile.Items.Add(taskinfo.Profile);
-                taskListProxies.Items.Add(taskinfo.Proxy);
-                taskListStatus.Items.Add("inactive");
-                Button taskActions = new Button()
-                {
-                    Content = "start"
-                };
-                taskListActions.Items.Add(taskActions);
-                taskIdCounter++;
-            }
+        private void TaskListViewSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ListView listView = sender as ListView;
+            GridView gView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var col1 = 0.05;
+            var col2 = 0.13714;
+            var col3 = 0.13714;
+            var col4 = 0.13714;
+            var col5 = 0.13714;
+            var col6 = 0.14714;
+            var col7 = 0.10;
+            var col8 = 0.1665;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
+            gView.Columns[2].Width = workingWidth * col3;
+            gView.Columns[3].Width = workingWidth * col4;
+            gView.Columns[4].Width = workingWidth * col5;
+            gView.Columns[5].Width = workingWidth * col6;
+            gView.Columns[6].Width = workingWidth * col7;
+            gView.Columns[7].Width = workingWidth * col8;
         }
 
         #endregion Create Task

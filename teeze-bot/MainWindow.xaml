@@ -16,12 +16,12 @@
     <!--#region Styles and Resources-->
     <Window.Resources>
         <!--#region List-->
-        <Style TargetType="{x:Type ListBox}">
+        <Style TargetType="{x:Type ListView}">
             <Setter Property="Foreground" Value="Wheat" />
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="Background" Value="Transparent" />
         </Style>
-        <Style TargetType="{x:Type ListBoxItem}">
+        <Style TargetType="{x:Type ListViewItem}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
@@ -29,33 +29,23 @@
             <Setter Property="Height" Value="30" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border
+                         BorderBrush="Transparent"
+                         BorderThickness="0"
+                         Background="{TemplateBinding Background}">
+                            <GridViewRowPresenter HorizontalAlignment="Stretch" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="Auto" Margin="0" Content="{TemplateBinding Content}" />
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsSelected" Value="true" />
-                                    <Condition Property="Selector.IsSelectionActive" Value="false" />
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="Transparent" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="Wheat" />
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="MinHeight" Value="15" />
         </Style>
         <!--#endregion-->
 
@@ -540,47 +530,32 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.05*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.10*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.12*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.10*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.12*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.12*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.12*"></ColumnDefinition>
-                            <ColumnDefinition Width="0.10*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="0" BorderBrush="Gray" Margin="2,2,2,0" MinWidth="30">
-                            <Label Content="#" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="1" BorderBrush="Gray" Margin="2,2,2,0" MinWidth="80">
-                            <Label Content="Store" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="2" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
-                            <Label Content="Product" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="3" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
-                            <Label Content="Sizes" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="4" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="110">
-                            <Label Content="Profile" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="5" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
-                            <Label Content="Proxies" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="6" BorderBrush="Gray" Margin="0,2,2,0">
-                            <Label Content="Status" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="7" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="100">
-                            <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <ListBox x:Name="taskListId" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="taskListStore" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="taskListProduct" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="taskListSizes" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="taskListProfile" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="taskListProxies" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="taskListStatus" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="taskListActions" Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="1" />
+                        <ListView Name="taskListView" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" SizeChanged="TaskListViewSizeChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding TaskId}" />
+                                    <GridViewColumn Header="Store" DisplayMemberBinding="{Binding Store}" />
+                                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Product}" />
+                                    <GridViewColumn Header="Sizes" DisplayMemberBinding="{Binding ShoeSizes}" />
+                                    <GridViewColumn Header="Profile" DisplayMemberBinding="{Binding Profile}" />
+                                    <GridViewColumn Header="Proxies" DisplayMemberBinding="{Binding Proxy}" />
+                                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" />
+                                    <GridViewColumn Header="Actions">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button Content="Delete" CommandParameter="{Binding}" />
+                                                    <Button Content="Edit" CommandParameter="{Binding}" />
+                                                    <Button Content="Start" CommandParameter="{Binding}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </Grid>
                     <!--#endregion-->
 
@@ -744,36 +719,30 @@
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="0" BorderBrush="Gray" Margin="2,2,2,0" MinWidth="80">
-                            <Label Content="Number" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="1" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="140">
-                            <Label Content="Name" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="2" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="120">
-                            <Label Content="Date Created" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="3" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="80">
-                            <Label Content="Country" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="4" BorderBrush="Gray" Margin="0,2,2,0">
-                            <Label Content="" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <Border BorderThickness="0.5" Grid.Row="0" Grid.Column="5" BorderBrush="Gray" Margin="0,2,2,0" MinWidth="120">
-                            <Label Content="Actions" Foreground="DeepSkyBlue" FontSize="12"></Label>
-                        </Border>
-                        <ListBox x:Name="profileListNumber" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="profileListName" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="profileListDateCreated" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="profileListCountry" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="1" />
-                        <ListBox x:Name="profileListActions" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="1" />
+                        <ListView x:Name="profilesListView" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" SizeChanged="ProfileListViewSizeChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding ProfileNumber}" />
+                                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding FullName}" />
+                                    <GridViewColumn Header="Date Created" DisplayMemberBinding="{Binding DateCreated}" />
+                                    <GridViewColumn Header="Country" DisplayMemberBinding="{Binding Country}" />
+                                    <GridViewColumn Header="E-Mail" DisplayMemberBinding="{Binding EMail}" />
+                                    <GridViewColumn Header="Actions">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button Content="Start" CommandParameter="{Binding}" />
+                                                    <Button Content="info" CommandParameter="{Binding}" />
+                                                    <Button Content="Delete" CommandParameter="{Binding}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </Grid>
 
                     <!--#region Create Profile Window-->

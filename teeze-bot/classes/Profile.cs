@@ -2,19 +2,24 @@
 {
     public class Profile
     {
-        public int ProfileNumber;
-        public string Firstname;
-        public string Lastname;
-        public string EMail;
-        public string Phone;
-        public string Address1;
-        public string Address2;
-        public string City;
-        public string ZIP;
-        public string Country;
-        public string DateCreated;
+        public int ProfileNumber { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string FullName { get; set; }
+        public string EMail { get; set; }
+        public string Phone { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string ZIP { get; set; }
+        public string Country { get; set; }
+        public string DateCreated { get; set; }
 
-        public void AddProfileInfos(int profileNumber, string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country, string dateCreated)
+        public Profile()
+        {
+        }
+
+        public Profile(int profileNumber, string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country, string dateCreated)
         {
             ProfileNumber = profileNumber;
             Firstname = firstname;
@@ -27,6 +32,7 @@
             ZIP = zip;
             Country = country;
             DateCreated = dateCreated;
+            FullName = string.Join(" ", firstname, lastname);
         }
     }
 }
