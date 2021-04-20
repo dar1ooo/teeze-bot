@@ -2,16 +2,20 @@
 {
     public class TaskInfo
     {
-        public int TaskId;
-        public string Store;
-        public string ShoeSizes;
-        public string Product;
-        public string Profile;
-        public string Proxy;
-        public string Account;
-        public string Status;
+        public int TaskId { get; set; }
+        public string Store { get; set; }
+        public string Product { get; set; }
+        public string ShoeSizes { get; set; }
+        public string Profile { get; set; }
+        public string Proxy { get; set; }
+        public string Account { get; set; }
+        public string Status { get; set; }
 
-        public void AddInfos(int taskId, string store, string shoeSize, string product, string profile, string proxy, string account)
+        public TaskInfo()
+        {
+        }
+
+        public TaskInfo(int taskId, string store, string shoeSize, string product, string profile, string proxy, string account)
         {
             TaskId = taskId;
             Store = store;
