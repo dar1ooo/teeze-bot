@@ -14,6 +14,7 @@ namespace teeze_bot
     {
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
+        private TaskInfo editedTask = new TaskInfo();
 
         private int taskIdCounter = 0;
         private int profileCounter = 0;
@@ -254,10 +255,56 @@ namespace teeze_bot
 
         #endregion Create Profile
 
+        #region Task
+
+        private void editTask(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            editedTask = button.CommandParameter as TaskInfo;
+            CreateTaskLabel.Content = "Task " + editedTask.TaskId.ToString();
+            TaskPageList.Visibility = Visibility.Hidden;
+            TaskPageOptions.Visibility = Visibility.Hidden;
+            EditTaskButton.Visibility = Visibility.Visible;
+            CreateTaskButton.Visibility = Visibility.Hidden;
+            CreateTaskWindow.Visibility = Visibility.Visible;
+
+            newTask_Store.SelectedIndex = -1;
+            newTask_Sizes.Text = editedTask.ShoeSizes;
+            newTask_Productname.Text = editedTask.Productname;
+            newTask_Product.Text = editedTask.Product;
+            newTask_Profile.SelectedIndex = -1;
+            newTask_Proxy.SelectedIndex = -1;
+            newTask_Account.SelectedIndex = -1;
+        }
+
+        public void SaveEditedTask_Click(object sender, RoutedEventArgs e)
+        {
+            GatherTaskInfo(true);
+            CloseCreateTaskWindow();
+        }
+
+        public void DeleteSpecificTask(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            TaskInfo task = button.CommandParameter as TaskInfo;
+            taskList.Remove(task);
+            taskListView.ItemsSource = taskList;
+            taskListView.Items.Refresh();
+            taskIdCounter--;
+            foreach (TaskInfo deletedTaskList in taskList)
+            {
+                if (deletedTaskList.TaskId > task.TaskId)
+                {
+                    deletedTaskList.TaskId--;
+                }
+            }
+        }
+
         #region Create Task
 
         private void CreateTaskOption_Click(object sender, RoutedEventArgs e)
         {
+            CreateTaskLabel.Content = "Create Task";
             CreateTaskWindow.Visibility = Visibility.Visible;
             TaskPageOptions.Visibility = Visibility.Hidden;
             TaskPageList.Visibility = Visibility.Hidden;
@@ -268,6 +315,7 @@ namespace teeze_bot
             newTask_Profile.SelectedIndex = -1;
             newTask_Proxy.SelectedIndex = -1;
             newTask_Account.SelectedIndex = -1;
+            EditTaskButton.Visibility = Visibility.Hidden;
             newTask_AccountLabel.Visibility = Visibility.Visible;
             newTask_Account.Visibility = Visibility.Visible;
             newTask_errorStore.Visibility = Visibility.Hidden;
@@ -291,7 +339,7 @@ namespace teeze_bot
                 switch (newTask_Store.SelectedIndex)
                 {
                     case 0:
-                        GatherTaskInfo();
+                        GatherTaskInfo(false);
                         SaveTasksToJSON();
                         CloseCreateTaskWindow();
                         break;
@@ -334,7 +382,7 @@ namespace teeze_bot
             }
         }
 
-        private void GatherTaskInfo()
+        private void GatherTaskInfo(bool isEdited)
         {
             var item = (ComboBoxItem)newTask_Store.SelectedValue;
             string Store = (string)item.Content;
@@ -355,8 +403,15 @@ namespace teeze_bot
             {
                 Account = "";
             }
-            taskIdCounter++;
-            taskList.Add(new TaskInfo(taskIdCounter, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account));
+            if (!isEdited)
+            {
+                taskIdCounter++;
+                taskList.Add(new TaskInfo(taskIdCounter, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account));
+            }
+            if (isEdited)
+            {
+                taskList[editedTask.TaskId - 1].UpdateInfo(editedTask.TaskId, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account);
+            }
             taskListView.ItemsSource = taskList;
             taskListView.Items.Refresh();
         }
@@ -415,5 +470,7 @@ namespace teeze_bot
         }
 
         #endregion Create Task
+
+        #endregion Task
     }
 }

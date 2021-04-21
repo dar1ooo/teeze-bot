@@ -560,8 +560,8 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Button Content="Delete" CommandParameter="{Binding}" />
-                                                    <Button Content="Edit" CommandParameter="{Binding}" />
+                                                    <Button Content="Delete" CommandParameter="{Binding}" Click="DeleteSpecificTask" />
+                                                    <Button Content="Edit" CommandParameter="{Binding}" Click="editTask" />
                                                     <Button Content="Start" CommandParameter="{Binding}" />
                                                 </StackPanel>
                                             </DataTemplate>
@@ -576,16 +576,15 @@
                     <!--#region Create Task Window-->
                     <Grid Grid.Row="1" x:Name="CreateTaskWindow" Visibility="Hidden">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.08*" />
                             <RowDefinition />
-                            <RowDefinition Height="0.08*" />
+                            <RowDefinition Height="0.12*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.15*" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="0.15*" />
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid Grid.Row="0" Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="10px" />
                                 <RowDefinition Height="35px" />
@@ -617,9 +616,10 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="CreateTask" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Create" Margin="50,0,0,0" Click="CreateTask_Click" />
+                                <Button x:Name="CreateTaskButton" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Create" Margin="50,0,0,0" Click="CreateTask_Click" />
+                                <Button x:Name="EditTaskButton" Visibility="Hidden" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Save" Margin="50,0,0,0" Click="SaveEditedTask_Click" />
                             </Grid>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Create Task" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
+                            <Label x:Name="CreateTaskLabel" Grid.Row="1" Grid.Column="1" Content="Create Task" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
                             <Button x:Name="CancelCreateTask" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="20px" Width="20px" VerticalAlignment="Center" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="13" FontFamily="Fonts/Dosis" FontWeight="Medium" Click="CancelCreateTask_Click" Margin="0,0,2.5,0"></Button>
 
                             <Label Grid.Row="2" Grid.Column="1" Content="Store" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
