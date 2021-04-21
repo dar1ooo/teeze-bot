@@ -28,5 +28,18 @@
             Account = account;
             Status = "waiting";
         }
+
+        public void UpdateInfo(int taskId, string store, string shoeSize, string productname, string product, string profile, string proxy, string account)
+        {
+            TaskId = taskId;
+            Store = store;
+            ShoeSizes = shoeSize;
+            Productname = productname;
+            Product = product;
+            Profile = profile;
+            Proxy = proxy;
+            Account = account;
+            Status = "waiting";
+        }
     }
 }
