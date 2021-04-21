@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "TaskId": 1,
+    "Store": "Titolo",
+    "Productname": "adas",
+    "Product": "asdasd",
+    "ShoeSizes": "asasdsda",
+    "Profile": "Mario the kek",
+    "Proxy": "chupapi muñañyo",
+    "Account": "",
+    "Status": "waiting"
+  },
+  {
+    "TaskId": 2,
+    "Store": "Titolo",
+    "Productname": "dsadsa",
+    "Product": "dsd",
+    "ShoeSizes": "dasdasd",
+    "Profile": "Mario the kek",
+    "Proxy": "chupapi muñañyo",
+    "Account": "",
+    "Status": "waiting"
+  }
+]

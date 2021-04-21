@@ -193,6 +193,7 @@ namespace teeze_bot
             profileCounter++;
             profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated));
             profilesListView.ItemsSource = profileList;
+            profilesListView.Items.Refresh();
         }
 
         private void CloseCreateProfileWindow()
@@ -209,6 +210,7 @@ namespace teeze_bot
             profileCounter = 0;
             profilesListView.ItemsSource = null;
             profilesListView.Items.Clear();
+            profilesListView.Items.Refresh();
         }
 
         private void SaveProfilesToJSON()
@@ -226,6 +228,7 @@ namespace teeze_bot
             profileCounter = 0;
             profilesListView.ItemsSource = profileList;
             profileCounter = profileList.Count;
+            profilesListView.Items.Refresh();
         }
 
         public void ProfileListViewSizeChanged(object sender, RoutedEventArgs e)
@@ -260,6 +263,7 @@ namespace teeze_bot
             TaskPageList.Visibility = Visibility.Hidden;
             newTask_Store.SelectedIndex = -1;
             newTask_Sizes.Text = "";
+            newTask_Productname.Text = "";
             newTask_Product.Text = "";
             newTask_Profile.SelectedIndex = -1;
             newTask_Proxy.SelectedIndex = -1;
@@ -269,6 +273,7 @@ namespace teeze_bot
             newTask_errorStore.Visibility = Visibility.Hidden;
             newTask_errorSizes.Visibility = Visibility.Hidden;
             newTask_errorProduct.Visibility = Visibility.Hidden;
+            newTask_errorProductname.Visibility = Visibility.Hidden;
             newTask_errorProfile.Visibility = Visibility.Hidden;
             newTask_errorProxy.Visibility = Visibility.Hidden;
             newTask_errorAccount.Visibility = Visibility.Hidden;
@@ -287,8 +292,8 @@ namespace teeze_bot
                 {
                     case 0:
                         GatherTaskInfo();
-                        CloseCreateTaskWindow();
                         SaveTasksToJSON();
+                        CloseCreateTaskWindow();
                         break;
 
                     default:
@@ -309,11 +314,12 @@ namespace teeze_bot
             newTask_errorStore.Visibility = newTask_Store.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorSizes.Visibility = newTask_Sizes.Text == "" ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProduct.Visibility = newTask_Product.Text.Length == 0 || newTask_Product.Text == "" ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorProductname.Visibility = newTask_Productname.Text.Length == 0 || newTask_Productname.Text == "" ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProfile.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorAccount.Visibility = newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
 
-            if (newTask_Store.SelectedIndex != -1 && newTask_Sizes.Text != "" && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1 && (newTask_Account.Visibility == Visibility.Hidden || newTask_Account.SelectedIndex != -1 && newTask_Account.Visibility == Visibility.Visible))
+            if (newTask_Store.SelectedIndex != -1 && newTask_Sizes.Text != "" && newTask_Productname.Text != "" && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1 && (newTask_Account.Visibility == Visibility.Hidden || newTask_Account.SelectedIndex != -1 && newTask_Account.Visibility == Visibility.Visible))
                 return true;
             else
                 return false;
@@ -333,6 +339,7 @@ namespace teeze_bot
             var item = (ComboBoxItem)newTask_Store.SelectedValue;
             string Store = (string)item.Content;
             string ShoeSizes = (newTask_Sizes.Text.ToString());
+            string Productname = newTask_Productname.Text.ToString();
             string Product = newTask_Product.Text.ToString();
             item = (ComboBoxItem)newTask_Profile.SelectedValue;
             string Profile = (string)item.Content;
@@ -349,8 +356,9 @@ namespace teeze_bot
                 Account = "";
             }
             taskIdCounter++;
-            taskList.Add(new TaskInfo(taskIdCounter, Store, ShoeSizes, Product, Profile, Proxy, Account));
+            taskList.Add(new TaskInfo(taskIdCounter, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account));
             taskListView.ItemsSource = taskList;
+            taskListView.Items.Refresh();
         }
 
         private void DeleteAllOption_Click(object sender, RoutedEventArgs e)
@@ -360,6 +368,7 @@ namespace teeze_bot
             taskIdCounter = 0;
             taskListView.ItemsSource = null;
             taskListView.Items.Clear();
+            taskListView.Items.Refresh();
         }
 
         private void SaveTasksToJSON()
@@ -377,6 +386,7 @@ namespace teeze_bot
             taskIdCounter = 0;
             taskListView.ItemsSource = taskList;
             taskIdCounter = taskList.Count;
+            taskListView.Items.Refresh();
         }
 
         private void TaskListViewSizeChanged(object sender, SizeChangedEventArgs e)
@@ -385,9 +395,9 @@ namespace teeze_bot
             GridView gView = listView.View as GridView;
 
             var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
-            var col1 = 0.05;
-            var col2 = 0.13714;
-            var col3 = 0.13714;
+            var col1 = 0.03;
+            var col2 = 0.09714;
+            var col3 = 0.18714;
             var col4 = 0.13714;
             var col5 = 0.13714;
             var col6 = 0.14714;
