@@ -551,7 +551,7 @@
                                 <GridView>
                                     <GridViewColumn Header="#" DisplayMemberBinding="{Binding TaskId}" />
                                     <GridViewColumn Header="Store" DisplayMemberBinding="{Binding Store}" />
-                                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Product}" />
+                                    <GridViewColumn Header="Product" DisplayMemberBinding="{Binding Productname}" />
                                     <GridViewColumn Header="Sizes" DisplayMemberBinding="{Binding ShoeSizes}" />
                                     <GridViewColumn Header="Profile" DisplayMemberBinding="{Binding Profile}" />
                                     <GridViewColumn Header="Proxies" DisplayMemberBinding="{Binding Proxy}" />
@@ -576,9 +576,9 @@
                     <!--#region Create Task Window-->
                     <Grid Grid.Row="1" x:Name="CreateTaskWindow" Visibility="Hidden">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.10*" />
+                            <RowDefinition Height="0.08*" />
                             <RowDefinition />
-                            <RowDefinition Height="0.10*" />
+                            <RowDefinition Height="0.08*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.15*" />
@@ -600,9 +600,10 @@
                                 <RowDefinition Height="15px" />
                                 <RowDefinition Height="25px" />
                                 <RowDefinition Height="40px" />
+                                <RowDefinition Height="15px" />
                                 <RowDefinition Height="25px" />
                                 <RowDefinition Height="40px" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="15px" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20px" />
@@ -611,7 +612,7 @@
                                 <ColumnDefinition Width="25px" />
                                 <ColumnDefinition Width="20px" />
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Row="14" Grid.Column="2">
+                            <Grid Grid.Row="15" Grid.Column="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
@@ -628,28 +629,32 @@
                                 <ComboBoxItem Content="Titolo" />
                             </ComboBox>
 
-                            <Label Grid.Row="5" Grid.Column="1" Content="Product" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <TextBox x:Name="newTask_Product" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource MyWaterMarkStyle}" Tag="Enter Entire Link" Text="{Binding CategorySearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <Label Grid.Row="5" Grid.Column="1" Content="Product Name" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <TextBox x:Name="newTask_Productname" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Style="{StaticResource MyWaterMarkStyle}" Tag="Productname" Text="{Binding CategorySearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-                            <Label Grid.Row="8" Grid.Column="1" Content="Profile" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <Label Grid.Row="8" Grid.Column="2" Content="Proxy" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <ComboBox x:Name="newTask_Profile" Grid.Row="9" Grid.Column="1" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                            <Label Grid.Row="8" Grid.Column="1" Content="Product" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <TextBox x:Name="newTask_Product" Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="2" Style="{StaticResource MyWaterMarkStyle}" Tag="Enter Entire Link" Text="{Binding CategorySearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+                            <Label Grid.Row="11" Grid.Column="1" Content="Profile" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <Label Grid.Row="11" Grid.Column="2" Content="Proxy" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <ComboBox x:Name="newTask_Profile" Grid.Row="12" Grid.Column="1" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
                                 <ComboBoxItem Content="Mario the kek" />
                             </ComboBox>
-                            <ComboBox x:Name="newTask_Proxy" Grid.Row="9" Grid.Column="2" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                            <ComboBox x:Name="newTask_Proxy" Grid.Row="12" Grid.Column="2" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
                                 <ComboBoxItem Content="chupapi muñañyo" />
                             </ComboBox>
 
-                            <Label Grid.Row="11" x:Name="newTask_AccountLabel" Grid.Column="1" Content="Account" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <ComboBox x:Name="newTask_Account" Grid.Row="12" Grid.Column="1" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                            <Label Grid.Row="14" x:Name="newTask_AccountLabel" Grid.Column="1" Content="Account" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <ComboBox x:Name="newTask_Account" Grid.Row="15" Grid.Column="1" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
                                 <ComboBoxItem Content="CHING CHENG CHONG" />
                             </ComboBox>
                             <Label x:Name="newTask_errorStore" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="4" Grid.Column="1" Content="Please select a store" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newTask_errorSizes" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="4" Grid.Column="2" Content="Please enter a size" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
-                            <Label x:Name="newTask_errorProduct" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="7" Grid.Column="1" Content="Please enter a product" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
-                            <Label x:Name="newTask_errorProfile" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please select a profile" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
-                            <Label x:Name="newTask_errorProxy" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="2" Content="Please select a proxy" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
-                            <Label x:Name="newTask_errorAccount" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="1" Content="Please select an Account" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorProductname" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="7" Grid.Column="1" Content="Please enter a product name" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorProduct" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please enter a product" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorProfile" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="1" Content="Please select a profile" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorProxy" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="2" Content="Please select a proxy" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorAccount" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="16" Grid.Column="1" Content="Please select an Account" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Grid.Background>
                                 <SolidColorBrush Color="#081D26" />
                             </Grid.Background>
@@ -858,6 +863,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
+                <!--#endregion-->
                 <!--#endregion-->
 
                 <!--#region Accounts Page-->
