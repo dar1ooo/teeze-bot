@@ -7,16 +7,22 @@ namespace teeze_bot.classes
     {
         public IWebDriver driver;
         public TaskInfo taskinfo;
+        public bool InProgress = false;
 
-        public void OpenChrome()
+        public void StartTask()
         {
             driver = new ChromeDriver();
             driver.Url = taskinfo.Product;
+            InProgress = true;
         }
 
-        public void CreateTitoloTask(TaskInfo taskInfo)
+        public void QuitTask()
         {
-            taskinfo = taskInfo;
+            if (driver != null)
+            {
+                driver.Quit();
+                InProgress = false;
+            }
         }
     }
 }
