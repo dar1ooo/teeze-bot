@@ -16,7 +16,7 @@ namespace teeze_bot
 
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
-        private List<TitoloTask> titoloTasks = new List<TitoloTask>();
+        private List<KithTask> kithTasks = new List<KithTask>();
         private TaskInfo currentTask = new TaskInfo();
         private Profile currentProfile = new Profile();
 
@@ -60,7 +60,7 @@ namespace teeze_bot
 
             while (anyTaskInProgress == false && noRunningTaskFound == false)
             {
-                foreach (TitoloTask titoloTask in titoloTasks)
+                foreach (KithTask titoloTask in kithTasks)
                 {
                     if (!anyTaskInProgress)
                     {
@@ -384,7 +384,7 @@ namespace teeze_bot
 
             while (anyTaskInProgress == false && noRunningTaskFound == false)
             {
-                foreach (TitoloTask titoloTask in titoloTasks)
+                foreach (KithTask titoloTask in kithTasks)
                 {
                     if (!anyTaskInProgress)
                     {
@@ -421,7 +421,7 @@ namespace teeze_bot
             }
             else
             {
-                foreach (TitoloTask titoloTask in titoloTasks)
+                foreach (KithTask titoloTask in kithTasks)
                 {
                     if (titoloTask.InProgress)
                     {
@@ -543,7 +543,7 @@ namespace teeze_bot
             {
                 taskIdCounter++;
                 taskList.Add(new TaskInfo(taskIdCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
-                titoloTasks.Add(new TitoloTask() { taskinfo = taskList[taskIdCounter - 1] });
+                kithTasks.Add(new KithTask() { taskinfo = taskList[taskIdCounter - 1] });
             }
             if (isEdited)
             {
@@ -571,7 +571,7 @@ namespace teeze_bot
 
             foreach (TaskInfo task in taskList)
             {
-                titoloTasks.Add(new TitoloTask() { taskinfo = task });
+                kithTasks.Add(new KithTask() { taskinfo = task });
             }
         }
 
@@ -610,7 +610,7 @@ namespace teeze_bot
         {
             Button button = sender as Button;
             currentTask = button.CommandParameter as TaskInfo;
-            if (!titoloTasks[currentTask.TaskId - 1].InProgress)
+            if (!kithTasks[currentTask.TaskId - 1].InProgress)
             {
                 currentTask = button.CommandParameter as TaskInfo;
                 CreateTaskLabel.Content = "Task " + currentTask.TaskId.ToString();
@@ -644,7 +644,7 @@ namespace teeze_bot
         {
             Button button = sender as Button;
             currentTask = button.CommandParameter as TaskInfo;
-            if (!titoloTasks[currentTask.TaskId - 1].InProgress)
+            if (!kithTasks[currentTask.TaskId - 1].InProgress)
             {
                 TaskPageOptions.Visibility = Visibility.Hidden;
                 TaskPageList.Visibility = Visibility.Hidden;
@@ -684,7 +684,7 @@ namespace teeze_bot
                 switch (task.Store)
                 {
                     case "Titolo":
-                        titoloTasks[task.TaskId - 1].StartTask();
+                        kithTasks[task.TaskId - 1].StartTask();
                         break;
 
                     default:
@@ -699,7 +699,7 @@ namespace teeze_bot
                 switch (task.Store)
                 {
                     case "Titolo":
-                        titoloTasks[task.TaskId - 1].QuitTask();
+                        kithTasks[task.TaskId - 1].QuitTask();
                         break;
 
                     default:
