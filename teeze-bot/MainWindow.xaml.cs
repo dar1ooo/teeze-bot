@@ -16,7 +16,7 @@ namespace teeze_bot
 
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
-        private List<TitoloTask> titoloTasks = new List<TitoloTask>();
+        private List<KithTask> kithTasks = new List<KithTask>();
         private TaskInfo currentTask = new TaskInfo();
         private Profile currentProfile = new Profile();
 
@@ -40,6 +40,7 @@ namespace teeze_bot
         {
             ReadTasksFromJSON();
             ReadProfilesFromJSON();
+            RefreshAllContent();
         }
 
         private void TeezeClosed(object sender, CancelEventArgs e)
@@ -59,7 +60,7 @@ namespace teeze_bot
 
             while (anyTaskInProgress == false && noRunningTaskFound == false)
             {
-                foreach (TitoloTask titoloTask in titoloTasks)
+                foreach (KithTask titoloTask in kithTasks)
                 {
                     if (!anyTaskInProgress)
                     {
@@ -272,8 +273,7 @@ namespace teeze_bot
             {
                 profileList[currentProfile.ProfileNumber - 1].UpdateInfo(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated);
             }
-            profilesListView.ItemsSource = profileList;
-            profilesListView.Items.Refresh();
+            RefreshAllContent();
         }
 
         private void CloseCreateProfileWindow()
@@ -290,7 +290,7 @@ namespace teeze_bot
             profileCounter = 0;
             profilesListView.ItemsSource = null;
             profilesListView.Items.Clear();
-            profilesListView.Items.Refresh();
+            RefreshAllContent();
         }
 
         private void SaveProfilesToJSON()
@@ -306,9 +306,8 @@ namespace teeze_bot
                 profileList = JsonConvert.DeserializeObject<List<Profile>>(json);
             }
             profileCounter = 0;
-            profilesListView.ItemsSource = profileList;
             profileCounter = profileList.Count;
-            profilesListView.Items.Refresh();
+            RefreshAllContent();
         }
 
         private void ProfileListViewSizeChanged(object sender, RoutedEventArgs e)
@@ -385,7 +384,7 @@ namespace teeze_bot
 
             while (anyTaskInProgress == false && noRunningTaskFound == false)
             {
-                foreach (TitoloTask titoloTask in titoloTasks)
+                foreach (KithTask titoloTask in kithTasks)
                 {
                     if (!anyTaskInProgress)
                     {
@@ -422,7 +421,7 @@ namespace teeze_bot
             }
             else
             {
-                foreach (TitoloTask titoloTask in titoloTasks)
+                foreach (KithTask titoloTask in kithTasks)
                 {
                     if (titoloTask.InProgress)
                     {
@@ -438,28 +437,35 @@ namespace teeze_bot
 
         private void CreateTaskOption_Click(object sender, RoutedEventArgs e)
         {
-            CreateTaskLabel.Content = "Create Task";
-            CreateTaskWindow.Visibility = Visibility.Visible;
-            TaskPageOptions.Visibility = Visibility.Hidden;
-            TaskPageList.Visibility = Visibility.Hidden;
-            newTask_Store.SelectedIndex = -1;
-            newTask_Sizes.Text = "";
-            newTask_Productname.Text = "";
-            newTask_Product.Text = "";
-            newTask_Profile.SelectedIndex = -1;
-            newTask_Proxy.SelectedIndex = -1;
-            newTask_Account.SelectedIndex = -1;
-            SaveEditedTaskButton.Visibility = Visibility.Hidden;
-            CreateTaskButton.Visibility = Visibility.Visible;
-            newTask_AccountLabel.Visibility = Visibility.Visible;
-            newTask_Account.Visibility = Visibility.Visible;
-            newTask_errorStore.Visibility = Visibility.Hidden;
-            newTask_errorSizes.Visibility = Visibility.Hidden;
-            newTask_errorProduct.Visibility = Visibility.Hidden;
-            newTask_errorProductname.Visibility = Visibility.Hidden;
-            newTask_errorProfile.Visibility = Visibility.Hidden;
-            newTask_errorProxy.Visibility = Visibility.Hidden;
-            newTask_errorAccount.Visibility = Visibility.Hidden;
+            if (profileCounter == 0)
+            {
+                MessageBox.Show("Please Create a profile first");
+            }
+            else
+            {
+                CreateTaskLabel.Content = "Create Task";
+                CreateTaskWindow.Visibility = Visibility.Visible;
+                TaskPageOptions.Visibility = Visibility.Hidden;
+                TaskPageList.Visibility = Visibility.Hidden;
+                newTask_Store.SelectedIndex = -1;
+                newTask_Sizes.Text = "";
+                newTask_Productname.Text = "";
+                newTask_Product.Text = "";
+                newTask_Profile.SelectedIndex = -1;
+                newTask_Proxy.SelectedIndex = -1;
+                newTask_Account.SelectedIndex = -1;
+                SaveEditedTaskButton.Visibility = Visibility.Hidden;
+                CreateTaskButton.Visibility = Visibility.Visible;
+                newTask_AccountLabel.Visibility = Visibility.Visible;
+                newTask_Account.Visibility = Visibility.Visible;
+                newTask_errorStore.Visibility = Visibility.Hidden;
+                newTask_errorSizes.Visibility = Visibility.Hidden;
+                newTask_errorProduct.Visibility = Visibility.Hidden;
+                newTask_errorProductname.Visibility = Visibility.Hidden;
+                newTask_errorProfileEmpty.Visibility = Visibility.Hidden;
+                newTask_errorProxy.Visibility = Visibility.Hidden;
+                newTask_errorAccount.Visibility = Visibility.Hidden;
+            }
         }
 
         private void CancelCreateTask_Click(object sender, RoutedEventArgs e)
@@ -490,7 +496,7 @@ namespace teeze_bot
             newTask_errorSizes.Visibility = newTask_Sizes.Text == "" ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProduct.Visibility = newTask_Product.Text.Length == 0 || newTask_Product.Text == "" ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProductname.Visibility = newTask_Productname.Text.Length == 0 || newTask_Productname.Text == "" ? Visibility.Visible : Visibility.Hidden;
-            newTask_errorProfile.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorProfileEmpty.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorAccount.Visibility = newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
 
@@ -517,8 +523,7 @@ namespace teeze_bot
             string ShoeSizes = (newTask_Sizes.Text.ToString());
             string Productname = newTask_Productname.Text.ToString();
             string Product = newTask_Product.Text.ToString();
-            item = (ComboBoxItem)newTask_Profile.SelectedValue;
-            string Profile = (string)item.Content;
+            string Profile = newTask_Profile.SelectedValue.ToString();
             int ProfileIndex = newTask_Profile.SelectedIndex;
             item = (ComboBoxItem)newTask_Proxy.SelectedValue;
             string Proxy = (string)item.Content;
@@ -538,7 +543,7 @@ namespace teeze_bot
             {
                 taskIdCounter++;
                 taskList.Add(new TaskInfo(taskIdCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
-                titoloTasks.Add(new TitoloTask() { taskinfo = taskList[taskIdCounter - 1] });
+                kithTasks.Add(new KithTask() { taskinfo = taskList[taskIdCounter - 1] });
             }
             if (isEdited)
             {
@@ -566,7 +571,7 @@ namespace teeze_bot
 
             foreach (TaskInfo task in taskList)
             {
-                titoloTasks.Add(new TitoloTask() { taskinfo = task });
+                kithTasks.Add(new KithTask() { taskinfo = task });
             }
         }
 
@@ -605,7 +610,7 @@ namespace teeze_bot
         {
             Button button = sender as Button;
             currentTask = button.CommandParameter as TaskInfo;
-            if (!titoloTasks[currentTask.TaskId - 1].InProgress)
+            if (!kithTasks[currentTask.TaskId - 1].InProgress)
             {
                 currentTask = button.CommandParameter as TaskInfo;
                 CreateTaskLabel.Content = "Task " + currentTask.TaskId.ToString();
@@ -639,7 +644,7 @@ namespace teeze_bot
         {
             Button button = sender as Button;
             currentTask = button.CommandParameter as TaskInfo;
-            if (!titoloTasks[currentTask.TaskId - 1].InProgress)
+            if (!kithTasks[currentTask.TaskId - 1].InProgress)
             {
                 TaskPageOptions.Visibility = Visibility.Hidden;
                 TaskPageList.Visibility = Visibility.Hidden;
@@ -656,8 +661,7 @@ namespace teeze_bot
         private void DeleteSpecificTask()
         {
             taskList.Remove(currentTask);
-            taskListView.ItemsSource = taskList;
-            taskListView.Items.Refresh();
+            RefreshAllContent();
             taskIdCounter--;
             foreach (TaskInfo deletedTaskList in taskList)
             {
@@ -680,7 +684,7 @@ namespace teeze_bot
                 switch (task.Store)
                 {
                     case "Titolo":
-                        titoloTasks[task.TaskId - 1].StartTask();
+                        kithTasks[task.TaskId - 1].StartTask();
                         break;
 
                     default:
@@ -695,7 +699,7 @@ namespace teeze_bot
                 switch (task.Store)
                 {
                     case "Titolo":
-                        titoloTasks[task.TaskId - 1].QuitTask();
+                        kithTasks[task.TaskId - 1].QuitTask();
                         break;
 
                     default:
@@ -709,5 +713,23 @@ namespace teeze_bot
         #endregion Task List Options
 
         #endregion Task
+
+        #region global methods
+
+        private void RefreshAllContent()
+        {
+            //tasks
+            taskListView.ItemsSource = taskList;
+            taskListView.Items.Refresh();
+            newTask_Profile.ItemsSource = profileList;
+            newTask_Profile.DisplayMemberPath = "FullName";
+            newTask_Profile.SelectedValuePath = "FullName";
+
+            //profiles
+            profilesListView.ItemsSource = profileList;
+            profilesListView.Items.Refresh();
+        }
+
+        #endregion global methods
     }
 }

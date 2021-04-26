@@ -710,10 +710,9 @@
                             <Label Grid.Row="11" Grid.Column="1" Content="Profile" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <Label Grid.Row="11" Grid.Column="2" Content="Proxy" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <ComboBox x:Name="newTask_Profile" Grid.Row="12" Grid.Column="1" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
-                                <ComboBoxItem Content="Mario the kek" />
                             </ComboBox>
                             <ComboBox x:Name="newTask_Proxy" Grid.Row="12" Grid.Column="2" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
-                                <ComboBoxItem Content="chupapi muñañyo" />
+                                <ComboBoxItem Content="KEK" />
                             </ComboBox>
 
                             <Label Grid.Row="14" x:Name="newTask_AccountLabel" Grid.Column="1" Content="Account" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
@@ -724,7 +723,7 @@
                             <Label x:Name="newTask_errorSizes" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="4" Grid.Column="2" Content="Please enter a size" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newTask_errorProductname" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="7" Grid.Column="1" Content="Please enter a product name" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newTask_errorProduct" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please enter a product" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
-                            <Label x:Name="newTask_errorProfile" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="1" Content="Please select a profile" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newTask_errorProfileEmpty" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="1" Content="Please select a profile" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newTask_errorProxy" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="13" Grid.Column="2" Content="Please select a proxy" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Label x:Name="newTask_errorAccount" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="16" Grid.Column="1" Content="Please select an Account" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
                             <Grid.Background>
