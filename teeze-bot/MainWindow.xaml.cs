@@ -12,14 +12,16 @@ namespace teeze_bot
 {
     public partial class MainWindow : Window
     {
-        private int runningTasks = 0;
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
-        private TaskInfo editedTask = new TaskInfo();
+        private TaskInfo currentTask = new TaskInfo();
         private List<TitoloTask> titoloTasks = new List<TitoloTask>();
 
         private int taskIdCounter = 0;
         private int profileCounter = 0;
+        private int runningTasks = 0;
+        private bool deleteAllTasks = false;
+        private bool deleteSpecificTask = false;
 
         public MainWindow()
         {
@@ -29,7 +31,7 @@ namespace teeze_bot
 
         #region Teeze Opened and Closed
 
-        public void TeezeOpened()
+        private void TeezeOpened()
         {
             ReadTasksFromJSON();
             ReadProfilesFromJSON();
@@ -246,7 +248,7 @@ namespace teeze_bot
             File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json", JsonConvert.SerializeObject(profileList, Formatting.Indented));
         }
 
-        public void ReadProfilesFromJSON()
+        private void ReadProfilesFromJSON()
         {
             using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json"))
             {
@@ -259,7 +261,7 @@ namespace teeze_bot
             profilesListView.Items.Refresh();
         }
 
-        public void ProfileListViewSizeChanged(object sender, RoutedEventArgs e)
+        private void ProfileListViewSizeChanged(object sender, RoutedEventArgs e)
         {
             ListView listView = sender as ListView;
             GridView gView = listView.View as GridView;
@@ -284,7 +286,7 @@ namespace teeze_bot
 
         #region Task
 
-        #region General Options
+        #region General Top Options
 
         private void DeleteAllOption_Click(object sender, RoutedEventArgs e)
         {
@@ -294,33 +296,70 @@ namespace teeze_bot
             }
             else
             {
-                bool anyTaskInProgress = false;
+                deleteAllTasks = true;
+                TaskPageOptions.Visibility = Visibility.Hidden;
+                TaskPageList.Visibility = Visibility.Hidden;
+                ConfirmDeleteWindow.Visibility = Visibility.Visible;
+                ConfirmDeleteLabel.Content = "Do you want to delete all tasks ?";
+            }
+        }
 
-                while (anyTaskInProgress == false)
+        private void Confirm_Click(object sender, RoutedEventArgs e)
+        {
+            TaskPageOptions.Visibility = Visibility.Visible;
+            TaskPageList.Visibility = Visibility.Visible;
+            ConfirmDeleteWindow.Visibility = Visibility.Hidden;
+            if (deleteAllTasks)
+            {
+                DeleteAllTasks();
+            }
+            else if (deleteSpecificTask)
+            {
+                DeleteSpecificTask();
+            }
+        }
+
+        private void CancelConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmDeleteWindow.Visibility = Visibility.Hidden;
+            TaskPageOptions.Visibility = Visibility.Visible;
+            TaskPageList.Visibility = Visibility.Visible;
+        }
+
+        private void DeleteAllTasks()
+        {
+            bool anyTaskInProgress = false;
+            bool noRunningTaskFound = false;
+
+            while (anyTaskInProgress == false && noRunningTaskFound == false)
+            {
+                foreach (TitoloTask titoloTask in titoloTasks)
                 {
-                    foreach (TitoloTask titoloTask in titoloTasks)
+                    if (!anyTaskInProgress)
                     {
-                        if (!anyTaskInProgress)
-                        {
-                            anyTaskInProgress = titoloTask.InProgress;
-                        }
+                        anyTaskInProgress = titoloTask.InProgress;
                     }
                 }
-
                 if (!anyTaskInProgress)
                 {
-                    taskList.Clear();
-                    SaveTasksToJSON();
-                    taskIdCounter = 0;
-                    taskListView.ItemsSource = null;
-                    taskListView.Items.Clear();
-                    taskListView.Items.Refresh();
-                }
-                else
-                {
-                    MessageBox.Show("There are still tasks running. Please end them first");
+                    noRunningTaskFound = true;
                 }
             }
+
+            if (!anyTaskInProgress)
+            {
+                taskList.Clear();
+                SaveTasksToJSON();
+                taskIdCounter = 0;
+                taskListView.ItemsSource = null;
+                taskListView.Items.Clear();
+                taskListView.Items.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("There are still tasks running. Please end them first");
+            }
+            deleteAllTasks = false;
         }
 
         private void StopAllOptions_Click(object sender, RoutedEventArgs e)
@@ -331,9 +370,6 @@ namespace teeze_bot
             }
             else
             {
-                foreach (TaskInfo task in taskList)
-                {
-                }
                 foreach (TitoloTask titoloTask in titoloTasks)
                 {
                     if (titoloTask.InProgress)
@@ -345,106 +381,6 @@ namespace teeze_bot
             runningTasks = 0;
             RunningTaskLabel.Content = runningTasks.ToString();
         }
-
-        #endregion General Options
-
-        #region Task Options
-
-        private void editTask(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            TaskInfo task = button.CommandParameter as TaskInfo;
-            if (!titoloTasks[task.TaskId - 1].InProgress)
-            {
-                editedTask = button.CommandParameter as TaskInfo;
-                CreateTaskLabel.Content = "Task " + editedTask.TaskId.ToString();
-                TaskPageList.Visibility = Visibility.Hidden;
-                TaskPageOptions.Visibility = Visibility.Hidden;
-                EditTaskButton.Visibility = Visibility.Visible;
-                CreateTaskButton.Visibility = Visibility.Hidden;
-                CreateTaskWindow.Visibility = Visibility.Visible;
-
-                newTask_Store.SelectedIndex = -1;
-                newTask_Sizes.Text = editedTask.ShoeSizes;
-                newTask_Productname.Text = editedTask.Productname;
-                newTask_Product.Text = editedTask.Product;
-                newTask_Profile.SelectedIndex = -1;
-                newTask_Proxy.SelectedIndex = -1;
-                newTask_Account.SelectedIndex = -1;
-            }
-            else
-            {
-                MessageBox.Show("Cannot edit a Task which is running");
-            }
-        }
-
-        public void SaveEditedTask_Click(object sender, RoutedEventArgs e)
-        {
-            GatherTaskInfo(true);
-            CloseCreateTaskWindow();
-        }
-
-        public void DeleteSpecificTask(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            TaskInfo task = button.CommandParameter as TaskInfo;
-            if (!titoloTasks[task.TaskId - 1].InProgress)
-            {
-                taskList.Remove(task);
-                taskListView.ItemsSource = taskList;
-                taskListView.Items.Refresh();
-                taskIdCounter--;
-                foreach (TaskInfo deletedTaskList in taskList)
-                {
-                    if (deletedTaskList.TaskId > task.TaskId)
-                    {
-                        deletedTaskList.TaskId--;
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Cannot delete a Task which is running");
-            }
-        }
-
-        public void StartOrEndTask(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            TaskInfo task = button.CommandParameter as TaskInfo;
-            if (button.Content.ToString() == "Start")
-            {
-                button.Content = "End";
-                switch (task.Store)
-                {
-                    case "Titolo":
-                        titoloTasks[task.TaskId - 1].StartTask();
-                        break;
-
-                    default:
-                        break;
-                }
-                runningTasks++;
-                RunningTaskLabel.Content = runningTasks.ToString();
-            }
-            else
-            {
-                button.Content = "Start";
-                switch (task.Store)
-                {
-                    case "Titolo":
-                        titoloTasks[task.TaskId - 1].QuitTask();
-                        break;
-
-                    default:
-                        break;
-                }
-                runningTasks--;
-                RunningTaskLabel.Content = runningTasks.ToString();
-            }
-        }
-
-        #endregion Task Options
 
         #region Create Task
 
@@ -549,7 +485,7 @@ namespace teeze_bot
             }
             if (isEdited)
             {
-                taskList[editedTask.TaskId - 1].UpdateInfo(editedTask.TaskId, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account);
+                taskList[currentTask.TaskId - 1].UpdateInfo(currentTask.TaskId, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account);
             }
             taskListView.ItemsSource = taskList;
             taskListView.Items.Refresh();
@@ -560,7 +496,7 @@ namespace teeze_bot
             File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTasks.json", JsonConvert.SerializeObject(taskList, Formatting.Indented));
         }
 
-        public void ReadTasksFromJSON()
+        private void ReadTasksFromJSON()
         {
             using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTasks.json"))
             {
@@ -603,6 +539,117 @@ namespace teeze_bot
         }
 
         #endregion Create Task
+
+        #endregion General Top Options
+
+        #region Task Options
+
+        private void editTask(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            TaskInfo task = button.CommandParameter as TaskInfo;
+            if (!titoloTasks[task.TaskId - 1].InProgress)
+            {
+                currentTask = button.CommandParameter as TaskInfo;
+                CreateTaskLabel.Content = "Task " + currentTask.TaskId.ToString();
+                TaskPageList.Visibility = Visibility.Hidden;
+                TaskPageOptions.Visibility = Visibility.Hidden;
+                EditTaskButton.Visibility = Visibility.Visible;
+                CreateTaskButton.Visibility = Visibility.Hidden;
+                CreateTaskWindow.Visibility = Visibility.Visible;
+
+                newTask_Store.SelectedIndex = -1;
+                newTask_Sizes.Text = currentTask.ShoeSizes;
+                newTask_Productname.Text = currentTask.Productname;
+                newTask_Product.Text = currentTask.Product;
+                newTask_Profile.SelectedIndex = -1;
+                newTask_Proxy.SelectedIndex = -1;
+                newTask_Account.SelectedIndex = -1;
+            }
+            else
+            {
+                MessageBox.Show("Cannot edit a Task which is running");
+            }
+        }
+
+        private void SaveEditedTask_Click(object sender, RoutedEventArgs e)
+        {
+            GatherTaskInfo(true);
+            CloseCreateTaskWindow();
+        }
+
+        private void DeleteSpecificTask_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentTask = button.CommandParameter as TaskInfo;
+            if (!titoloTasks[currentTask.TaskId - 1].InProgress)
+            {
+                TaskPageOptions.Visibility = Visibility.Hidden;
+                TaskPageList.Visibility = Visibility.Hidden;
+                ConfirmDeleteWindow.Visibility = Visibility.Visible;
+                ConfirmDeleteLabel.Content = "Do you want to delete this task ?";
+                deleteSpecificTask = true;
+            }
+            else
+            {
+                MessageBox.Show("Cannot delete a Task which is running");
+            }
+        }
+
+        private void DeleteSpecificTask()
+        {
+            taskList.Remove(currentTask);
+            taskListView.ItemsSource = taskList;
+            taskListView.Items.Refresh();
+            taskIdCounter--;
+            foreach (TaskInfo deletedTaskList in taskList)
+            {
+                if (deletedTaskList.TaskId > currentTask.TaskId)
+                {
+                    deletedTaskList.TaskId--;
+                }
+            }
+
+            deleteSpecificTask = false;
+        }
+
+        private void StartOrEndTask(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            TaskInfo task = button.CommandParameter as TaskInfo;
+            if (button.Content.ToString() == "Start")
+            {
+                button.Content = "End";
+                switch (task.Store)
+                {
+                    case "Titolo":
+                        titoloTasks[task.TaskId - 1].StartTask();
+                        break;
+
+                    default:
+                        break;
+                }
+                runningTasks++;
+                RunningTaskLabel.Content = runningTasks.ToString();
+            }
+            else
+            {
+                button.Content = "Start";
+                switch (task.Store)
+                {
+                    case "Titolo":
+                        titoloTasks[task.TaskId - 1].QuitTask();
+                        break;
+
+                    default:
+                        break;
+                }
+                runningTasks--;
+                RunningTaskLabel.Content = runningTasks.ToString();
+            }
+        }
+
+        #endregion Task Options
 
         #endregion Task
     }

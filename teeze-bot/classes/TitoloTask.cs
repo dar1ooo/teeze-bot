@@ -18,7 +18,7 @@ namespace teeze_bot.classes
 
         public void QuitTask()
         {
-            if (driver != null)
+            if (InProgress)
             {
                 driver.Quit();
                 InProgress = false;
