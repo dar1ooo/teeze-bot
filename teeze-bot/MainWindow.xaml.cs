@@ -173,7 +173,7 @@ namespace teeze_bot
             newProfile_Address2.Text = currentProfile.Address2;
             newProfile_City.Text = currentProfile.City;
             newProfile_ZIP.Text = currentProfile.ZIP;
-            newProfile_Country.SelectedIndex = -1;
+            newProfile_Country.SelectedIndex = currentProfile.CountryIndex;
         }
 
         private void SaveEditedProfile_CLick(object sender, RoutedEventArgs e)
@@ -248,6 +248,7 @@ namespace teeze_bot
         private void GatherProfileInfos(bool isEdited)
         {
             var item = (ComboBoxItem)newProfile_Country.SelectedValue;
+            int countryIndex = newProfile_Country.SelectedIndex;
             string country = (string)item.Content;
             string firstname = newProfile_Firstname.Text;
             string lastname = newProfile_Lastname.Text;
@@ -265,11 +266,11 @@ namespace teeze_bot
             if (!isEdited)
             {
                 profileCounter++;
-                profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated));
+                profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated));
             }
             if (isEdited)
             {
-                profileList[currentProfile.ProfileNumber - 1].UpdateInfo(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated);
+                profileList[currentProfile.ProfileNumber - 1].UpdateInfo(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated);
             }
             profilesListView.ItemsSource = profileList;
             profilesListView.Items.Refresh();
@@ -449,6 +450,7 @@ namespace teeze_bot
             newTask_Proxy.SelectedIndex = -1;
             newTask_Account.SelectedIndex = -1;
             SaveEditedTaskButton.Visibility = Visibility.Hidden;
+            CreateTaskButton.Visibility = Visibility.Visible;
             newTask_AccountLabel.Visibility = Visibility.Visible;
             newTask_Account.Visibility = Visibility.Visible;
             newTask_errorStore.Visibility = Visibility.Hidden;
