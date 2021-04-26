@@ -585,6 +585,7 @@
                         <RowDefinition Height="35px" />
                         <RowDefinition />
                     </Grid.RowDefinitions>
+
                     <!--#region Top Bar Options-->
                     <Grid Grid.Row="0" x:Name="TaskPageOptions" Visibility="Visible">
                         <Grid.RowDefinitions>
@@ -733,6 +734,7 @@
                     </Grid>
                     <!--#endregion-->
 
+                    <!--#region Confirm Delete Window-->
                     <Grid x:Name="ConfirmDeleteWindow" Grid.Row="1" Visibility="Hidden">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -767,6 +769,7 @@
                             </Grid.Background>
                         </Grid>
                     </Grid>
+                    <!--#endregion-->
                 </Grid>
                 <!--#endregion-->
 

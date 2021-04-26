@@ -12,6 +12,8 @@ namespace teeze_bot
 {
     public partial class MainWindow : Window
     {
+        #region Global Variables
+
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
         private TaskInfo currentTask = new TaskInfo();
@@ -22,6 +24,8 @@ namespace teeze_bot
         private int runningTasks = 0;
         private bool deleteAllTasks = false;
         private bool deleteSpecificTask = false;
+
+        #endregion Global Variables
 
         public MainWindow()
         {
@@ -561,7 +565,7 @@ namespace teeze_bot
                 newTask_Store.SelectedIndex = -1;
                 newTask_Sizes.Text = currentTask.ShoeSizes;
                 newTask_Productname.Text = currentTask.Productname;
-                newTask_Product.Text = currentTask.Product;
+                newTask_Product.Text = currentTask.ProductLink;
                 newTask_Profile.SelectedIndex = -1;
                 newTask_Proxy.SelectedIndex = -1;
                 newTask_Account.SelectedIndex = -1;

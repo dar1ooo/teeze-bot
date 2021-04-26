@@ -12,7 +12,7 @@ namespace teeze_bot.classes
         public void StartTask()
         {
             driver = new ChromeDriver();
-            driver.Url = taskinfo.Product;
+            driver.Url = taskinfo.ProductLink;
             InProgress = true;
         }
 
