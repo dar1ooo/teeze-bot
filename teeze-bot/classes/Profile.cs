@@ -13,13 +13,14 @@
         public string City { get; set; }
         public string ZIP { get; set; }
         public string Country { get; set; }
+        public int CountryIndex { get; set; }
         public string DateCreated { get; set; }
 
         public Profile()
         {
         }
 
-        public Profile(int profileNumber, string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country, string dateCreated)
+        public Profile(int profileNumber, string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country, int countryIndex, string dateCreated)
         {
             ProfileNumber = profileNumber;
             Firstname = firstname;
@@ -31,6 +32,24 @@
             City = city;
             ZIP = zip;
             Country = country;
+            CountryIndex = countryIndex;
+            DateCreated = dateCreated;
+            FullName = string.Join(" ", firstname, lastname);
+        }
+
+        public void UpdateInfo(int profileNumber, string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country, int countryIndex, string dateCreated)
+        {
+            ProfileNumber = profileNumber;
+            Firstname = firstname;
+            Lastname = lastname;
+            EMail = eMail;
+            Phone = phone;
+            Address1 = address1;
+            Address2 = address2;
+            City = city;
+            ZIP = zip;
+            Country = country;
+            CountryIndex = countryIndex;
             DateCreated = dateCreated;
             FullName = string.Join(" ", firstname, lastname);
         }

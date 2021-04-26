@@ -12,16 +12,21 @@ namespace teeze_bot
 {
     public partial class MainWindow : Window
     {
+        #region Global Variables
+
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
-        private TaskInfo currentTask = new TaskInfo();
         private List<TitoloTask> titoloTasks = new List<TitoloTask>();
+        private TaskInfo currentTask = new TaskInfo();
+        private Profile currentProfile = new Profile();
 
         private int taskIdCounter = 0;
         private int profileCounter = 0;
         private int runningTasks = 0;
         private bool deleteAllTasks = false;
         private bool deleteSpecificTask = false;
+
+        #endregion Global Variables
 
         public MainWindow()
         {
@@ -145,10 +150,45 @@ namespace teeze_bot
 
         #endregion BasicFeatures
 
+        #region Profiles
+
+        #region Profile List Options
+
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentProfile = button.CommandParameter as Profile;
+            CreateProfileLabel.Content = "Profile " + currentProfile.ProfileNumber.ToString();
+            ProfilePageList.Visibility = Visibility.Hidden;
+            ProfilePageOptions.Visibility = Visibility.Hidden;
+            SaveEditedProfileButton.Visibility = Visibility.Visible;
+            CreateProfileButton.Visibility = Visibility.Hidden;
+            CreateProfileWindow.Visibility = Visibility.Visible;
+
+            newProfile_Firstname.Text = currentProfile.Firstname;
+            newProfile_Lastname.Text = currentProfile.Lastname;
+            newProfile_EMail.Text = currentProfile.EMail;
+            newProfile_Phone.Text = currentProfile.Phone;
+            newProfile_Address1.Text = currentProfile.Address1;
+            newProfile_Address2.Text = currentProfile.Address2;
+            newProfile_City.Text = currentProfile.City;
+            newProfile_ZIP.Text = currentProfile.ZIP;
+            newProfile_Country.SelectedIndex = currentProfile.CountryIndex;
+        }
+
+        private void SaveEditedProfile_CLick(object sender, RoutedEventArgs e)
+        {
+            GatherProfileInfos(true);
+            CloseCreateProfileWindow();
+        }
+
+        #endregion Profile List Options
+
         #region Create Profile
 
         private void CreateProfileOption_Click(object sender, RoutedEventArgs e)
         {
+            CreateProfileLabel.Content = "Create Profile";
             newProfile_Firstname.Text = "";
             newProfile_Lastname.Text = "";
             newProfile_EMail.Text = "";
@@ -173,6 +213,8 @@ namespace teeze_bot
 
         private void CancleCreateProfile_Click(object sender, RoutedEventArgs e)
         {
+            SaveEditedProfileButton.Visibility = Visibility.Hidden;
+            CreateProfileButton.Visibility = Visibility.Visible;
             CloseCreateProfileWindow();
         }
 
@@ -180,7 +222,7 @@ namespace teeze_bot
         {
             if (IsProfileFormValid())
             {
-                GatherProfileInfos();
+                GatherProfileInfos(false);
                 CloseCreateProfileWindow();
                 SaveProfilesToJSON();
             }
@@ -203,9 +245,10 @@ namespace teeze_bot
                 return false;
         }
 
-        private void GatherProfileInfos()
+        private void GatherProfileInfos(bool isEdited)
         {
             var item = (ComboBoxItem)newProfile_Country.SelectedValue;
+            int countryIndex = newProfile_Country.SelectedIndex;
             string country = (string)item.Content;
             string firstname = newProfile_Firstname.Text;
             string lastname = newProfile_Lastname.Text;
@@ -220,8 +263,15 @@ namespace teeze_bot
             string city = newProfile_City.Text;
             string zip = newProfile_ZIP.Text;
             string dateCreated = DateTime.Now.ToString("M-d-yyyy");
-            profileCounter++;
-            profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated));
+            if (!isEdited)
+            {
+                profileCounter++;
+                profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated));
+            }
+            if (isEdited)
+            {
+                profileList[currentProfile.ProfileNumber - 1].UpdateInfo(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated);
+            }
             profilesListView.ItemsSource = profileList;
             profilesListView.Items.Refresh();
         }
@@ -283,6 +333,8 @@ namespace teeze_bot
         }
 
         #endregion Create Profile
+
+        #endregion Profiles
 
         #region Task
 
@@ -397,7 +449,8 @@ namespace teeze_bot
             newTask_Profile.SelectedIndex = -1;
             newTask_Proxy.SelectedIndex = -1;
             newTask_Account.SelectedIndex = -1;
-            EditTaskButton.Visibility = Visibility.Hidden;
+            SaveEditedTaskButton.Visibility = Visibility.Hidden;
+            CreateTaskButton.Visibility = Visibility.Visible;
             newTask_AccountLabel.Visibility = Visibility.Visible;
             newTask_Account.Visibility = Visibility.Visible;
             newTask_errorStore.Visibility = Visibility.Hidden;
@@ -460,14 +513,18 @@ namespace teeze_bot
         {
             var item = (ComboBoxItem)newTask_Store.SelectedValue;
             string Store = (string)item.Content;
+            int StoreIndex = newTask_Store.SelectedIndex;
             string ShoeSizes = (newTask_Sizes.Text.ToString());
             string Productname = newTask_Productname.Text.ToString();
             string Product = newTask_Product.Text.ToString();
             item = (ComboBoxItem)newTask_Profile.SelectedValue;
             string Profile = (string)item.Content;
+            int ProfileIndex = newTask_Profile.SelectedIndex;
             item = (ComboBoxItem)newTask_Proxy.SelectedValue;
             string Proxy = (string)item.Content;
+            int ProxyIndex = newTask_Proxy.SelectedIndex;
             item = (ComboBoxItem)newTask_Account.SelectedValue;
+            int AccountIndex = newTask_Account.SelectedIndex;
             string Account = "";
             if (item != null)
             {
@@ -480,12 +537,12 @@ namespace teeze_bot
             if (!isEdited)
             {
                 taskIdCounter++;
-                taskList.Add(new TaskInfo(taskIdCounter, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account));
+                taskList.Add(new TaskInfo(taskIdCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
                 titoloTasks.Add(new TitoloTask() { taskinfo = taskList[taskIdCounter - 1] });
             }
             if (isEdited)
             {
-                taskList[currentTask.TaskId - 1].UpdateInfo(currentTask.TaskId, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account);
+                taskList[currentTask.TaskId - 1].UpdateInfo(currentTask.TaskId, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex);
             }
             taskListView.ItemsSource = taskList;
             taskListView.Items.Refresh();
@@ -542,29 +599,29 @@ namespace teeze_bot
 
         #endregion General Top Options
 
-        #region Task Options
+        #region Task List Options
 
-        private void editTask(object sender, RoutedEventArgs e)
+        private void EditTask_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            TaskInfo task = button.CommandParameter as TaskInfo;
-            if (!titoloTasks[task.TaskId - 1].InProgress)
+            currentTask = button.CommandParameter as TaskInfo;
+            if (!titoloTasks[currentTask.TaskId - 1].InProgress)
             {
                 currentTask = button.CommandParameter as TaskInfo;
                 CreateTaskLabel.Content = "Task " + currentTask.TaskId.ToString();
                 TaskPageList.Visibility = Visibility.Hidden;
                 TaskPageOptions.Visibility = Visibility.Hidden;
-                EditTaskButton.Visibility = Visibility.Visible;
+                SaveEditedTaskButton.Visibility = Visibility.Visible;
                 CreateTaskButton.Visibility = Visibility.Hidden;
                 CreateTaskWindow.Visibility = Visibility.Visible;
 
-                newTask_Store.SelectedIndex = -1;
+                newTask_Store.SelectedIndex = currentTask.StoreIndex;
                 newTask_Sizes.Text = currentTask.ShoeSizes;
                 newTask_Productname.Text = currentTask.Productname;
-                newTask_Product.Text = currentTask.Product;
-                newTask_Profile.SelectedIndex = -1;
-                newTask_Proxy.SelectedIndex = -1;
-                newTask_Account.SelectedIndex = -1;
+                newTask_Product.Text = currentTask.ProductLink;
+                newTask_Profile.SelectedIndex = currentTask.ProfileIndex;
+                newTask_Proxy.SelectedIndex = currentTask.ProxyIndex;
+                newTask_Account.SelectedIndex = currentTask.AccountIndex;
             }
             else
             {
@@ -613,7 +670,7 @@ namespace teeze_bot
             deleteSpecificTask = false;
         }
 
-        private void StartOrEndTask(object sender, RoutedEventArgs e)
+        private void StartOrEndTask_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
             TaskInfo task = button.CommandParameter as TaskInfo;
@@ -649,7 +706,7 @@ namespace teeze_bot
             }
         }
 
-        #endregion Task Options
+        #endregion Task List Options
 
         #endregion Task
     }
