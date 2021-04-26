@@ -873,7 +873,7 @@
                     </Grid>
 
                     <!--#region Create Profile Window-->
-                    <Grid Grid.Row="1" x:Name="CreateProfileWindow" Visibility="Visible">
+                    <Grid Grid.Row="1" x:Name="CreateProfileWindow" Visibility="Hidden">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.10*" />
                             <RowDefinition />
@@ -915,8 +915,8 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button x:Name="CreateProfile" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Create" Margin="50,0,0,0" Click="CreateProfile_Click" />
-                                <Button x:Name="SaveEditedProfileButton" Visibility="Hidden" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Save" Margin="50,0,0,0" Click="SaveEditedTask_Click" />
+                                <Button x:Name="CreateProfileButton" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Create" Margin="50,0,0,0" Click="CreateProfile_Click" />
+                                <Button x:Name="SaveEditedProfileButton" Visibility="Hidden" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Save" Margin="50,0,0,0" Click="SaveEditedProfile_CLick" />
                             </Grid>
                             <Label x:Name="CreateProfileLabel" Grid.Row="1" Grid.Column="1" Content="Create Profile" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
                             <Button x:Name="CancelCreateProfile" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="20px" Width="20px" VerticalAlignment="Center" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="13" FontFamily="Fonts/Dosis" FontWeight="Medium" Margin="0,0,2.5,0" Click="CancleCreateProfile_Click"></Button>

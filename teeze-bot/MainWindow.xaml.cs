@@ -152,7 +152,7 @@ namespace teeze_bot
 
         #region Profiles
 
-        #region Profile Options
+        #region Profile List Options
 
         private void EditProfile_Click(object sender, RoutedEventArgs e)
         {
@@ -162,24 +162,33 @@ namespace teeze_bot
             ProfilePageList.Visibility = Visibility.Hidden;
             ProfilePageOptions.Visibility = Visibility.Hidden;
             SaveEditedProfileButton.Visibility = Visibility.Visible;
-            CreateTaskButton.Visibility = Visibility.Hidden;
-            CreateTaskWindow.Visibility = Visibility.Visible;
+            CreateProfileButton.Visibility = Visibility.Hidden;
+            CreateProfileWindow.Visibility = Visibility.Visible;
 
-            newTask_Store.SelectedIndex = -1;
-            newTask_Sizes.Text = currentTask.ShoeSizes;
-            newTask_Productname.Text = currentTask.Productname;
-            newTask_Product.Text = currentTask.ProductLink;
-            newTask_Profile.SelectedIndex = -1;
-            newTask_Proxy.SelectedIndex = -1;
-            newTask_Account.SelectedIndex = -1;
+            newProfile_Firstname.Text = currentProfile.Firstname;
+            newProfile_Lastname.Text = currentProfile.Lastname;
+            newProfile_EMail.Text = currentProfile.EMail;
+            newProfile_Phone.Text = currentProfile.Phone;
+            newProfile_Address1.Text = currentProfile.Address1;
+            newProfile_Address2.Text = currentProfile.Address2;
+            newProfile_City.Text = currentProfile.City;
+            newProfile_ZIP.Text = currentProfile.ZIP;
+            newProfile_Country.SelectedIndex = -1;
         }
 
-        #endregion Profile Options
+        private void SaveEditedProfile_CLick(object sender, RoutedEventArgs e)
+        {
+            GatherProfileInfos(true);
+            CloseCreateProfileWindow();
+        }
+
+        #endregion Profile List Options
 
         #region Create Profile
 
         private void CreateProfileOption_Click(object sender, RoutedEventArgs e)
         {
+            CreateProfileLabel.Content = "Create Profile";
             newProfile_Firstname.Text = "";
             newProfile_Lastname.Text = "";
             newProfile_EMail.Text = "";
@@ -204,6 +213,8 @@ namespace teeze_bot
 
         private void CancleCreateProfile_Click(object sender, RoutedEventArgs e)
         {
+            SaveEditedProfileButton.Visibility = Visibility.Hidden;
+            CreateProfileButton.Visibility = Visibility.Visible;
             CloseCreateProfileWindow();
         }
 
@@ -211,7 +222,7 @@ namespace teeze_bot
         {
             if (IsProfileFormValid())
             {
-                GatherProfileInfos();
+                GatherProfileInfos(false);
                 CloseCreateProfileWindow();
                 SaveProfilesToJSON();
             }
@@ -234,7 +245,7 @@ namespace teeze_bot
                 return false;
         }
 
-        private void GatherProfileInfos()
+        private void GatherProfileInfos(bool isEdited)
         {
             var item = (ComboBoxItem)newProfile_Country.SelectedValue;
             string country = (string)item.Content;
@@ -251,8 +262,15 @@ namespace teeze_bot
             string city = newProfile_City.Text;
             string zip = newProfile_ZIP.Text;
             string dateCreated = DateTime.Now.ToString("M-d-yyyy");
-            profileCounter++;
-            profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated));
+            if (!isEdited)
+            {
+                profileCounter++;
+                profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated));
+            }
+            if (isEdited)
+            {
+                profileList[currentProfile.ProfileNumber - 1].UpdateInfo(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, dateCreated);
+            }
             profilesListView.ItemsSource = profileList;
             profilesListView.Items.Refresh();
         }
@@ -575,7 +593,7 @@ namespace teeze_bot
 
         #endregion General Top Options
 
-        #region Task Options
+        #region Task List Options
 
         private void EditTask_Click(object sender, RoutedEventArgs e)
         {
@@ -682,7 +700,7 @@ namespace teeze_bot
             }
         }
 
-        #endregion Task Options
+        #endregion Task List Options
 
         #endregion Task
     }
