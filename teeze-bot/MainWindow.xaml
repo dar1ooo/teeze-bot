@@ -698,7 +698,7 @@
                             <Label Grid.Row="2" Grid.Column="2" Content="Sizes" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <TextBox x:Name="newTask_Sizes" Grid.Column="2" Grid.Row="3" Style="{StaticResource MyWaterMarkStyle}" Tag="Enter Sizes" Text="{Binding CategorySearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <ComboBox x:Name="newTask_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}" SelectionChanged="SelectStore">
-                                <ComboBoxItem Content="Titolo" />
+                                <ComboBoxItem Content="KITH" />
                             </ComboBox>
 
                             <Label Grid.Row="5" Grid.Column="1" Content="Product Name" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />

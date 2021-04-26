@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using System;
+using System.Windows;
 
 namespace teeze_bot.classes
 {
@@ -13,18 +13,25 @@ namespace teeze_bot.classes
 
         public void StartTask()
         {
-            InProgress = true;
-            driver = new ChromeDriver();
-            driver.Url = taskinfo.ProductLink;
-            driver.Url = taskinfo.ProductLink;
+            try
+            {
+                InProgress = true;
+                driver = new ChromeDriver();
+                driver.Url = taskinfo.ProductLink;
+                driver.Url = taskinfo.ProductLink;
 
-            var sizes = driver.FindElement(By.Id("SingleOptionSelector-0"));
-            //create select element object
-            var selectElement = new SelectElement(sizes);
+                var sizes = driver.FindElement(By.Id("SingleOptionSelector-0"));
+                //create select element object
+                var selectElement = new SelectElement(sizes);
 
-            //select by value
-            selectElement.SelectByValue(taskinfo.ShoeSizes.ToString());
-            driver.FindElement(By.XPath("//*[@id='shopify-section-product']/section/div[2]/form/button")).Click();
+                //select by value
+                selectElement.SelectByValue(taskinfo.ShoeSizes.ToString());
+                driver.FindElement(By.XPath("//*[@id='shopify-section-product']/section/div[2]/form/button")).Click();
+            }
+            catch
+            {
+                MessageBox.Show("An error has occured. Please end the Task");
+            }
         }
 
         public void QuitTask()
