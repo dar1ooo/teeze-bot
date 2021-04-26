@@ -16,8 +16,9 @@ namespace teeze_bot
 
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
-        private TaskInfo currentTask = new TaskInfo();
         private List<TitoloTask> titoloTasks = new List<TitoloTask>();
+        private TaskInfo currentTask = new TaskInfo();
+        private Profile currentProfile = new Profile();
 
         private int taskIdCounter = 0;
         private int profileCounter = 0;
@@ -148,6 +149,32 @@ namespace teeze_bot
         }
 
         #endregion BasicFeatures
+
+        #region Profiles
+
+        #region Profile Options
+
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentProfile = button.CommandParameter as Profile;
+            CreateProfileLabel.Content = "Profile " + currentProfile.ProfileNumber.ToString();
+            ProfilePageList.Visibility = Visibility.Hidden;
+            ProfilePageOptions.Visibility = Visibility.Hidden;
+            SaveEditedProfileButton.Visibility = Visibility.Visible;
+            CreateTaskButton.Visibility = Visibility.Hidden;
+            CreateTaskWindow.Visibility = Visibility.Visible;
+
+            newTask_Store.SelectedIndex = -1;
+            newTask_Sizes.Text = currentTask.ShoeSizes;
+            newTask_Productname.Text = currentTask.Productname;
+            newTask_Product.Text = currentTask.ProductLink;
+            newTask_Profile.SelectedIndex = -1;
+            newTask_Proxy.SelectedIndex = -1;
+            newTask_Account.SelectedIndex = -1;
+        }
+
+        #endregion Profile Options
 
         #region Create Profile
 
@@ -288,6 +315,8 @@ namespace teeze_bot
 
         #endregion Create Profile
 
+        #endregion Profiles
+
         #region Task
 
         #region General Top Options
@@ -401,7 +430,7 @@ namespace teeze_bot
             newTask_Profile.SelectedIndex = -1;
             newTask_Proxy.SelectedIndex = -1;
             newTask_Account.SelectedIndex = -1;
-            EditTaskButton.Visibility = Visibility.Hidden;
+            SaveEditedTaskButton.Visibility = Visibility.Hidden;
             newTask_AccountLabel.Visibility = Visibility.Visible;
             newTask_Account.Visibility = Visibility.Visible;
             newTask_errorStore.Visibility = Visibility.Hidden;
@@ -548,17 +577,17 @@ namespace teeze_bot
 
         #region Task Options
 
-        private void editTask(object sender, RoutedEventArgs e)
+        private void EditTask_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            TaskInfo task = button.CommandParameter as TaskInfo;
-            if (!titoloTasks[task.TaskId - 1].InProgress)
+            currentTask = button.CommandParameter as TaskInfo;
+            if (!titoloTasks[currentTask.TaskId - 1].InProgress)
             {
                 currentTask = button.CommandParameter as TaskInfo;
                 CreateTaskLabel.Content = "Task " + currentTask.TaskId.ToString();
                 TaskPageList.Visibility = Visibility.Hidden;
                 TaskPageOptions.Visibility = Visibility.Hidden;
-                EditTaskButton.Visibility = Visibility.Visible;
+                SaveEditedTaskButton.Visibility = Visibility.Visible;
                 CreateTaskButton.Visibility = Visibility.Hidden;
                 CreateTaskWindow.Visibility = Visibility.Visible;
 
@@ -617,7 +646,7 @@ namespace teeze_bot
             deleteSpecificTask = false;
         }
 
-        private void StartOrEndTask(object sender, RoutedEventArgs e)
+        private void StartOrEndTask_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
             TaskInfo task = button.CommandParameter as TaskInfo;

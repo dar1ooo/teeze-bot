@@ -633,8 +633,8 @@
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Button Content="Delete" Style="{DynamicResource ListOptionsButton}" CommandParameter="{Binding}" Click="DeleteSpecificTask_Click" />
-                                                    <Button Content="Edit" Style="{DynamicResource ListOptionsButton}" CommandParameter="{Binding}" Click="editTask" />
-                                                    <Button Content="Start" Style="{DynamicResource ListOptionsButton}" CommandParameter="{Binding}" Click="StartOrEndTask" />
+                                                    <Button Content="Edit" Style="{DynamicResource ListOptionsButton}" CommandParameter="{Binding}" Click="EditTask_Click" />
+                                                    <Button Content="Start" Style="{DynamicResource ListOptionsButton}" CommandParameter="{Binding}" Click="StartOrEndTask_Click" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -689,7 +689,7 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Button x:Name="CreateTaskButton" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Create" Margin="50,0,0,0" Click="CreateTask_Click" />
-                                <Button x:Name="EditTaskButton" Visibility="Hidden" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Save" Margin="50,0,0,0" Click="SaveEditedTask_Click" />
+                                <Button x:Name="SaveEditedTaskButton" Visibility="Hidden" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Save" Margin="50,0,0,0" Click="SaveEditedTask_Click" />
                             </Grid>
                             <Label x:Name="CreateTaskLabel" Grid.Row="1" Grid.Column="1" Content="Create Task" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
                             <Button x:Name="CancelCreateTask" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="20px" Width="20px" VerticalAlignment="Center" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="13" FontFamily="Fonts/Dosis" FontWeight="Medium" Click="CancelCreateTask_Click" Margin="0,0,2.5,0"></Button>
@@ -861,9 +861,8 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Button Content="Start" CommandParameter="{Binding}" />
-                                                    <Button Content="info" CommandParameter="{Binding}" />
-                                                    <Button Content="Delete" CommandParameter="{Binding}" />
+                                                    <Button Content="Edit" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" Click="EditProfile_Click" />
+                                                    <Button Content="Delete" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -874,7 +873,7 @@
                     </Grid>
 
                     <!--#region Create Profile Window-->
-                    <Grid Grid.Row="1" x:Name="CreateProfileWindow" Visibility="Hidden">
+                    <Grid Grid.Row="1" x:Name="CreateProfileWindow" Visibility="Visible">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.10*" />
                             <RowDefinition />
@@ -917,8 +916,9 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Button x:Name="CreateProfile" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Create" Margin="50,0,0,0" Click="CreateProfile_Click" />
+                                <Button x:Name="SaveEditedProfileButton" Visibility="Hidden" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Save" Margin="50,0,0,0" Click="SaveEditedTask_Click" />
                             </Grid>
-                            <Label Grid.Row="1" Grid.Column="1" Content="Create Profile" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
+                            <Label x:Name="CreateProfileLabel" Grid.Row="1" Grid.Column="1" Content="Create Profile" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
                             <Button x:Name="CancelCreateProfile" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="20px" Width="20px" VerticalAlignment="Center" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="13" FontFamily="Fonts/Dosis" FontWeight="Medium" Margin="0,0,2.5,0" Click="CancleCreateProfile_Click"></Button>
 
                             <Label Grid.Row="2" Grid.Column="1" Content="First Name" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
