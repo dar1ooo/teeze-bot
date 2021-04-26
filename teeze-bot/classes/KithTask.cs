@@ -1,18 +1,20 @@
-﻿using teeze_bot.Sites;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
 
 namespace teeze_bot.classes
 {
     public class KithTask
     {
         public TaskInfo taskinfo = new TaskInfo();
-        public KithSite kithsite = new KithSite();
+        public IWebDriver driver = new ChromeDriver();
         public bool InProgress = false;
 
         public void StartTask()
         {
             InProgress = true;
 
-            kithsite.LoadPage(taskinfo.ProductLink);
+            driver.Url = taskinfo.ProductLink;
         }
 
         public void QuitTask()
@@ -20,8 +22,6 @@ namespace teeze_bot.classes
             if (InProgress)
             {
                 InProgress = false;
-
-                kithsite.QuitTask();
             }
         }
     }
