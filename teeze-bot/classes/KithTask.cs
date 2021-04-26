@@ -7,13 +7,13 @@ namespace teeze_bot.classes
     public class KithTask
     {
         public TaskInfo taskinfo = new TaskInfo();
-        public IWebDriver driver = new ChromeDriver();
+        public IWebDriver driver;
         public bool InProgress = false;
 
         public void StartTask()
         {
             InProgress = true;
-
+            driver = new ChromeDriver();
             driver.Url = taskinfo.ProductLink;
         }
 
