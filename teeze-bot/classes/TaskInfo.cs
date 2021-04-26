@@ -4,41 +4,53 @@
     {
         public int TaskId { get; set; }
         public string Store { get; set; }
+        public int StoreIndex { get; set; }
         public string Productname { get; set; }
         public string ProductLink { get; set; }
         public string ShoeSizes { get; set; }
         public string Profile { get; set; }
+        public int ProfileIndex { get; set; }
         public string Proxy { get; set; }
+        public int ProxyIndex { get; set; }
         public string Account { get; set; }
+        public int AccountIndex { get; set; }
         public string Status { get; set; }
 
         public TaskInfo()
         {
         }
 
-        public TaskInfo(int taskId, string store, string shoeSize, string productname, string productLink, string profile, string proxy, string account)
+        public TaskInfo(int taskId, string store, int storeIndex, string shoeSize, string productname, string productLink, string profile, int profileIndex, string proxy, int proxyIndex, string account, int accountIndex)
         {
             TaskId = taskId;
             Store = store;
+            StoreIndex = storeIndex;
             ShoeSizes = shoeSize;
             Productname = productname;
             ProductLink = productLink;
             Profile = profile;
+            ProfileIndex = profileIndex;
             Proxy = proxy;
+            ProxyIndex = proxyIndex;
             Account = account;
+            AccountIndex = accountIndex;
             Status = "waiting";
         }
 
-        public void UpdateInfo(int taskId, string store, string shoeSize, string productname, string productLink, string profile, string proxy, string account)
+        public void UpdateInfo(int taskId, string store, int storeIndex, string shoeSize, string productname, string productLink, string profile, int profileIndex, string proxy, int proxyIndex, string account, int accountIndex)
         {
             TaskId = taskId;
             Store = store;
+            StoreIndex = storeIndex;
             ShoeSizes = shoeSize;
             Productname = productname;
             ProductLink = productLink;
             Profile = profile;
+            ProfileIndex = profileIndex;
             Proxy = proxy;
+            ProxyIndex = proxyIndex;
             Account = account;
+            AccountIndex = accountIndex;
             Status = "waiting";
         }
     }

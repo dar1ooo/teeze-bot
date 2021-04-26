@@ -511,14 +511,18 @@ namespace teeze_bot
         {
             var item = (ComboBoxItem)newTask_Store.SelectedValue;
             string Store = (string)item.Content;
+            int StoreIndex = newTask_Store.SelectedIndex;
             string ShoeSizes = (newTask_Sizes.Text.ToString());
             string Productname = newTask_Productname.Text.ToString();
             string Product = newTask_Product.Text.ToString();
             item = (ComboBoxItem)newTask_Profile.SelectedValue;
             string Profile = (string)item.Content;
+            int ProfileIndex = newTask_Profile.SelectedIndex;
             item = (ComboBoxItem)newTask_Proxy.SelectedValue;
             string Proxy = (string)item.Content;
+            int ProxyIndex = newTask_Proxy.SelectedIndex;
             item = (ComboBoxItem)newTask_Account.SelectedValue;
+            int AccountIndex = newTask_Account.SelectedIndex;
             string Account = "";
             if (item != null)
             {
@@ -531,12 +535,12 @@ namespace teeze_bot
             if (!isEdited)
             {
                 taskIdCounter++;
-                taskList.Add(new TaskInfo(taskIdCounter, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account));
+                taskList.Add(new TaskInfo(taskIdCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
                 titoloTasks.Add(new TitoloTask() { taskinfo = taskList[taskIdCounter - 1] });
             }
             if (isEdited)
             {
-                taskList[currentTask.TaskId - 1].UpdateInfo(currentTask.TaskId, Store, ShoeSizes, Productname, Product, Profile, Proxy, Account);
+                taskList[currentTask.TaskId - 1].UpdateInfo(currentTask.TaskId, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex);
             }
             taskListView.ItemsSource = taskList;
             taskListView.Items.Refresh();
@@ -609,13 +613,13 @@ namespace teeze_bot
                 CreateTaskButton.Visibility = Visibility.Hidden;
                 CreateTaskWindow.Visibility = Visibility.Visible;
 
-                newTask_Store.SelectedIndex = -1;
+                newTask_Store.SelectedIndex = currentTask.StoreIndex;
                 newTask_Sizes.Text = currentTask.ShoeSizes;
                 newTask_Productname.Text = currentTask.Productname;
                 newTask_Product.Text = currentTask.ProductLink;
-                newTask_Profile.SelectedIndex = -1;
-                newTask_Proxy.SelectedIndex = -1;
-                newTask_Account.SelectedIndex = -1;
+                newTask_Profile.SelectedIndex = currentTask.ProfileIndex;
+                newTask_Proxy.SelectedIndex = currentTask.ProxyIndex;
+                newTask_Account.SelectedIndex = currentTask.AccountIndex;
             }
             else
             {
