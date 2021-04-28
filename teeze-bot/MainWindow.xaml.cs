@@ -17,11 +17,14 @@ namespace teeze_bot
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
         private List<KithTask> kithTasks = new List<KithTask>();
+        private List<Account> accountList = new List<Account>();
         private TaskInfo currentTask = new TaskInfo();
         private Profile currentProfile = new Profile();
+        private Account currentAccount = new Account();
 
         private int taskIdCounter = 0;
         private int profileCounter = 0;
+        private int accountCounter = 0;
         private int runningTasks = 0;
         private bool deleteAllTasks = false;
         private bool deleteSpecificTask = false;
@@ -40,6 +43,7 @@ namespace teeze_bot
         {
             ReadTasksFromJSON();
             ReadProfilesFromJSON();
+            ReadAccountsFromJSON();
             RefreshAllContent();
         }
 
@@ -150,190 +154,6 @@ namespace teeze_bot
         }
 
         #endregion BasicFeatures
-
-        #region Profiles
-
-        #region Profile List Options
-
-        private void EditProfile_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            currentProfile = button.CommandParameter as Profile;
-            CreateProfileLabel.Content = "Profile " + currentProfile.ProfileNumber.ToString();
-            ProfilePageList.Visibility = Visibility.Hidden;
-            ProfilePageOptions.Visibility = Visibility.Hidden;
-            SaveEditedProfileButton.Visibility = Visibility.Visible;
-            CreateProfileButton.Visibility = Visibility.Hidden;
-            CreateProfileWindow.Visibility = Visibility.Visible;
-
-            newProfile_Firstname.Text = currentProfile.Firstname;
-            newProfile_Lastname.Text = currentProfile.Lastname;
-            newProfile_EMail.Text = currentProfile.EMail;
-            newProfile_Phone.Text = currentProfile.Phone;
-            newProfile_Address1.Text = currentProfile.Address1;
-            newProfile_Address2.Text = currentProfile.Address2;
-            newProfile_City.Text = currentProfile.City;
-            newProfile_ZIP.Text = currentProfile.ZIP;
-            newProfile_Country.SelectedIndex = currentProfile.CountryIndex;
-        }
-
-        private void SaveEditedProfile_CLick(object sender, RoutedEventArgs e)
-        {
-            GatherProfileInfos(true);
-            CloseCreateProfileWindow();
-        }
-
-        #endregion Profile List Options
-
-        #region Create Profile
-
-        private void CreateProfileOption_Click(object sender, RoutedEventArgs e)
-        {
-            CreateProfileLabel.Content = "Create Profile";
-            newProfile_Firstname.Text = "";
-            newProfile_Lastname.Text = "";
-            newProfile_EMail.Text = "";
-            newProfile_Phone.Text = "";
-            newProfile_Address1.Text = "";
-            newProfile_Address2.Text = "";
-            newProfile_City.Text = "";
-            newProfile_ZIP.Text = "";
-            newProfile_Country.SelectedIndex = -1;
-            CreateProfileWindow.Visibility = Visibility.Visible;
-            ProfilePageOptions.Visibility = Visibility.Hidden;
-            ProfilePageList.Visibility = Visibility.Hidden;
-            newProfile_errorFirstname.Visibility = Visibility.Hidden;
-            newProfile_errorLastname.Visibility = Visibility.Hidden;
-            newProfile_errorEmail.Visibility = Visibility.Hidden;
-            newProfile_errorPhone.Visibility = Visibility.Hidden;
-            newProfile_errorAddresse1.Visibility = Visibility.Hidden;
-            newProfile_errorCity.Visibility = Visibility.Hidden;
-            newProfile_errorZip.Visibility = Visibility.Hidden;
-            newProfile_errorCountry.Visibility = Visibility.Hidden;
-        }
-
-        private void CancleCreateProfile_Click(object sender, RoutedEventArgs e)
-        {
-            SaveEditedProfileButton.Visibility = Visibility.Hidden;
-            CreateProfileButton.Visibility = Visibility.Visible;
-            CloseCreateProfileWindow();
-        }
-
-        private void CreateProfile_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsProfileFormValid())
-            {
-                GatherProfileInfos(false);
-                CloseCreateProfileWindow();
-                SaveProfilesToJSON();
-            }
-        }
-
-        private bool IsProfileFormValid()
-        {
-            newProfile_errorFirstname.Visibility = newProfile_Firstname.Text.Length == 0 || newProfile_Firstname.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorLastname.Visibility = newProfile_Lastname.Text.Length == 0 || newProfile_Lastname.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorEmail.Visibility = newProfile_EMail.Text.Length == 0 || newProfile_EMail.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorPhone.Visibility = newProfile_Phone.Text.Length == 0 || newProfile_Phone.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorAddresse1.Visibility = newProfile_Address1.Text.Length == 0 || newProfile_Address1.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorCity.Visibility = newProfile_City.Text.Length == 0 || newProfile_City.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorZip.Visibility = newProfile_ZIP.Text.Length == 0 || newProfile_ZIP.Text == "" ? Visibility : Visibility.Hidden;
-            newProfile_errorCountry.Visibility = newProfile_Country.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
-
-            if (newProfile_Firstname.Text.Length != 0 && newProfile_Lastname.Text.Length != 0 && newProfile_EMail.Text.Length != 0 && newProfile_Phone.Text.Length != 0 && newProfile_Address1.Text.Length != 0 && newProfile_City.Text.Length != 0 && newProfile_ZIP.Text.Length != 0 && newProfile_City.Text.Length != 0)
-                return true;
-            else
-                return false;
-        }
-
-        private void GatherProfileInfos(bool isEdited)
-        {
-            var item = (ComboBoxItem)newProfile_Country.SelectedValue;
-            int countryIndex = newProfile_Country.SelectedIndex;
-            string country = (string)item.Content;
-            string firstname = newProfile_Firstname.Text;
-            string lastname = newProfile_Lastname.Text;
-            string eMail = newProfile_EMail.Text;
-            string phone = newProfile_Phone.Text;
-            string address1 = newProfile_Address1.Text;
-            string address2 = newProfile_Address2.Text;
-            if (address2 == null)
-            {
-                address2 = "";
-            }
-            string city = newProfile_City.Text;
-            string zip = newProfile_ZIP.Text;
-            string dateCreated = DateTime.Now.ToString("M-d-yyyy");
-            if (!isEdited)
-            {
-                profileCounter++;
-                profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated));
-            }
-            if (isEdited)
-            {
-                profileList[currentProfile.ProfileNumber - 1].UpdateInfo(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated);
-            }
-            RefreshAllContent();
-        }
-
-        private void CloseCreateProfileWindow()
-        {
-            CreateProfileWindow.Visibility = Visibility.Hidden;
-            ProfilePageOptions.Visibility = Visibility.Visible;
-            ProfilePageList.Visibility = Visibility.Visible;
-        }
-
-        private void DeleteAllProfiles(object sender, RoutedEventArgs e)
-        {
-            profileList.Clear();
-            SaveProfilesToJSON();
-            profileCounter = 0;
-            profilesListView.ItemsSource = null;
-            profilesListView.Items.Clear();
-            RefreshAllContent();
-        }
-
-        private void SaveProfilesToJSON()
-        {
-            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json", JsonConvert.SerializeObject(profileList, Formatting.Indented));
-        }
-
-        private void ReadProfilesFromJSON()
-        {
-            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json"))
-            {
-                string json = r.ReadToEnd();
-                profileList = JsonConvert.DeserializeObject<List<Profile>>(json);
-            }
-            profileCounter = 0;
-            profileCounter = profileList.Count;
-            RefreshAllContent();
-        }
-
-        private void ProfileListViewSizeChanged(object sender, RoutedEventArgs e)
-        {
-            ListView listView = sender as ListView;
-            GridView gView = listView.View as GridView;
-
-            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
-            var col1 = 0.05;
-            var col2 = 0.16714;
-            var col3 = 0.15714;
-            var col4 = 0.15714;
-            var col5 = 0.30714;
-            var col6 = 0.16714;
-
-            gView.Columns[0].Width = workingWidth * col1;
-            gView.Columns[1].Width = workingWidth * col2;
-            gView.Columns[2].Width = workingWidth * col3;
-            gView.Columns[3].Width = workingWidth * col4;
-            gView.Columns[4].Width = workingWidth * col5;
-            gView.Columns[5].Width = workingWidth * col6;
-        }
-
-        #endregion Create Profile
-
-        #endregion Profiles
 
         #region Task
 
@@ -714,6 +534,321 @@ namespace teeze_bot
 
         #endregion Task
 
+        #region Profiles
+
+        #region Create Profile
+
+        private void CreateProfileOption_Click(object sender, RoutedEventArgs e)
+        {
+            CreateProfileLabel.Content = "Create Profile";
+            newProfile_Firstname.Text = "";
+            newProfile_Lastname.Text = "";
+            newProfile_EMail.Text = "";
+            newProfile_Phone.Text = "";
+            newProfile_Address1.Text = "";
+            newProfile_Address2.Text = "";
+            newProfile_City.Text = "";
+            newProfile_ZIP.Text = "";
+            newProfile_Country.SelectedIndex = -1;
+            CreateProfileWindow.Visibility = Visibility.Visible;
+            ProfilePageOptions.Visibility = Visibility.Hidden;
+            ProfilePageList.Visibility = Visibility.Hidden;
+            newProfile_errorFirstname.Visibility = Visibility.Hidden;
+            newProfile_errorLastname.Visibility = Visibility.Hidden;
+            newProfile_errorEmail.Visibility = Visibility.Hidden;
+            newProfile_errorPhone.Visibility = Visibility.Hidden;
+            newProfile_errorAddresse1.Visibility = Visibility.Hidden;
+            newProfile_errorCity.Visibility = Visibility.Hidden;
+            newProfile_errorZip.Visibility = Visibility.Hidden;
+            newProfile_errorCountry.Visibility = Visibility.Hidden;
+        }
+
+        private void CancleCreateProfile_Click(object sender, RoutedEventArgs e)
+        {
+            SaveEditedProfileButton.Visibility = Visibility.Hidden;
+            CreateProfileButton.Visibility = Visibility.Visible;
+            CloseCreateProfileWindow();
+        }
+
+        private void CreateProfile_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsProfileFormValid())
+            {
+                GatherProfileInfos(false);
+                CloseCreateProfileWindow();
+                SaveProfilesToJSON();
+            }
+        }
+
+        private bool IsProfileFormValid()
+        {
+            newProfile_errorFirstname.Visibility = newProfile_Firstname.Text.Length == 0 || newProfile_Firstname.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorLastname.Visibility = newProfile_Lastname.Text.Length == 0 || newProfile_Lastname.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorEmail.Visibility = newProfile_EMail.Text.Length == 0 || newProfile_EMail.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorPhone.Visibility = newProfile_Phone.Text.Length == 0 || newProfile_Phone.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorAddresse1.Visibility = newProfile_Address1.Text.Length == 0 || newProfile_Address1.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorCity.Visibility = newProfile_City.Text.Length == 0 || newProfile_City.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorZip.Visibility = newProfile_ZIP.Text.Length == 0 || newProfile_ZIP.Text == "" ? Visibility : Visibility.Hidden;
+            newProfile_errorCountry.Visibility = newProfile_Country.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+
+            if (newProfile_Firstname.Text.Length != 0 && newProfile_Lastname.Text.Length != 0 && newProfile_EMail.Text.Length != 0 && newProfile_Phone.Text.Length != 0 && newProfile_Address1.Text.Length != 0 && newProfile_City.Text.Length != 0 && newProfile_ZIP.Text.Length != 0 && newProfile_City.Text.Length != 0)
+                return true;
+            else
+                return false;
+        }
+
+        private void GatherProfileInfos(bool isEdited)
+        {
+            var item = (ComboBoxItem)newProfile_Country.SelectedValue;
+            int countryIndex = newProfile_Country.SelectedIndex;
+            string country = (string)item.Content;
+            string firstname = newProfile_Firstname.Text;
+            string lastname = newProfile_Lastname.Text;
+            string eMail = newProfile_EMail.Text;
+            string phone = newProfile_Phone.Text;
+            string address1 = newProfile_Address1.Text;
+            string address2 = newProfile_Address2.Text;
+            if (address2 == null)
+            {
+                address2 = "";
+            }
+            string city = newProfile_City.Text;
+            string zip = newProfile_ZIP.Text;
+            string dateCreated = DateTime.Now.ToString("M-d-yyyy");
+            if (!isEdited)
+            {
+                profileCounter++;
+                profileList.Add(new Profile(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated));
+            }
+            if (isEdited)
+            {
+                profileList[currentProfile.ProfileNumber - 1].UpdateInfo(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated);
+            }
+            RefreshAllContent();
+        }
+
+        private void CloseCreateProfileWindow()
+        {
+            CreateProfileWindow.Visibility = Visibility.Hidden;
+            ProfilePageOptions.Visibility = Visibility.Visible;
+            ProfilePageList.Visibility = Visibility.Visible;
+        }
+
+        private void DeleteAllProfiles(object sender, RoutedEventArgs e)
+        {
+            profileList.Clear();
+            SaveProfilesToJSON();
+            profileCounter = 0;
+            profilesListView.ItemsSource = null;
+            profilesListView.Items.Clear();
+            RefreshAllContent();
+        }
+
+        private void SaveProfilesToJSON()
+        {
+            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json", JsonConvert.SerializeObject(profileList, Formatting.Indented));
+        }
+
+        private void ReadProfilesFromJSON()
+        {
+            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json"))
+            {
+                string json = r.ReadToEnd();
+                profileList = JsonConvert.DeserializeObject<List<Profile>>(json);
+            }
+            profileCounter = 0;
+            profileCounter = profileList.Count;
+            RefreshAllContent();
+        }
+
+        #endregion Create Profile
+
+        #region Profile List Options
+
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentProfile = button.CommandParameter as Profile;
+            CreateProfileLabel.Content = "Profile " + currentProfile.ProfileNumber.ToString();
+            ProfilePageList.Visibility = Visibility.Hidden;
+            ProfilePageOptions.Visibility = Visibility.Hidden;
+            SaveEditedProfileButton.Visibility = Visibility.Visible;
+            CreateProfileButton.Visibility = Visibility.Hidden;
+            CreateProfileWindow.Visibility = Visibility.Visible;
+
+            newProfile_Firstname.Text = currentProfile.Firstname;
+            newProfile_Lastname.Text = currentProfile.Lastname;
+            newProfile_EMail.Text = currentProfile.EMail;
+            newProfile_Phone.Text = currentProfile.Phone;
+            newProfile_Address1.Text = currentProfile.Address1;
+            newProfile_Address2.Text = currentProfile.Address2;
+            newProfile_City.Text = currentProfile.City;
+            newProfile_ZIP.Text = currentProfile.ZIP;
+            newProfile_Country.SelectedIndex = currentProfile.CountryIndex;
+        }
+
+        private void SaveEditedProfile_CLick(object sender, RoutedEventArgs e)
+        {
+            GatherProfileInfos(true);
+            CloseCreateProfileWindow();
+        }
+
+        #endregion Profile List Options
+
+        #region Other
+
+        private void ProfileListViewSizeChanged(object sender, RoutedEventArgs e)
+        {
+            ListView listView = sender as ListView;
+            GridView gView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var col1 = 0.05;
+            var col2 = 0.16714;
+            var col3 = 0.15714;
+            var col4 = 0.15714;
+            var col5 = 0.30714;
+            var col6 = 0.16714;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
+            gView.Columns[2].Width = workingWidth * col3;
+            gView.Columns[3].Width = workingWidth * col4;
+            gView.Columns[4].Width = workingWidth * col5;
+            gView.Columns[5].Width = workingWidth * col6;
+        }
+
+        #endregion Other
+
+        #endregion Profiles
+
+        #region Accounts
+
+        #region Create Account
+
+        private void CreateAccountOption_Click(object sender, RoutedEventArgs e)
+        {
+            CreateAccountLabel.Content = "Create Account";
+            newAccount_Email.Text = "";
+            newAccount_Password.Text = "";
+            newAccount_Store.SelectedIndex = -1;
+            CreateAccountWindow.Visibility = Visibility.Visible;
+            AccountPageOptions.Visibility = Visibility.Hidden;
+            AccountsListView.Visibility = Visibility.Hidden;
+            newAccount_errorStore.Visibility = Visibility.Hidden;
+            newAccount_errorEmail.Visibility = Visibility.Hidden;
+            newAccount_errorPassword.Visibility = Visibility.Hidden;
+        }
+
+        private void CancleCreateAccount_Click(object sender, RoutedEventArgs e)
+        {
+            SaveEditedAccountButton.Visibility = Visibility.Hidden;
+            CreateAccountButton.Visibility = Visibility.Visible;
+            CloseCreateAccountWindow();
+        }
+
+        private void CreateAccount_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsAccountFormValid())
+            {
+                GatherAccountInfos(false);
+                CloseCreateAccountWindow();
+                SaveAccountsToJSON();
+            }
+        }
+
+        private bool IsAccountFormValid()
+        {
+            newAccount_errorStore.Visibility = newAccount_Store.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
+            newAccount_errorEmail.Visibility = newAccount_Email.Text.Length == 0 || newAccount_Email.Text == "" ? Visibility : Visibility.Hidden;
+            newAccount_errorPassword.Visibility = newAccount_Password.Text.Length == 0 || newAccount_Password.Text == "" ? Visibility : Visibility.Hidden;
+
+            if (newAccount_Store.SelectedIndex != -1 && newAccount_Email.Text.Length != 0 && newAccount_Password.Text.Length != 0)
+                return true;
+            else
+                return false;
+        }
+
+        private void GatherAccountInfos(bool isEdited)
+        {
+            var item = (ComboBoxItem)newAccount_Store.SelectedValue;
+            int storeIndex = newAccount_Store.SelectedIndex;
+            string store = (string)item.Content;
+            string email = newAccount_Email.Text;
+            string password = newAccount_Password.Text;
+            if (!isEdited)
+            {
+                accountCounter++;
+                accountList.Add(new Account(accountCounter, store, storeIndex, email, password));
+            }
+            if (isEdited)
+            {
+                accountList[currentAccount.AccountId - 1].UpdateInfo(accountCounter, store, storeIndex, email, password);
+            }
+            RefreshAllContent();
+        }
+
+        private void CloseCreateAccountWindow()
+        {
+            CreateAccountWindow.Visibility = Visibility.Hidden;
+            AccountPageOptions.Visibility = Visibility.Visible;
+            AccountsListView.Visibility = Visibility.Visible;
+        }
+
+        private void DeleteAllAccounts(object sender, RoutedEventArgs e)
+        {
+            accountList.Clear();
+            SaveAccountsToJSON();
+            accountCounter = 0;
+            AccountsListView.ItemsSource = null;
+            AccountsListView.Items.Clear();
+            RefreshAllContent();
+        }
+
+        private void SaveAccountsToJSON()
+        {
+            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userAccounts.json", JsonConvert.SerializeObject(accountList, Formatting.Indented));
+        }
+
+        private void ReadAccountsFromJSON()
+        {
+            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userAccounts.json"))
+            {
+                string json = r.ReadToEnd();
+                accountList = JsonConvert.DeserializeObject<List<Account>>(json);
+            }
+            accountCounter = 0;
+            accountCounter = accountList.Count;
+            RefreshAllContent();
+        }
+
+        #endregion Create Account
+
+        #region Other
+
+        private void AccountsListViewSizeChanged(object sender, RoutedEventArgs e)
+        {
+            ListView listView = sender as ListView;
+            GridView gView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var col1 = 0.05;
+            var col2 = 0.30714;
+            var col3 = 0.30714;
+            var col4 = 0.20714;
+            var col5 = 0.12714;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
+            gView.Columns[2].Width = workingWidth * col3;
+            gView.Columns[3].Width = workingWidth * col4;
+            gView.Columns[4].Width = workingWidth * col5;
+        }
+
+        #endregion Other
+
+        #endregion Accounts
+
         #region global methods
 
         private void RefreshAllContent()
@@ -728,6 +863,10 @@ namespace teeze_bot
             //profiles
             profilesListView.ItemsSource = profileList;
             profilesListView.Items.Refresh();
+
+            //accounts
+            AccountsListView.ItemsSource = accountList;
+            AccountsListView.Items.Refresh();
         }
 
         #endregion global methods
