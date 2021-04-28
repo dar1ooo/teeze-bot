@@ -698,7 +698,7 @@
                             <Label Grid.Row="2" Grid.Column="2" Content="Sizes" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <TextBox x:Name="newTask_Sizes" Grid.Column="2" Grid.Row="3" Style="{StaticResource MyWaterMarkStyle}" Tag="Enter Sizes" Text="{Binding CategorySearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                             <ComboBox x:Name="newTask_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}" SelectionChanged="SelectStore">
-                                <ComboBoxItem Content="Titolo" />
+                                <ComboBoxItem Content="KITH" />
                             </ComboBox>
 
                             <Label Grid.Row="5" Grid.Column="1" Content="Product Name" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
@@ -976,6 +976,124 @@
 
                 <!--#region Accounts Page-->
                 <Grid x:Name="AccountsPage" Visibility="Hidden" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35px" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" x:Name="AccountPageOptions">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="8*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80px" />
+                            <ColumnDefinition Width="80px" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="85px" />
+                        </Grid.ColumnDefinitions>
+                        <Button Content="New Account" Grid.Row="1" Grid.Column="0"  Style="{DynamicResource OptionsButton}" Click="CreateAccountOption_Click"></Button>
+                        <Button Content="Import" Grid.Row="1" Grid.Column="1"  Style="{DynamicResource OptionsButton}"></Button>
+                        <Button Content="Delete All" Grid.Row="1" Grid.Column="5"  Style="{DynamicResource OptionsButton}" Click="DeleteAllAccounts"></Button>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <ListView x:Name="AccountsListView" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="8" SizeChanged="AccountsListViewSizeChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding AccountId}" />
+                                    <GridViewColumn Header="store" DisplayMemberBinding="{Binding Store}" />
+                                    <GridViewColumn Header="e-mail" DisplayMemberBinding="{Binding Email}" />
+                                    <GridViewColumn Header="password" DisplayMemberBinding="{Binding Password}" />
+                                    <GridViewColumn Header="Actions">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Button Content="Edit" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" />
+                                                    <Button Content="Delete" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+
+                    <!--#region Create Account-->
+                    <Grid Grid.Row="1" x:Name="CreateAccountWindow" Visibility="Hidden">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.20*" />
+                            <RowDefinition />
+                            <RowDefinition Height="0.40*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.15*" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="0.15*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="10px" />
+                                <RowDefinition Height="35px" />
+                                <RowDefinition Height="25px" />
+                                <RowDefinition Height="40px" />
+                                <RowDefinition Height="15px" />
+                                <RowDefinition Height="25px" />
+                                <RowDefinition Height="40px" />
+                                <RowDefinition Height="15px" />
+                                <RowDefinition Height="25px" />
+                                <RowDefinition Height="40px" />
+                                <RowDefinition Height="35px" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20px" />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="25px" />
+                                <ColumnDefinition Width="20px" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Row="10" Grid.Column="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="CreateAccountButton" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Create" Margin="50,0,0,0" Click="CreateAccount_Click" />
+                                <Button x:Name="SaveEditedAccountButton" Visibility="Hidden" Grid.Column="1" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Save" Margin="50,0,0,0" />
+                            </Grid>
+                            <Label x:Name="CreateAccountLabel" Grid.Row="1" Grid.Column="1" Content="Create Account" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
+                            <Button x:Name="CancelCreateAccont" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="20px" Width="20px" VerticalAlignment="Center" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="13" FontFamily="Fonts/Dosis" FontWeight="Medium" Margin="0,0,2.5,0" Click="CancleCreateAccount_Click"></Button>
+
+                            <Label Grid.Row="2" Grid.Column="1" Content="Store" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <ComboBox x:Name="newAccount_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
+                                <ComboBoxItem Content="KITH" />
+                            </ComboBox>
+
+                            <Label Grid.Row="5" Grid.Column="1" Content="E-Mail" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray"></Label>
+                            <TextBox x:Name="newAccount_Email" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"></TextBox>
+
+                            <Label Grid.Row="8" Grid.Column="1" Content="Password" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <TextBox x:Name="newAccount_Password" Grid.Row="9" Grid.Column="1"></TextBox>
+
+                            <Label x:Name="newAccount_errorStore" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="4" Grid.Column="1" Content="Please choose a store" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newAccount_errorEmail" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="7" Grid.Column="1" Content="Please enter an email" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Label x:Name="newAccount_errorPassword" HorizontalContentAlignment="Center" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Please enter a Password" VerticalContentAlignment="Center" Foreground="#D32A0E" FontSize="12px" Padding="4,0,0,0" />
+                            <Grid.Background>
+                                <SolidColorBrush Color="#081D26" />
+                            </Grid.Background>
+                        </Grid>
+                    </Grid>
+                    <!--#endregion-->
                 </Grid>
                 <!--#endregion-->
 
