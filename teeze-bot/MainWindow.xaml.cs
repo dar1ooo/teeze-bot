@@ -159,7 +159,7 @@ namespace teeze_bot
 
         #region General Top Options
 
-        private void DeleteAllOption_Click(object sender, RoutedEventArgs e)
+        private void DeleteAllTasks_Click(object sender, RoutedEventArgs e)
         {
             if (taskIdCounter == 0)
             {
@@ -255,7 +255,7 @@ namespace teeze_bot
 
         #region Create Task
 
-        private void CreateTaskOption_Click(object sender, RoutedEventArgs e)
+        private void CreateNewTask_Click(object sender, RoutedEventArgs e)
         {
             if (profileCounter == 0)
             {
@@ -724,6 +724,8 @@ namespace teeze_bot
 
         #region Accounts
 
+        #region General Top Options
+
         #region Create Account
 
         private void CreateAccountOption_Click(object sender, RoutedEventArgs e)
@@ -823,6 +825,34 @@ namespace teeze_bot
         }
 
         #endregion Create Account
+
+        #endregion General Top Options
+
+        #region Account List Options
+
+        private void EditAccount_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentAccount = button.CommandParameter as Account;
+            CreateAccountLabel.Content = "Account " + currentAccount.AccountId.ToString();
+            AccountsListView.Visibility = Visibility.Hidden;
+            AccountPageOptions.Visibility = Visibility.Hidden;
+            SaveEditedAccountButton.Visibility = Visibility.Visible;
+            CreateAccountButton.Visibility = Visibility.Hidden;
+            CreateAccountWindow.Visibility = Visibility.Visible;
+
+            newAccount_Store.SelectedIndex = currentAccount.StoreIndex;
+            newAccount_Email.Text = currentAccount.Email;
+            newAccount_Password.Text = currentAccount.Password;
+        }
+
+        private void SaveEditedAccount_CLick(object sender, RoutedEventArgs e)
+        {
+            GatherAccountInfos(true);
+            CloseCreateAccountWindow();
+        }
+
+        #endregion Account List Options
 
         #region Other
 
