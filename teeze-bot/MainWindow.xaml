@@ -576,6 +576,43 @@
                 </Grid>
                 <!--#endregion-->
 
+                <!--#region Confirm Delete Window-->
+                <Grid x:Name="ConfirmDeleteWindow" Grid.Row="1" Visibility="Hidden">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="200px" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="400px" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40px" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="40px" />
+                            <RowDefinition Height="20px" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20px" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20px" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" x:Name="ConfirmDeleteLabel" Content="Do you want to delete the Task ?" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
+                        <Button Grid.Column="3" Grid.Row="3" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Confirm" Click="Confirm_Click" />
+                        <Button Grid.Column="2" Grid.Row="3" Style="{DynamicResource RoundedButtonStyle}" Background="Wheat" Foreground="Gray" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Cancel" Click="CancelConfirm_Click" />
+                        <Grid.Background>
+                            <SolidColorBrush Color="#081D26" />
+                        </Grid.Background>
+                    </Grid>
+                </Grid>
+                <!--#endregion-->
+
                 <!--#region Tasks Page-->
                 <Grid x:Name="TaskPage" Visibility="Visible" Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -732,43 +769,6 @@
                         </Grid>
                     </Grid>
                     <!--#endregion-->
-
-                    <!--#region Confirm Delete Window-->
-                    <Grid x:Name="ConfirmDeleteWindow" Grid.Row="1" Visibility="Hidden">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="200px" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="400px" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40px" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="40px" />
-                                <RowDefinition Height="20px" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20px" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="20px" />
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" x:Name="ConfirmDeleteLabel" Content="Do you want to delete the Task ?" VerticalAlignment="Center" FontWeight="UltraBlack" FontSize="20px" Foreground="FloralWhite" />
-                            <Button Grid.Column="3" Grid.Row="3" Style="{DynamicResource RoundedButtonStyle}" Background="ForestGreen" Foreground="Wheat" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Confirm" Click="Confirm_Click" />
-                            <Button Grid.Column="2" Grid.Row="3" Style="{DynamicResource RoundedButtonStyle}" Background="Wheat" Foreground="Gray" FontWeight="Bold" FontSize="15px" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="Cancel" Click="CancelConfirm_Click" />
-                            <Grid.Background>
-                                <SolidColorBrush Color="#081D26" />
-                            </Grid.Background>
-                        </Grid>
-                    </Grid>
-                    <!--#endregion-->
                 </Grid>
                 <!--#endregion-->
 
@@ -838,7 +838,7 @@
                         </Grid.ColumnDefinitions>
                         <Button Content="New Profile" Grid.Row="1" Grid.Column="0"  Style="{DynamicResource OptionsButton}" Click="CreateProfileOption_Click"></Button>
                         <Button Content="Import" Grid.Row="1" Grid.Column="1"  Style="{DynamicResource OptionsButton}"></Button>
-                        <Button Content="Delete All" Grid.Row="1" Grid.Column="5"  Style="{DynamicResource OptionsButton}" Click="DeleteAllProfiles"></Button>
+                        <Button Content="Delete All" Grid.Row="1" Grid.Column="5"  Style="{DynamicResource OptionsButton}" Click="DeleteAllProfiles_Click"></Button>
                     </Grid>
                     <Grid Grid.Row="1" x:Name="ProfilePageList">
                         <Grid.RowDefinitions>
@@ -861,7 +861,7 @@
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Button Content="Edit" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" Click="EditProfile_Click" />
-                                                    <Button Content="Delete" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" />
+                                                    <Button Content="Delete" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" Click="DeleteSpecificProfile_Click" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -997,9 +997,9 @@
                         </Grid.ColumnDefinitions>
                         <Button Content="New Account" Grid.Row="1" Grid.Column="0"  Style="{DynamicResource OptionsButton}" Click="CreateAccountOption_Click"></Button>
                         <Button Content="Import" Grid.Row="1" Grid.Column="1"  Style="{DynamicResource OptionsButton}"></Button>
-                        <Button Content="Delete All" Grid.Row="1" Grid.Column="5"  Style="{DynamicResource OptionsButton}" Click="DeleteAllAccounts"></Button>
+                        <Button Content="Delete All" Grid.Row="1" Grid.Column="5"  Style="{DynamicResource OptionsButton}" Click="DeleteAllAccounts_Click"></Button>
                     </Grid>
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" x:Name="AccountPageList">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
@@ -1019,7 +1019,7 @@
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Button Content="Edit" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" Click="EditAccount_Click" />
-                                                    <Button Content="Delete" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" />
+                                                    <Button Content="Delete" CommandParameter="{Binding}" Style="{DynamicResource ListOptionsButton}" Click="DeleteSpecificAccount_Click" />
                                                 </StackPanel>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
