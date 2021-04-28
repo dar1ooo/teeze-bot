@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using teeze_bot.classes;
+using teeze_bot.classes.enums;
 
 namespace teeze_bot
 {
@@ -21,13 +22,12 @@ namespace teeze_bot
         private TaskInfo currentTask = new TaskInfo();
         private Profile currentProfile = new Profile();
         private Account currentAccount = new Account();
+        private Confirm confirm = 0;
 
         private int taskIdCounter = 0;
         private int profileCounter = 0;
         private int accountCounter = 0;
         private int runningTasks = 0;
-        private bool deleteAllTasks = false;
-        private bool deleteSpecificTask = false;
 
         #endregion Global Variables
 
@@ -51,6 +51,7 @@ namespace teeze_bot
         {
             SaveTasksToJSON();
             SaveProfilesToJSON();
+            SaveAccountsToJSON();
         }
 
         #endregion Teeze Opened and Closed
@@ -159,7 +160,7 @@ namespace teeze_bot
 
         #region General Top Options
 
-        private void DeleteAllOption_Click(object sender, RoutedEventArgs e)
+        private void DeleteAllTasks_Click(object sender, RoutedEventArgs e)
         {
             if (taskIdCounter == 0)
             {
@@ -167,34 +168,12 @@ namespace teeze_bot
             }
             else
             {
-                deleteAllTasks = true;
+                confirm = Confirm.DeleteAllTasks;
                 TaskPageOptions.Visibility = Visibility.Hidden;
                 TaskPageList.Visibility = Visibility.Hidden;
                 ConfirmDeleteWindow.Visibility = Visibility.Visible;
                 ConfirmDeleteLabel.Content = "Do you want to delete all tasks ?";
             }
-        }
-
-        private void Confirm_Click(object sender, RoutedEventArgs e)
-        {
-            TaskPageOptions.Visibility = Visibility.Visible;
-            TaskPageList.Visibility = Visibility.Visible;
-            ConfirmDeleteWindow.Visibility = Visibility.Hidden;
-            if (deleteAllTasks)
-            {
-                DeleteAllTasks();
-            }
-            else if (deleteSpecificTask)
-            {
-                DeleteSpecificTask();
-            }
-        }
-
-        private void CancelConfirm_Click(object sender, RoutedEventArgs e)
-        {
-            ConfirmDeleteWindow.Visibility = Visibility.Hidden;
-            TaskPageOptions.Visibility = Visibility.Visible;
-            TaskPageList.Visibility = Visibility.Visible;
         }
 
         private void DeleteAllTasks()
@@ -224,13 +203,14 @@ namespace teeze_bot
                 taskIdCounter = 0;
                 taskListView.ItemsSource = null;
                 taskListView.Items.Clear();
-                taskListView.Items.Refresh();
+                RefreshAllContent();
             }
             else
             {
                 MessageBox.Show("There are still tasks running. Please end them first");
             }
-            deleteAllTasks = false;
+            TaskPageOptions.Visibility = Visibility.Visible;
+            TaskPageList.Visibility = Visibility.Visible;
         }
 
         private void StopAllOptions_Click(object sender, RoutedEventArgs e)
@@ -255,7 +235,7 @@ namespace teeze_bot
 
         #region Create Task
 
-        private void CreateTaskOption_Click(object sender, RoutedEventArgs e)
+        private void CreateNewTask_Click(object sender, RoutedEventArgs e)
         {
             if (profileCounter == 0)
             {
@@ -466,11 +446,11 @@ namespace teeze_bot
             currentTask = button.CommandParameter as TaskInfo;
             if (!kithTasks[currentTask.TaskId - 1].InProgress)
             {
+                confirm = Confirm.DeleteSpecificTask;
                 TaskPageOptions.Visibility = Visibility.Hidden;
                 TaskPageList.Visibility = Visibility.Hidden;
                 ConfirmDeleteWindow.Visibility = Visibility.Visible;
                 ConfirmDeleteLabel.Content = "Do you want to delete this task ?";
-                deleteSpecificTask = true;
             }
             else
             {
@@ -481,7 +461,6 @@ namespace teeze_bot
         private void DeleteSpecificTask()
         {
             taskList.Remove(currentTask);
-            RefreshAllContent();
             taskIdCounter--;
             foreach (TaskInfo deletedTaskList in taskList)
             {
@@ -490,8 +469,10 @@ namespace teeze_bot
                     deletedTaskList.TaskId--;
                 }
             }
-
-            deleteSpecificTask = false;
+            RefreshAllContent();
+            RefreshAllContent();
+            TaskPageOptions.Visibility = Visibility.Visible;
+            TaskPageList.Visibility = Visibility.Visible;
         }
 
         private void StartOrEndTask_Click(object sender, RoutedEventArgs e)
@@ -535,6 +516,131 @@ namespace teeze_bot
         #endregion Task
 
         #region Profiles
+
+        #region Top Profile Options
+
+        private void DeleteAllProfiles_Click(object sender, RoutedEventArgs e)
+        {
+            bool anyProfileInUseTask = false;
+
+            foreach (TaskInfo task in taskList)
+            {
+                foreach (Profile profile in profileList)
+                {
+                    if (profile.FullName == task.Profile)
+                    {
+                        anyProfileInUseTask = true;
+                    }
+                }
+            }
+
+            if (profileCounter == 0)
+            {
+                MessageBox.Show("There are no profiles to delete");
+            }
+            else if (anyProfileInUseTask)
+            {
+                MessageBox.Show("Cannot delete all profiles because some are used in Tasks");
+            }
+            else
+            {
+                confirm = Confirm.DeleteAllProfiles;
+                ProfilePageOptions.Visibility = Visibility.Hidden;
+                ProfilePageList.Visibility = Visibility.Hidden;
+                ConfirmDeleteWindow.Visibility = Visibility.Visible;
+                ConfirmDeleteLabel.Content = "Do you want to delete all profiles ?";
+            }
+        }
+
+        private void DeleteAllProfiles()
+        {
+            profileList.Clear();
+            SaveProfilesToJSON();
+            profileCounter = 0;
+            profilesListView.ItemsSource = null;
+            profilesListView.Items.Clear();
+            RefreshAllContent();
+            ProfilePageOptions.Visibility = Visibility.Visible;
+            ProfilePageList.Visibility = Visibility.Visible;
+        }
+
+        #endregion Top Profile Options
+
+        #region Profile List Options
+
+        private void EditProfile_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentProfile = button.CommandParameter as Profile;
+            CreateProfileLabel.Content = "Profile " + currentProfile.ProfileNumber.ToString();
+            ProfilePageList.Visibility = Visibility.Hidden;
+            ProfilePageOptions.Visibility = Visibility.Hidden;
+            SaveEditedProfileButton.Visibility = Visibility.Visible;
+            CreateProfileButton.Visibility = Visibility.Hidden;
+            CreateProfileWindow.Visibility = Visibility.Visible;
+
+            newProfile_Firstname.Text = currentProfile.Firstname;
+            newProfile_Lastname.Text = currentProfile.Lastname;
+            newProfile_EMail.Text = currentProfile.EMail;
+            newProfile_Phone.Text = currentProfile.Phone;
+            newProfile_Address1.Text = currentProfile.Address1;
+            newProfile_Address2.Text = currentProfile.Address2;
+            newProfile_City.Text = currentProfile.City;
+            newProfile_ZIP.Text = currentProfile.ZIP;
+            newProfile_Country.SelectedIndex = currentProfile.CountryIndex;
+        }
+
+        private void SaveEditedProfile_CLick(object sender, RoutedEventArgs e)
+        {
+            GatherProfileInfos(true);
+            CloseCreateProfileWindow();
+        }
+
+        private void DeleteSpecificProfile_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentProfile = button.CommandParameter as Profile;
+            bool anyProfileInUse = false;
+
+            foreach (TaskInfo task in taskList)
+            {
+                if (task.Profile == currentProfile.FullName)
+                {
+                    anyProfileInUse = true;
+                }
+            }
+
+            if (!anyProfileInUse)
+            {
+                confirm = Confirm.DeleteSpecificProfile;
+                ProfilePageOptions.Visibility = Visibility.Hidden;
+                ProfilePageList.Visibility = Visibility.Hidden;
+                ConfirmDeleteWindow.Visibility = Visibility.Visible;
+                ConfirmDeleteLabel.Content = "Do you want to delete this profile ?";
+            }
+            else if (anyProfileInUse)
+            {
+                MessageBox.Show("Cannot delete this profile because it is used in a task");
+            }
+        }
+
+        private void DeleteSpecificProfile()
+        {
+            profileList.Remove(currentProfile);
+            profileCounter--;
+            foreach (Profile profile in profileList)
+            {
+                if (profile.ProfileNumber > currentProfile.ProfileNumber)
+                {
+                    profile.ProfileNumber--;
+                }
+            }
+            RefreshAllContent();
+            ProfilePageOptions.Visibility = Visibility.Visible;
+            ProfilePageList.Visibility = Visibility.Visible;
+        }
+
+        #endregion Profile List Options
 
         #region Create Profile
 
@@ -634,66 +740,7 @@ namespace teeze_bot
             ProfilePageList.Visibility = Visibility.Visible;
         }
 
-        private void DeleteAllProfiles(object sender, RoutedEventArgs e)
-        {
-            profileList.Clear();
-            SaveProfilesToJSON();
-            profileCounter = 0;
-            profilesListView.ItemsSource = null;
-            profilesListView.Items.Clear();
-            RefreshAllContent();
-        }
-
-        private void SaveProfilesToJSON()
-        {
-            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json", JsonConvert.SerializeObject(profileList, Formatting.Indented));
-        }
-
-        private void ReadProfilesFromJSON()
-        {
-            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json"))
-            {
-                string json = r.ReadToEnd();
-                profileList = JsonConvert.DeserializeObject<List<Profile>>(json);
-            }
-            profileCounter = 0;
-            profileCounter = profileList.Count;
-            RefreshAllContent();
-        }
-
         #endregion Create Profile
-
-        #region Profile List Options
-
-        private void EditProfile_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            currentProfile = button.CommandParameter as Profile;
-            CreateProfileLabel.Content = "Profile " + currentProfile.ProfileNumber.ToString();
-            ProfilePageList.Visibility = Visibility.Hidden;
-            ProfilePageOptions.Visibility = Visibility.Hidden;
-            SaveEditedProfileButton.Visibility = Visibility.Visible;
-            CreateProfileButton.Visibility = Visibility.Hidden;
-            CreateProfileWindow.Visibility = Visibility.Visible;
-
-            newProfile_Firstname.Text = currentProfile.Firstname;
-            newProfile_Lastname.Text = currentProfile.Lastname;
-            newProfile_EMail.Text = currentProfile.EMail;
-            newProfile_Phone.Text = currentProfile.Phone;
-            newProfile_Address1.Text = currentProfile.Address1;
-            newProfile_Address2.Text = currentProfile.Address2;
-            newProfile_City.Text = currentProfile.City;
-            newProfile_ZIP.Text = currentProfile.ZIP;
-            newProfile_Country.SelectedIndex = currentProfile.CountryIndex;
-        }
-
-        private void SaveEditedProfile_CLick(object sender, RoutedEventArgs e)
-        {
-            GatherProfileInfos(true);
-            CloseCreateProfileWindow();
-        }
-
-        #endregion Profile List Options
 
         #region Other
 
@@ -718,11 +765,30 @@ namespace teeze_bot
             gView.Columns[5].Width = workingWidth * col6;
         }
 
+        private void SaveProfilesToJSON()
+        {
+            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json", JsonConvert.SerializeObject(profileList, Formatting.Indented));
+        }
+
+        private void ReadProfilesFromJSON()
+        {
+            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json"))
+            {
+                string json = r.ReadToEnd();
+                profileList = JsonConvert.DeserializeObject<List<Profile>>(json);
+            }
+            profileCounter = 0;
+            profileCounter = profileList.Count;
+            RefreshAllContent();
+        }
+
         #endregion Other
 
         #endregion Profiles
 
         #region Accounts
+
+        #region Account Top Options
 
         #region Create Account
 
@@ -824,6 +890,126 @@ namespace teeze_bot
 
         #endregion Create Account
 
+        private void DeleteAllAccounts_Click(object sender, RoutedEventArgs e)
+        {
+            bool anyAccountInUseTask = false;
+
+            foreach (TaskInfo task in taskList)
+            {
+                foreach (Account Account in accountList)
+                {
+                    if (Account.Email == task.Account)
+                    {
+                        anyAccountInUseTask = true;
+                    }
+                }
+            }
+
+            if (accountCounter == 0)
+            {
+                MessageBox.Show("There are no Accounts to delete");
+            }
+            else if (anyAccountInUseTask)
+            {
+                MessageBox.Show("Cannot delete all Accounts because some are used in Tasks");
+            }
+            else
+            {
+                confirm = Confirm.DeleteAllAccounts;
+                AccountPageOptions.Visibility = Visibility.Hidden;
+                AccountPageList.Visibility = Visibility.Hidden;
+                ConfirmDeleteWindow.Visibility = Visibility.Visible;
+                ConfirmDeleteLabel.Content = "Do you want to delete all Accounts ?";
+            }
+        }
+
+        private void DeleteAllAccounts()
+        {
+            accountList.Clear();
+            SaveAccountsToJSON();
+            accountCounter = 0;
+            AccountsListView.ItemsSource = null;
+            AccountsListView.Items.Clear();
+            RefreshAllContent();
+            AccountPageOptions.Visibility = Visibility.Visible;
+            AccountPageList.Visibility = Visibility.Visible;
+        }
+
+        #endregion Account Top Options
+
+        #region Account List Options
+
+        private void EditAccount_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentAccount = button.CommandParameter as Account;
+            CreateAccountLabel.Content = "Account " + currentAccount.AccountId.ToString();
+            AccountsListView.Visibility = Visibility.Hidden;
+            AccountPageOptions.Visibility = Visibility.Hidden;
+            SaveEditedAccountButton.Visibility = Visibility.Visible;
+            CreateAccountButton.Visibility = Visibility.Hidden;
+            CreateAccountWindow.Visibility = Visibility.Visible;
+
+            newAccount_Store.SelectedIndex = currentAccount.StoreIndex;
+            newAccount_Email.Text = currentAccount.Email;
+            newAccount_Password.Text = currentAccount.Password;
+        }
+
+        private void SaveEditedAccount_CLick(object sender, RoutedEventArgs e)
+        {
+            GatherAccountInfos(true);
+            CloseCreateAccountWindow();
+        }
+
+        private void DeleteSpecificAccount_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            currentAccount = button.CommandParameter as Account;
+            bool anyAccountInUse = false;
+
+            foreach (TaskInfo task in taskList)
+            {
+                foreach (Account Account in accountList)
+                {
+                    if (Account.Email == task.Account)
+                    {
+                        anyAccountInUse = true;
+                    }
+                }
+            }
+
+            if (!anyAccountInUse)
+            {
+                confirm = Confirm.DeleteSpecificAccount;
+                AccountPageOptions.Visibility = Visibility.Hidden;
+                AccountPageList.Visibility = Visibility.Hidden;
+                ConfirmDeleteWindow.Visibility = Visibility.Visible;
+                ConfirmDeleteLabel.Content = "Do you want to delete this Account ?";
+            }
+            else if (anyAccountInUse)
+            {
+                MessageBox.Show("Cannot delete this Account because it is used in a task");
+            }
+        }
+
+        private void DeleteSpecificAccount()
+        {
+            accountList.Remove(currentAccount);
+            accountCounter--;
+            foreach (Account Account in accountList)
+            {
+                if (Account.AccountId > currentAccount.AccountId)
+                {
+                    Account.AccountId--;
+                }
+            }
+            RefreshAllContent();
+            AccountPageOptions.Visibility = Visibility.Visible;
+            AccountPageList.Visibility = Visibility.Visible;
+        }
+
+        #endregion Account List Options
+
         #region Other
 
         private void AccountsListViewSizeChanged(object sender, RoutedEventArgs e)
@@ -867,6 +1053,83 @@ namespace teeze_bot
             //accounts
             AccountsListView.ItemsSource = accountList;
             AccountsListView.Items.Refresh();
+        }
+
+        private void Confirm_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmDeleteWindow.Visibility = Visibility.Hidden;
+            switch (confirm)
+            {
+                case Confirm.DeleteAllTasks:
+                    DeleteAllTasks();
+                    break;
+
+                case Confirm.DeleteSpecificTask:
+                    DeleteSpecificTask();
+                    break;
+
+                case Confirm.DeleteAllProfiles:
+                    DeleteAllProfiles();
+                    break;
+
+                case Confirm.DeleteSpecificProfile:
+                    DeleteSpecificProfile();
+                    break;
+
+                case Confirm.DeleteAllAccounts:
+                    DeleteAllAccounts();
+                    break;
+
+                case Confirm.DeleteSpecificAccount:
+                    DeleteSpecificAccount();
+                    break;
+
+                default:
+                    MessageBox.Show("This command does not exist yet");
+                    break;
+            }
+        }
+
+        private void CancelConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            ConfirmDeleteWindow.Visibility = Visibility.Hidden;
+
+            switch (confirm)
+            {
+                case Confirm.DeleteAllTasks:
+                    TaskPageOptions.Visibility = Visibility.Visible;
+                    TaskPageList.Visibility = Visibility.Visible;
+                    break;
+
+                case Confirm.DeleteSpecificTask:
+                    TaskPageOptions.Visibility = Visibility.Visible;
+                    TaskPageList.Visibility = Visibility.Visible;
+                    break;
+
+                case Confirm.DeleteAllProfiles:
+                    ProfilePageOptions.Visibility = Visibility.Visible;
+                    ProfilePageList.Visibility = Visibility.Visible;
+                    break;
+
+                case Confirm.DeleteSpecificProfile:
+                    ProfilePageOptions.Visibility = Visibility.Visible;
+                    ProfilePageList.Visibility = Visibility.Visible;
+                    break;
+
+                case Confirm.DeleteAllAccounts:
+                    AccountPageOptions.Visibility = Visibility.Visible;
+                    AccountPageList.Visibility = Visibility.Visible;
+                    break;
+
+                case Confirm.DeleteSpecificAccount:
+                    AccountPageOptions.Visibility = Visibility.Visible;
+                    AccountPageList.Visibility = Visibility.Visible;
+                    break;
+
+                default:
+                    MessageBox.Show("This command does not exist yet");
+                    break;
+            }
         }
 
         #endregion global methods

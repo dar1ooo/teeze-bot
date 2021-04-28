@@ -1,17 +1,1 @@
-[
-  {
-    "ProfileNumber": 1,
-    "Firstname": "dada",
-    "Lastname": "sdasda",
-    "FullName": "dada sdasda",
-    "EMail": "sdasda",
-    "Phone": "sdasda",
-    "Address1": "sdasdasd",
-    "Address2": "sdasda",
-    "City": "sdasda",
-    "ZIP": "asda",
-    "Country": "Switzerland",
-    "CountryIndex": 0,
-    "DateCreated": "4-28-2021"
-  }
-]
+[]
