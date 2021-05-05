@@ -43,7 +43,7 @@ namespace teeze_bot.classes
             }
             catch
             {
-                MessageBox.Show("An error has occured. Please end the Task");
+                MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart and end the Task");
             }
         }
 

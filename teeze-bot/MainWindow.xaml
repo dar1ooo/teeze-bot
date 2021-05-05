@@ -732,10 +732,11 @@
                             <Button x:Name="CancelCreateTask" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="20px" Width="20px" VerticalAlignment="Center" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="13" FontFamily="Fonts/Dosis" FontWeight="Medium" Click="CancelCreateTask_Click" Margin="0,0,2.5,0"></Button>
 
                             <Label Grid.Row="2" Grid.Column="1" Content="Store" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <Label Grid.Row="2" Grid.Column="2" Content="Sizes" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <Label x:Name="newTask_SizesLabel" Grid.Row="2" Grid.Column="2" Content="Sizes" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <TextBox x:Name="newTask_Sizes" Grid.Column="2" Grid.Row="3" Style="{StaticResource MyWaterMarkStyle}" Tag="Enter Sizes" Text="{Binding CategorySearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                            <ComboBox x:Name="newTask_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}" SelectionChanged="SelectStore">
+                            <ComboBox x:Name="newTask_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}" SelectionChanged="SelectStoreSelectStore">
                                 <ComboBoxItem Content="KITH" />
+                                <ComboBoxItem Content="Digitec" />
                             </ComboBox>
 
                             <Label Grid.Row="5" Grid.Column="1" Content="Product Name" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
@@ -1077,6 +1078,7 @@
                             <Label Grid.Row="2" Grid.Column="1" Content="Store" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <ComboBox x:Name="newAccount_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
                                 <ComboBoxItem Content="KITH" />
+                                <ComboBoxItem Content="Digitec" />
                             </ComboBox>
 
                             <Label Grid.Row="5" Grid.Column="1" Content="E-Mail" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray"></Label>
