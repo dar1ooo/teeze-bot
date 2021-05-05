@@ -7,9 +7,9 @@ namespace teeze_bot.classes
 {
     public class KithTask
     {
-        private readonly TaskInfo taskinfo = new TaskInfo();
-        private IWebDriver driver;
-        private bool InProgress = false;
+        public TaskInfo taskinfo = new TaskInfo();
+        public IWebDriver driver;
+        public bool InProgress = false;
 
         public void StartTask()
         {
