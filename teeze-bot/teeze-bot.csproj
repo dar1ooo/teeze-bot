@@ -9,8 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Data\userAccounts.json" />
     <None Remove="Images\sneaker.png" />
     <None Remove="Images\usericon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\userAccounts.json" />
   </ItemGroup>
 
   <ItemGroup>

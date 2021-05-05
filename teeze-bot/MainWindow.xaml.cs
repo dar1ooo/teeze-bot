@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -114,6 +115,7 @@ namespace teeze_bot
                     ProxiesPage.Visibility = Visibility.Hidden;
                     ProfilesPage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Hidden;
+                    RafflePage.Visibility = Visibility.Hidden;
                     SettingsPage.Visibility = Visibility.Hidden;
                     break;
 
@@ -122,6 +124,7 @@ namespace teeze_bot
                     ProxiesPage.Visibility = Visibility.Visible;
                     ProfilesPage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Hidden;
+                    RafflePage.Visibility = Visibility.Hidden;
                     SettingsPage.Visibility = Visibility.Hidden;
                     break;
 
@@ -129,6 +132,7 @@ namespace teeze_bot
                     TaskPage.Visibility = Visibility.Hidden;
                     ProxiesPage.Visibility = Visibility.Hidden;
                     ProfilesPage.Visibility = Visibility.Visible;
+                    RafflePage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Hidden;
                     SettingsPage.Visibility = Visibility.Hidden;
                     break;
@@ -138,6 +142,16 @@ namespace teeze_bot
                     ProxiesPage.Visibility = Visibility.Hidden;
                     ProfilesPage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Visible;
+                    RafflePage.Visibility = Visibility.Hidden;
+                    SettingsPage.Visibility = Visibility.Hidden;
+                    break;
+
+                case "Raffle":
+                    TaskPage.Visibility = Visibility.Hidden;
+                    ProxiesPage.Visibility = Visibility.Hidden;
+                    ProfilesPage.Visibility = Visibility.Hidden;
+                    AccountsPage.Visibility = Visibility.Hidden;
+                    RafflePage.Visibility = Visibility.Visible;
                     SettingsPage.Visibility = Visibility.Hidden;
                     break;
 
@@ -146,6 +160,7 @@ namespace teeze_bot
                     ProxiesPage.Visibility = Visibility.Hidden;
                     ProfilesPage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Hidden;
+                    RafflePage.Visibility = Visibility.Hidden;
                     SettingsPage.Visibility = Visibility.Visible;
                     break;
 
@@ -379,12 +394,12 @@ namespace teeze_bot
 
         private void SaveTasksToJSON()
         {
-            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTasks.json", JsonConvert.SerializeObject(taskList, Formatting.Indented));
+            File.WriteAllText(@"E:\teeze-bot\teeze-bot\teeze-bot\Data\userTasks.json", JsonConvert.SerializeObject(taskList, Formatting.Indented));
         }
 
         private void ReadTasksFromJSON()
         {
-            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTasks.json"))
+            using (StreamReader r = new StreamReader(@"E:\teeze-bot\teeze-bot\teeze-bot\Data\userTasks.json"))
             {
                 string json = r.ReadToEnd();
                 taskList = JsonConvert.DeserializeObject<List<TaskInfo>>(json);
@@ -791,12 +806,12 @@ namespace teeze_bot
 
         private void SaveProfilesToJSON()
         {
-            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json", JsonConvert.SerializeObject(profileList, Formatting.Indented));
+            File.WriteAllText(@"E:\teeze-bot\teeze-bot\teeze-bot\Data\userProfiles.json", JsonConvert.SerializeObject(profileList, Formatting.Indented));
         }
 
         private void ReadProfilesFromJSON()
         {
-            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userProfiles.json"))
+            using (StreamReader r = new StreamReader(@"E:\teeze-bot\teeze-bot\teeze-bot\Data\userProfiles.json"))
             {
                 string json = r.ReadToEnd();
                 profileList = JsonConvert.DeserializeObject<List<Profile>>(json);
@@ -897,12 +912,12 @@ namespace teeze_bot
 
         private void SaveAccountsToJSON()
         {
-            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userAccounts.json", JsonConvert.SerializeObject(accountList, Formatting.Indented));
+            File.WriteAllText(@"E:\teeze-bot\teeze-bot\teeze-bot\Data\userAccounts.json", JsonConvert.SerializeObject(accountList, Formatting.Indented));
         }
 
         private void ReadAccountsFromJSON()
         {
-            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userAccounts.json"))
+            using (StreamReader r = new StreamReader(@"E:\teeze-bot\teeze-bot\teeze-bot\Data\userAccounts.json"))
             {
                 string json = r.ReadToEnd();
                 accountList = JsonConvert.DeserializeObject<List<Account>>(json);
