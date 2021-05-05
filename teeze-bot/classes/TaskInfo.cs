@@ -1,10 +1,12 @@
-﻿namespace teeze_bot.classes
+﻿using teeze_bot.classes.enums;
+
+namespace teeze_bot.classes
 {
     public class TaskInfo
     {
         public int TaskId { get; set; }
         public string Store { get; set; }
-        public int StoreIndex { get; set; }
+        public StoreType storeType;
         public string Productname { get; set; }
         public string ProductLink { get; set; }
         public string ShoeSizes { get; set; }
@@ -24,7 +26,7 @@
         {
             TaskId = taskId;
             Store = store;
-            StoreIndex = storeIndex;
+            storeType = (StoreType)storeIndex;
             ShoeSizes = shoeSize;
             Productname = productname;
             ProductLink = productLink;
@@ -41,7 +43,7 @@
         {
             TaskId = taskId;
             Store = store;
-            StoreIndex = storeIndex;
+            storeType = (StoreType)storeIndex;
             ShoeSizes = shoeSize;
             Productname = productname;
             ProductLink = productLink;

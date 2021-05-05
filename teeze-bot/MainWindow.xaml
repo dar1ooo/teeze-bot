@@ -638,7 +638,7 @@
                             <ColumnDefinition Width="85px" />
                             <ColumnDefinition Width="85px" />
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="StartAllTasksButton" Grid.Column="3" Grid.Row="1" Content="Start All"  Style="{DynamicResource OptionsButton}"></Button>
+                        <Button x:Name="StartAllTasksButton" Grid.Column="3" Grid.Row="1" Content="Start All"  Style="{DynamicResource OptionsButton}" Click="StartAllTasks_Click"></Button>
                         <Button x:Name="StopAllTasksButton" Grid.Column="4" Grid.Row="1" Content="Stop All"  Style="{DynamicResource OptionsButton}" Click="StopAllOptions_Click"></Button>
                         <Button x:Name="DeleteAllTasksButton" Grid.Column="5" Grid.Row="1" Content="Delete All"  Style="{DynamicResource OptionsButton}" Click="DeleteAllTasks_Click"></Button>
                         <Button x:Name="CreateTaskTasksButton" Grid.Column="0" Grid.Row="1" Content="New Task"  Style="{DynamicResource OptionsButton}" Click="CreateNewTask_Click"></Button>
@@ -732,10 +732,11 @@
                             <Button x:Name="CancelCreateTask" Style="{DynamicResource ApplicationButtonStyle}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Right" Height="20px" Width="20px" VerticalAlignment="Center" BorderThickness="0" Background="#09161f" Content="✖" Foreground="DeepSkyBlue" FontSize="13" FontFamily="Fonts/Dosis" FontWeight="Medium" Click="CancelCreateTask_Click" Margin="0,0,2.5,0"></Button>
 
                             <Label Grid.Row="2" Grid.Column="1" Content="Store" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
-                            <Label Grid.Row="2" Grid.Column="2" Content="Sizes" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
+                            <Label x:Name="newTask_SizesLabel" Grid.Row="2" Grid.Column="2" Content="Sizes" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <TextBox x:Name="newTask_Sizes" Grid.Column="2" Grid.Row="3" Style="{StaticResource MyWaterMarkStyle}" Tag="Enter Sizes" Text="{Binding CategorySearch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
-                            <ComboBox x:Name="newTask_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}" SelectionChanged="SelectStore">
+                            <ComboBox x:Name="newTask_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}" SelectionChanged="SelectStoreSelectStore">
                                 <ComboBoxItem Content="KITH" />
+                                <ComboBoxItem Content="Digitec" />
                             </ComboBox>
 
                             <Label Grid.Row="5" Grid.Column="1" Content="Product Name" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
@@ -1077,6 +1078,7 @@
                             <Label Grid.Row="2" Grid.Column="1" Content="Store" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray" />
                             <ComboBox x:Name="newAccount_Store" Grid.Row="3" Grid.Column="1" IsEditable="False" Style="{DynamicResource theComboBox}" ItemContainerStyle="{DynamicResource theComboBoxItem}">
                                 <ComboBoxItem Content="KITH" />
+                                <ComboBoxItem Content="Digitec" />
                             </ComboBox>
 
                             <Label Grid.Row="5" Grid.Column="1" Content="E-Mail" VerticalAlignment="Center" FontWeight="DemiBold" FontSize="13px" Foreground="LightSlateGray"></Label>
@@ -1094,6 +1096,11 @@
                         </Grid>
                     </Grid>
                     <!--#endregion-->
+                </Grid>
+                <!--#endregion-->
+
+                <!--#region Raffle Page-->
+                <Grid x:Name="RafflePage" Visibility="Hidden" Grid.Row="1">
                 </Grid>
                 <!--#endregion-->
 
@@ -1146,6 +1153,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition x:Name="LogoUserName" Height="100"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -1219,7 +1227,10 @@
                 <Grid x:Name="AccountsGrid" Grid.Row="5">
                     <Button x:Name="Accounts" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Accounts" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
-                <Grid x:Name="SettingsGrid" Grid.Row="7">
+                <Grid x:Name="RaffleGrid" Grid.Row="6">
+                    <Button x:Name="Raffle" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Raffle Bot" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
+                </Grid>
+                <Grid x:Name="SettingsGrid" Grid.Row="8">
                     <Button x:Name="Settings" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Settings" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
             </Grid>

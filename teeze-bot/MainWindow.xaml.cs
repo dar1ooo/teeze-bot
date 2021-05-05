@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using teeze_bot.classes;
 using teeze_bot.classes.enums;
+using teeze_bot.Modules;
 
 namespace teeze_bot
 {
@@ -18,6 +19,7 @@ namespace teeze_bot
         private List<TaskInfo> taskList = new List<TaskInfo>();
         private List<Profile> profileList = new List<Profile>();
         private List<KithTask> kithTasks = new List<KithTask>();
+        private List<DigitecTask> digitecTasks = new List<DigitecTask>();
         private List<Account> accountList = new List<Account>();
         private TaskInfo currentTask = new TaskInfo();
         private Profile currentProfile = new Profile();
@@ -72,6 +74,13 @@ namespace teeze_bot
                         anyTaskInProgress = titoloTask.InProgress;
                     }
                 }
+                foreach (DigitecTask digitecTask in digitecTasks)
+                {
+                    if (!anyTaskInProgress)
+                    {
+                        anyTaskInProgress = digitecTask.InProgress;
+                    }
+                }
                 if (!anyTaskInProgress)
                 {
                     noRunningTaskFound = true;
@@ -114,6 +123,7 @@ namespace teeze_bot
                     ProxiesPage.Visibility = Visibility.Hidden;
                     ProfilesPage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Hidden;
+                    RafflePage.Visibility = Visibility.Hidden;
                     SettingsPage.Visibility = Visibility.Hidden;
                     break;
 
@@ -122,6 +132,7 @@ namespace teeze_bot
                     ProxiesPage.Visibility = Visibility.Visible;
                     ProfilesPage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Hidden;
+                    RafflePage.Visibility = Visibility.Hidden;
                     SettingsPage.Visibility = Visibility.Hidden;
                     break;
 
@@ -129,6 +140,7 @@ namespace teeze_bot
                     TaskPage.Visibility = Visibility.Hidden;
                     ProxiesPage.Visibility = Visibility.Hidden;
                     ProfilesPage.Visibility = Visibility.Visible;
+                    RafflePage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Hidden;
                     SettingsPage.Visibility = Visibility.Hidden;
                     break;
@@ -138,6 +150,16 @@ namespace teeze_bot
                     ProxiesPage.Visibility = Visibility.Hidden;
                     ProfilesPage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Visible;
+                    RafflePage.Visibility = Visibility.Hidden;
+                    SettingsPage.Visibility = Visibility.Hidden;
+                    break;
+
+                case "Raffle":
+                    TaskPage.Visibility = Visibility.Hidden;
+                    ProxiesPage.Visibility = Visibility.Hidden;
+                    ProfilesPage.Visibility = Visibility.Hidden;
+                    AccountsPage.Visibility = Visibility.Hidden;
+                    RafflePage.Visibility = Visibility.Visible;
                     SettingsPage.Visibility = Visibility.Hidden;
                     break;
 
@@ -146,10 +168,12 @@ namespace teeze_bot
                     ProxiesPage.Visibility = Visibility.Hidden;
                     ProfilesPage.Visibility = Visibility.Hidden;
                     AccountsPage.Visibility = Visibility.Hidden;
+                    RafflePage.Visibility = Visibility.Hidden;
                     SettingsPage.Visibility = Visibility.Visible;
                     break;
 
                 default:
+                    MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
                     break;
             }
         }
@@ -158,7 +182,7 @@ namespace teeze_bot
 
         #region Task
 
-        #region General Top Options
+        #region Task Top Options
 
         private void DeleteAllTasks_Click(object sender, RoutedEventArgs e)
         {
@@ -188,6 +212,13 @@ namespace teeze_bot
                     if (!anyTaskInProgress)
                     {
                         anyTaskInProgress = titoloTask.InProgress;
+                    }
+                }
+                foreach (DigitecTask digitecTask in digitecTasks)
+                {
+                    if (!anyTaskInProgress)
+                    {
+                        anyTaskInProgress = digitecTask.InProgress;
                     }
                 }
                 if (!anyTaskInProgress)
@@ -221,16 +252,37 @@ namespace teeze_bot
             }
             else
             {
-                foreach (KithTask titoloTask in kithTasks)
+                foreach (KithTask task in kithTasks)
                 {
-                    if (titoloTask.InProgress)
+                    if (task.InProgress)
                     {
-                        titoloTask.QuitTask();
+                        task.QuitTask();
                     }
                 }
             }
             runningTasks = 0;
             RunningTaskLabel.Content = runningTasks.ToString();
+        }
+
+        private void StartAllTasks_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (TaskInfo task in taskList)
+            {
+                switch (task.storeType)
+                {
+                    case StoreType.KITH:
+                        kithTasks[task.TaskId - 1].StartTask();
+                        break;
+
+                    case StoreType.Digitec:
+                        digitecTasks[task.TaskId - 1].StartTask();
+                        break;
+
+                    default:
+                        MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
+                        break;
+                }
+            }
         }
 
         #region Create Task
@@ -299,19 +351,60 @@ namespace teeze_bot
             newTask_errorProfileEmpty.Visibility = newTask_Profile.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorProxy.Visibility = newTask_Proxy.SelectedIndex == -1 ? Visibility.Visible : Visibility.Hidden;
             newTask_errorAccount.Visibility = newTask_Account.SelectedIndex == -1 && newTask_Account.Visibility == Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
+            newTask_errorSizes.Visibility = newTask_Sizes.Text == "" && newTask_Sizes.Visibility == Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
 
-            if (newTask_Store.SelectedIndex != -1 && newTask_Sizes.Text != "" && newTask_Productname.Text != "" && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1 && (newTask_Account.Visibility == Visibility.Hidden || newTask_Account.SelectedIndex != -1 && newTask_Account.Visibility == Visibility.Visible))
-                return true;
-            else
-                return false;
+            switch (newTask_Store.SelectedIndex)
+            {
+                case -1:
+                    return false;
+
+                case 0:
+                    if (newTask_Sizes.Text != "" && newTask_Productname.Text != "" && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                case 1:
+                    if (newTask_Productname.Text != "" && newTask_Product.Text != "" && newTask_Profile.SelectedIndex != -1 && newTask_Proxy.SelectedIndex != -1 && newTask_Account.SelectedIndex != -1)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                default:
+                    MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
+                    return false;
+            }
         }
 
         private void SelectStore(object sender, SelectionChangedEventArgs e)
         {
-            if (newTask_Store.SelectedIndex == 0)
+            switch (newTask_Store.SelectedIndex)
             {
-                newTask_AccountLabel.Visibility = Visibility.Hidden;
-                newTask_Account.Visibility = Visibility.Hidden;
+                case 0:
+                    newTask_AccountLabel.Visibility = Visibility.Hidden;
+                    newTask_Account.Visibility = Visibility.Hidden;
+                    newTask_Sizes.Visibility = Visibility.Visible;
+                    newTask_SizesLabel.Visibility = Visibility.Visible;
+                    break;
+
+                case 1:
+                    newTask_Sizes.Visibility = Visibility.Hidden;
+                    newTask_SizesLabel.Visibility = Visibility.Hidden;
+                    newTask_AccountLabel.Visibility = Visibility.Visible;
+                    newTask_Account.Visibility = Visibility.Visible;
+                    break;
+
+                default:
+                    MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
+                    break;
             }
         }
 
@@ -343,7 +436,20 @@ namespace teeze_bot
             {
                 taskIdCounter++;
                 taskList.Add(new TaskInfo(taskIdCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
-                kithTasks.Add(new KithTask() { taskinfo = taskList[taskIdCounter - 1] });
+                switch (StoreIndex)
+                {
+                    case 0:
+                        kithTasks.Add(new KithTask() { taskinfo = taskList[taskIdCounter - 1] });
+                        break;
+
+                    case 1:
+                        digitecTasks.Add(new DigitecTask() { taskinfo = taskList[taskIdCounter - 1] });
+                        break;
+
+                    default:
+                        MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
+                        break;
+                }
             }
             if (isEdited)
             {
@@ -371,7 +477,20 @@ namespace teeze_bot
 
             foreach (TaskInfo task in taskList)
             {
-                kithTasks.Add(new KithTask() { taskinfo = task });
+                switch (task.storeType)
+                {
+                    case StoreType.KITH:
+                        kithTasks.Add(new KithTask() { taskinfo = task });
+                        break;
+
+                    case StoreType.Digitec:
+                        digitecTasks.Add(new DigitecTask() { taskinfo = task });
+                        break;
+
+                    default:
+                        MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
+                        break;
+                }
             }
         }
 
@@ -402,7 +521,7 @@ namespace teeze_bot
 
         #endregion Create Task
 
-        #endregion General Top Options
+        #endregion Task Top Options
 
         #region Task List Options
 
@@ -410,27 +529,61 @@ namespace teeze_bot
         {
             Button button = sender as Button;
             currentTask = button.CommandParameter as TaskInfo;
-            if (!kithTasks[currentTask.TaskId - 1].InProgress)
+            switch (currentTask.storeType)
             {
-                currentTask = button.CommandParameter as TaskInfo;
-                CreateTaskLabel.Content = "Task " + currentTask.TaskId.ToString();
-                TaskPageList.Visibility = Visibility.Hidden;
-                TaskPageOptions.Visibility = Visibility.Hidden;
-                SaveEditedTaskButton.Visibility = Visibility.Visible;
-                CreateTaskButton.Visibility = Visibility.Hidden;
-                CreateTaskWindow.Visibility = Visibility.Visible;
+                case StoreType.KITH:
+                    if (!kithTasks[currentTask.TaskId - 1].InProgress)
+                    {
+                        currentTask = button.CommandParameter as TaskInfo;
+                        CreateTaskLabel.Content = "Task " + currentTask.TaskId.ToString();
+                        TaskPageList.Visibility = Visibility.Hidden;
+                        TaskPageOptions.Visibility = Visibility.Hidden;
+                        SaveEditedTaskButton.Visibility = Visibility.Visible;
+                        CreateTaskButton.Visibility = Visibility.Hidden;
+                        CreateTaskWindow.Visibility = Visibility.Visible;
 
-                newTask_Store.SelectedIndex = currentTask.StoreIndex;
-                newTask_Sizes.Text = currentTask.ShoeSizes;
-                newTask_Productname.Text = currentTask.Productname;
-                newTask_Product.Text = currentTask.ProductLink;
-                newTask_Profile.SelectedIndex = currentTask.ProfileIndex;
-                newTask_Proxy.SelectedIndex = currentTask.ProxyIndex;
-                newTask_Account.SelectedIndex = currentTask.AccountIndex;
-            }
-            else
-            {
-                MessageBox.Show("Cannot edit a Task which is running");
+                        newTask_Store.SelectedIndex = Convert.ToInt32(currentTask.storeType);
+                        newTask_Sizes.Text = currentTask.ShoeSizes;
+                        newTask_Productname.Text = currentTask.Productname;
+                        newTask_Product.Text = currentTask.ProductLink;
+                        newTask_Profile.SelectedIndex = currentTask.ProfileIndex;
+                        newTask_Proxy.SelectedIndex = currentTask.ProxyIndex;
+                        newTask_Account.SelectedIndex = currentTask.AccountIndex;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot edit a Task which is running");
+                    }
+                    break;
+
+                case StoreType.Digitec:
+                    if (!digitecTasks[currentTask.TaskId - 1].InProgress)
+                    {
+                        currentTask = button.CommandParameter as TaskInfo;
+                        CreateTaskLabel.Content = "Task " + currentTask.TaskId.ToString();
+                        TaskPageList.Visibility = Visibility.Hidden;
+                        TaskPageOptions.Visibility = Visibility.Hidden;
+                        SaveEditedTaskButton.Visibility = Visibility.Visible;
+                        CreateTaskButton.Visibility = Visibility.Hidden;
+                        CreateTaskWindow.Visibility = Visibility.Visible;
+
+                        newTask_Store.SelectedIndex = Convert.ToInt32(currentTask.storeType);
+                        newTask_Sizes.Text = currentTask.ShoeSizes;
+                        newTask_Productname.Text = currentTask.Productname;
+                        newTask_Product.Text = currentTask.ProductLink;
+                        newTask_Profile.SelectedIndex = currentTask.ProfileIndex;
+                        newTask_Proxy.SelectedIndex = currentTask.ProxyIndex;
+                        newTask_Account.SelectedIndex = currentTask.AccountIndex;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot edit a Task which is running");
+                    }
+                    break;
+
+                default:
+                    MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
+                    break;
             }
         }
 
@@ -444,17 +597,41 @@ namespace teeze_bot
         {
             Button button = sender as Button;
             currentTask = button.CommandParameter as TaskInfo;
-            if (!kithTasks[currentTask.TaskId - 1].InProgress)
+            switch (currentTask.storeType)
             {
-                confirm = Confirm.DeleteSpecificTask;
-                TaskPageOptions.Visibility = Visibility.Hidden;
-                TaskPageList.Visibility = Visibility.Hidden;
-                ConfirmDeleteWindow.Visibility = Visibility.Visible;
-                ConfirmDeleteLabel.Content = "Do you want to delete this task ?";
-            }
-            else
-            {
-                MessageBox.Show("Cannot delete a Task which is running");
+                case StoreType.KITH:
+                    if (!kithTasks[currentTask.TaskId - 1].InProgress)
+                    {
+                        confirm = Confirm.DeleteSpecificTask;
+                        TaskPageOptions.Visibility = Visibility.Hidden;
+                        TaskPageList.Visibility = Visibility.Hidden;
+                        ConfirmDeleteWindow.Visibility = Visibility.Visible;
+                        ConfirmDeleteLabel.Content = "Do you want to delete this task ?";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot delete a Task which is running");
+                    }
+                    break;
+
+                case StoreType.Digitec:
+                    if (!kithTasks[currentTask.TaskId - 1].InProgress)
+                    {
+                        confirm = Confirm.DeleteSpecificTask;
+                        TaskPageOptions.Visibility = Visibility.Hidden;
+                        TaskPageList.Visibility = Visibility.Hidden;
+                        ConfirmDeleteWindow.Visibility = Visibility.Visible;
+                        ConfirmDeleteLabel.Content = "Do you want to delete this task ?";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cannot delete a Task which is running");
+                    }
+                    break;
+
+                default:
+                    MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
+                    break;
             }
         }
 
@@ -482,13 +659,18 @@ namespace teeze_bot
             if (button.Content.ToString() == "Start")
             {
                 button.Content = "End";
-                switch (task.Store)
+                switch (task.storeType)
                 {
-                    case "Titolo":
+                    case StoreType.KITH:
                         kithTasks[task.TaskId - 1].StartTask();
                         break;
 
+                    case StoreType.Digitec:
+                        digitecTasks[task.TaskId - 1].StartTask();
+                        break;
+
                     default:
+                        MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
                         break;
                 }
                 runningTasks++;
@@ -497,13 +679,18 @@ namespace teeze_bot
             else
             {
                 button.Content = "Start";
-                switch (task.Store)
+                switch (task.storeType)
                 {
-                    case "Titolo":
+                    case StoreType.KITH:
                         kithTasks[task.TaskId - 1].QuitTask();
                         break;
 
+                    case StoreType.Digitec:
+                        digitecTasks[task.TaskId - 1].QuitTask();
+                        break;
+
                     default:
+                        MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
                         break;
                 }
                 runningTasks--;
@@ -873,12 +1060,12 @@ namespace teeze_bot
 
         private void SaveAccountsToJSON()
         {
-            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userAccounts.json", JsonConvert.SerializeObject(accountList, Formatting.Indented));
+            File.WriteAllText(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTasks.json", JsonConvert.SerializeObject(accountList, Formatting.Indented));
         }
 
         private void ReadAccountsFromJSON()
         {
-            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userAccounts.json"))
+            using (StreamReader r = new StreamReader(@"C:\Users\Dario\source\repos\teeze-bot\teeze-bot\Data\userTasks.json"))
             {
                 string json = r.ReadToEnd();
                 accountList = JsonConvert.DeserializeObject<List<Account>>(json);
@@ -1085,7 +1272,7 @@ namespace teeze_bot
                     break;
 
                 default:
-                    MessageBox.Show("This command does not exist yet");
+                    MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
                     break;
             }
         }
@@ -1127,7 +1314,7 @@ namespace teeze_bot
                     break;
 
                 default:
-                    MessageBox.Show("This command does not exist yet");
+                    MessageBox.Show("An error has occured. I know my code is bad :) sorry" + "\n" + "Please restart");
                     break;
             }
         }
