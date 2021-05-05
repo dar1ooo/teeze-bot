@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "TaskId": 1,
+    "Store": "KITH",
+    "StoreIndex": 0,
+    "Productname": "Test",
+    "ProductLink": "https://kith.com/collections/mens-footwear/products/ai1201a116-300",
+    "ShoeSizes": "9",
+    "Profile": "asdasdasd asdasd",
+    "ProfileIndex": 0,
+    "Proxy": "KEK",
+    "ProxyIndex": 0,
+    "Account": "",
+    "AccountIndex": -1,
+    "Status": "waiting"
+  }
+]

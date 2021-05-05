@@ -1097,6 +1097,11 @@
                 </Grid>
                 <!--#endregion-->
 
+                <!--#region Raffle Page-->
+                <Grid x:Name="RafflePage" Visibility="Hidden" Grid.Row="1">
+                </Grid>
+                <!--#endregion-->
+
                 <!--#region Settings Page-->
                 <Grid x:Name="SettingsPage" Visibility="Hidden" Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -1146,6 +1151,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition x:Name="LogoUserName" Height="100"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -1219,7 +1225,10 @@
                 <Grid x:Name="AccountsGrid" Grid.Row="5">
                     <Button x:Name="Accounts" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Accounts" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
-                <Grid x:Name="SettingsGrid" Grid.Row="7">
+                <Grid x:Name="RaffleGrid" Grid.Row="6">
+                    <Button x:Name="Raffle" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Raffle Bot" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
+                </Grid>
+                <Grid x:Name="SettingsGrid" Grid.Row="8">
                     <Button x:Name="Settings" BorderThickness="0" MinHeight="35" Background="#09161f" Content="Settings" Foreground="DeepSkyBlue" FontSize="15" FontFamily="Fonts/Dosis" FontWeight="Medium" Style="{DynamicResource RoundedButtonStyle}" Click="Page_Click" ></Button>
                 </Grid>
             </Grid>
