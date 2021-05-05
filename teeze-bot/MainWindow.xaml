@@ -638,7 +638,7 @@
                             <ColumnDefinition Width="85px" />
                             <ColumnDefinition Width="85px" />
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="StartAllTasksButton" Grid.Column="3" Grid.Row="1" Content="Start All"  Style="{DynamicResource OptionsButton}"></Button>
+                        <Button x:Name="StartAllTasksButton" Grid.Column="3" Grid.Row="1" Content="Start All"  Style="{DynamicResource OptionsButton}" Click="StartAllTasks_Click"></Button>
                         <Button x:Name="StopAllTasksButton" Grid.Column="4" Grid.Row="1" Content="Stop All"  Style="{DynamicResource OptionsButton}" Click="StopAllOptions_Click"></Button>
                         <Button x:Name="DeleteAllTasksButton" Grid.Column="5" Grid.Row="1" Content="Delete All"  Style="{DynamicResource OptionsButton}" Click="DeleteAllTasks_Click"></Button>
                         <Button x:Name="CreateTaskTasksButton" Grid.Column="0" Grid.Row="1" Content="New Task"  Style="{DynamicResource OptionsButton}" Click="CreateNewTask_Click"></Button>

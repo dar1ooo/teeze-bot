@@ -16,9 +16,22 @@ namespace teeze_bot.classes
             try
             {
                 InProgress = true;
-                driver = new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+
+                //Proxies
+                //Proxy proxy = new Proxy();
+                //proxy.Kind = ProxyKind.Manual;
+                //proxy.IsAutoDetect = false;
+                //proxy.SslProxy = "<HOST:PORT>";
+                //options.Proxy = proxy;
+                //options.AddArgument("ignore-certificate-errors");
+
+                options.AddExcludedArgument("enable-automation");
+                driver = new ChromeDriver(options);
                 driver.Url = taskinfo.ProductLink;
                 driver.Url = taskinfo.ProductLink;
+
+                driver.FindElement(By.XPath("//*[@id='usercentrics - root']//div/div[2]/div/footer/div/div/div[2]/div/button[2]")).Click();
 
                 var sizes = driver.FindElement(By.Id("SingleOptionSelector-0"));
                 //create select element object

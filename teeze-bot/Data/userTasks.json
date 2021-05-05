@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "TaskId": 1,
+    "Store": "KITH",
+    "StoreIndex": 0,
+    "Productname": "Clarks",
+    "ProductLink": "https://eu.kith.com/collections/mens-footwear/products/ck26161014",
+    "ShoeSizes": "8.9",
+    "Profile": "Dario Schaffner",
+    "ProfileIndex": 0,
+    "Proxy": "KEK",
+    "ProxyIndex": 0,
+    "Account": "",
+    "AccountIndex": -1,
+    "Status": "waiting"
+  },
+  {
+    "TaskId": 2,
+    "Store": "KITH",
+    "StoreIndex": 0,
+    "Productname": "sdasdasd",
+    "ProductLink": "https://eu.kith.com/collections/mens-footwear/products/ck26161014",
+    "ShoeSizes": "asdasda",
+    "Profile": "Dario Schaffner",
+    "ProfileIndex": 0,
+    "Proxy": "KEK",
+    "ProxyIndex": 0,
+    "Account": "",
+    "AccountIndex": -1,
+    "Status": "waiting"
+  }
+]

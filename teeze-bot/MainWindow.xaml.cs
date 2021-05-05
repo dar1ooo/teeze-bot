@@ -158,7 +158,7 @@ namespace teeze_bot
 
         #region Task
 
-        #region General Top Options
+        #region Task Top Options
 
         private void DeleteAllTasks_Click(object sender, RoutedEventArgs e)
         {
@@ -221,16 +221,32 @@ namespace teeze_bot
             }
             else
             {
-                foreach (KithTask titoloTask in kithTasks)
+                foreach (KithTask task in kithTasks)
                 {
-                    if (titoloTask.InProgress)
+                    if (task.InProgress)
                     {
-                        titoloTask.QuitTask();
+                        task.QuitTask();
                     }
                 }
             }
             runningTasks = 0;
             RunningTaskLabel.Content = runningTasks.ToString();
+        }
+
+        private void StartAllTasks_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (TaskInfo task in taskList)
+            {
+                switch (task.StoreIndex)
+                {
+                    case 0:
+                        kithTasks[task.TaskId - 1].StartTask();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         #region Create Task
@@ -343,7 +359,15 @@ namespace teeze_bot
             {
                 taskIdCounter++;
                 taskList.Add(new TaskInfo(taskIdCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
-                kithTasks.Add(new KithTask() { taskinfo = taskList[taskIdCounter - 1] });
+                switch (StoreIndex)
+                {
+                    case 0:
+                        kithTasks.Add(new KithTask() { taskinfo = taskList[taskIdCounter - 1] });
+                        break;
+
+                    default:
+                        break;
+                }
             }
             if (isEdited)
             {
@@ -402,7 +426,7 @@ namespace teeze_bot
 
         #endregion Create Task
 
-        #endregion General Top Options
+        #endregion Task Top Options
 
         #region Task List Options
 
@@ -484,7 +508,7 @@ namespace teeze_bot
                 button.Content = "End";
                 switch (task.Store)
                 {
-                    case "Titolo":
+                    case "KITH":
                         kithTasks[task.TaskId - 1].StartTask();
                         break;
 
@@ -499,7 +523,7 @@ namespace teeze_bot
                 button.Content = "Start";
                 switch (task.Store)
                 {
-                    case "Titolo":
+                    case "KITH":
                         kithTasks[task.TaskId - 1].QuitTask();
                         break;
 
