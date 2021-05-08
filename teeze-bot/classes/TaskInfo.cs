@@ -1,4 +1,6 @@
-﻿using teeze_bot.classes.enums;
+﻿using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
+using teeze_bot.classes.enums;
 
 namespace teeze_bot.classes
 {
@@ -6,7 +8,10 @@ namespace teeze_bot.classes
     {
         public int TaskId { get; set; }
         public string Store { get; set; }
-        public StoreType storeType;
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public StoreType storeType { get; set; }
+
         public string Productname { get; set; }
         public string ProductLink { get; set; }
         public string ShoeSizes { get; set; }
