@@ -414,6 +414,10 @@ namespace teeze_bot
             string Store = (string)item.Content;
             int StoreIndex = newTask_Store.SelectedIndex;
             string ShoeSizes = (newTask_Sizes.Text.ToString());
+            if (ShoeSizes == null)
+            {
+                ShoeSizes = "";
+            }
             string Productname = newTask_Productname.Text.ToString();
             string Product = newTask_Product.Text.ToString();
             string Profile = newTask_Profile.SelectedValue.ToString();
@@ -462,7 +466,7 @@ namespace teeze_bot
         private void SaveTasksToJSON()
         {
             string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"..\netcoreapp3.1\Data\userTasks.json");
+            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"Data\userTasks.json");
             string sFilePath = Path.GetFullPath(sFile);
 
             File.WriteAllText(sFilePath, JsonConvert.SerializeObject(taskList, Formatting.Indented));
@@ -471,7 +475,7 @@ namespace teeze_bot
         private void ReadTasksFromJSON()
         {
             string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"..\netcoreapp3.1\Data\userTasks.json");
+            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"Data\userTasks.json");
             string sFilePath = Path.GetFullPath(sFile);
 
             using (StreamReader r = new StreamReader(sFilePath))
@@ -963,7 +967,7 @@ namespace teeze_bot
         private void SaveProfilesToJSON()
         {
             string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"..\netcoreapp3.1\Data\userProfiles.json");
+            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"Data\userProfiles.json");
             string sFilePath = Path.GetFullPath(sFile);
 
             File.WriteAllText(sFilePath, JsonConvert.SerializeObject(profileList, Formatting.Indented));
@@ -972,7 +976,7 @@ namespace teeze_bot
         private void ReadProfilesFromJSON()
         {
             string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"..\netcoreapp3.1\Data\userProfiles.json");
+            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"Data\userProfiles.json");
             string sFilePath = Path.GetFullPath(sFile);
 
             using (StreamReader r = new StreamReader(sFilePath))
@@ -1077,7 +1081,7 @@ namespace teeze_bot
         private void SaveAccountsToJSON()
         {
             string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string sFile = System.IO.Path.Combine(sCurrentDirectory, @".\netcoreapp3.1.\Data\userAccounts.json");
+            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"Data\userAccounts.json");
             string sFilePath = Path.GetFullPath(sFile);
 
             File.WriteAllText(sFilePath, JsonConvert.SerializeObject(accountList, Formatting.Indented));
@@ -1086,7 +1090,7 @@ namespace teeze_bot
         private void ReadAccountsFromJSON()
         {
             string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"..\netcoreapp3.1\Data\userAccounts.json");
+            string sFile = System.IO.Path.Combine(sCurrentDirectory, @"Data\userAccounts.json");
             string sFilePath = Path.GetFullPath(sFile);
 
             using (StreamReader r = new StreamReader(sFilePath))
