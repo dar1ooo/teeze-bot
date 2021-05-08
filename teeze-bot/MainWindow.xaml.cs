@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,7 +27,9 @@ namespace teeze_bot
         private Account currentAccount = new Account();
         private Confirm confirm = 0;
 
-        private int taskIdCounter = 0;
+        private int taskIDCounter = 0;
+        private int kithCounter = 0;
+        private int digitecCounter = 0;
         private int profileCounter = 0;
         private int accountCounter = 0;
         private int runningTasks = 0;
@@ -186,7 +189,7 @@ namespace teeze_bot
 
         private void DeleteAllTasks_Click(object sender, RoutedEventArgs e)
         {
-            if (taskIdCounter == 0)
+            if (kithCounter == 0 && digitecCounter == 0)
             {
                 MessageBox.Show("There are no tasks to delete");
             }
@@ -231,7 +234,8 @@ namespace teeze_bot
             {
                 taskList.Clear();
                 SaveTasksToJSON();
-                taskIdCounter = 0;
+                kithCounter = 0;
+                digitecCounter = 0;
                 taskListView.ItemsSource = null;
                 taskListView.Items.Clear();
                 RefreshAllContent();
@@ -246,7 +250,7 @@ namespace teeze_bot
 
         private void StopAllOptions_Click(object sender, RoutedEventArgs e)
         {
-            if (taskIdCounter == 0)
+            if (kithCounter == 0 && digitecCounter == 0)
             {
                 MessageBox.Show("There are no tasks to delete");
             }
@@ -271,11 +275,13 @@ namespace teeze_bot
                 switch (task.storeType)
                 {
                     case StoreType.KITH:
-                        kithTasks[task.TaskId - 1].StartTask();
+                        Thread trd1 = new Thread(new ThreadStart(kithTasks[task.TaskIndex ].StartTask));
+                        trd1.Start();
                         break;
 
                     case StoreType.Digitec:
-                        digitecTasks[task.TaskId - 1].StartTask();
+                        Thread trd2 = new Thread(new ThreadStart(digitecTasks[task.TaskIndex ].StartTask));
+                        trd2.Start();
                         break;
 
                     default:
@@ -438,16 +444,17 @@ namespace teeze_bot
             }
             if (!isEdited)
             {
-                taskIdCounter++;
-                taskList.Add(new TaskInfo(taskIdCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
+                taskIDCounter++;
                 switch (StoreIndex)
                 {
                     case 0:
-                        kithTasks.Add(new KithTask() { taskinfo = taskList[taskIdCounter - 1] });
+                        taskList.Add(new TaskInfo(taskIDCounter, kithCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
+                        kithTasks.Add(new KithTask() { taskinfo = taskList[taskIDCounter - 1] });
                         break;
 
                     case 1:
-                        digitecTasks.Add(new DigitecTask() { taskinfo = taskList[taskIdCounter - 1] });
+                        taskList.Add(new TaskInfo(taskIDCounter, digitecCounter, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex));
+                        digitecTasks.Add(new DigitecTask() { taskinfo = taskList[taskIDCounter - 1] });
                         break;
 
                     default:
@@ -457,7 +464,7 @@ namespace teeze_bot
             }
             if (isEdited)
             {
-                taskList[currentTask.TaskId - 1].UpdateInfo(currentTask.TaskId, Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex);
+                taskList[currentTask.TaskId - 1].UpdateInfo(Store, StoreIndex, ShoeSizes, Productname, Product, Profile, ProfileIndex, Proxy, ProxyIndex, Account, AccountIndex);
             }
             taskListView.ItemsSource = taskList;
             taskListView.Items.Refresh();
@@ -484,7 +491,7 @@ namespace teeze_bot
                 taskList = JsonConvert.DeserializeObject<List<TaskInfo>>(json);
             }
             taskListView.ItemsSource = taskList;
-            taskIdCounter = taskList.Count;
+            taskIDCounter = taskList.Count;
             taskListView.Items.Refresh();
 
             foreach (TaskInfo task in taskList)
@@ -612,7 +619,7 @@ namespace teeze_bot
             switch (currentTask.storeType)
             {
                 case StoreType.KITH:
-                    if (!kithTasks[currentTask.TaskId - 1].InProgress)
+                    if (!kithTasks[currentTask.TaskIndex ].InProgress)
                     {
                         confirm = Confirm.DeleteSpecificTask;
                         TaskPageOptions.Visibility = Visibility.Hidden;
@@ -627,7 +634,7 @@ namespace teeze_bot
                     break;
 
                 case StoreType.Digitec:
-                    if (!kithTasks[currentTask.TaskId - 1].InProgress)
+                    if (!kithTasks[currentTask.TaskIndex ].InProgress)
                     {
                         confirm = Confirm.DeleteSpecificTask;
                         TaskPageOptions.Visibility = Visibility.Hidden;
@@ -650,7 +657,7 @@ namespace teeze_bot
         private void DeleteSpecificTask()
         {
             taskList.Remove(currentTask);
-            taskIdCounter--;
+            taskIDCounter--;
             foreach (TaskInfo deletedTaskList in taskList)
             {
                 if (deletedTaskList.TaskId > currentTask.TaskId)
@@ -674,11 +681,13 @@ namespace teeze_bot
                 switch (task.storeType)
                 {
                     case StoreType.KITH:
-                        kithTasks[task.TaskId - 1].StartTask();
+                        Thread trd1 = new Thread(new ThreadStart(kithTasks[task.TaskIndex].StartTask));
+                        trd1.Start();
                         break;
 
                     case StoreType.Digitec:
-                        digitecTasks[task.TaskId - 1].StartTask();
+                        Thread trd2 = new Thread(new ThreadStart(digitecTasks[task.TaskIndex].StartTask));
+                        trd2.Start();
                         break;
 
                     default:
@@ -694,11 +703,11 @@ namespace teeze_bot
                 switch (task.storeType)
                 {
                     case StoreType.KITH:
-                        kithTasks[task.TaskId - 1].QuitTask();
+                        kithTasks[task.TaskIndex].QuitTask();
                         break;
 
                     case StoreType.Digitec:
-                        digitecTasks[task.TaskId - 1].QuitTask();
+                        digitecTasks[task.TaskIndex].QuitTask();
                         break;
 
                     default:
@@ -927,7 +936,7 @@ namespace teeze_bot
             }
             if (isEdited)
             {
-                profileList[currentProfile.ProfileNumber - 1].UpdateInfo(profileCounter, firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated);
+                profileList[currentProfile.ProfileNumber - 1].UpdateInfo(firstname, lastname, eMail, phone, address1, address2, city, zip, country, countryIndex, dateCreated);
             }
             RefreshAllContent();
         }

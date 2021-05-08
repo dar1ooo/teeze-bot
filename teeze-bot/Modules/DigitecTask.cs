@@ -28,10 +28,8 @@ namespace teeze_bot.Modules
                 //options.Proxy = proxy;
                 //options.AddArgument("ignore-certificate-errors");
                 options.AddArgument("--disable-blink-features=AutomationControlled");
-                options.AddArgument("enable-automation");
                 options.AddArgument("window-size=1280,800");
                 options.AddArgument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
-                //options.AddArgument("user-data-dir=selenium");
 
                 driver = new ChromeDriver(options);
                 driver.Url = taskinfo.ProductLink;
@@ -41,7 +39,12 @@ namespace teeze_bot.Modules
 
                 driver.FindElement(By.Id("addToCartButton")).Click();
 
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(delay);
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(delay + 5);
+
+                if (driver.FindElement(By.XPath("/html/body/div[2]/div/div[1]/div[3]/div[2]/button")).Displayed)
+                {
+                    driver.FindElement(By.XPath("/html/body/div[2]/div/div[1]/div[3]/div[2]/button")).Click();
+                }
 
                 if (driver.FindElement(By.XPath("/html/body/div[2]/div/div[1]/div[3]/div[2]/button")).Displayed)
                 {
