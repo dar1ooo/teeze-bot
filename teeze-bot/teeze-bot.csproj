@@ -10,12 +10,18 @@
 
   <ItemGroup>
     <None Remove="Data\userAccounts.json" />
+    <None Remove="Data\userProfiles.json" />
+    <None Remove="Data\userTasks.json" />
     <None Remove="Images\sneaker.png" />
     <None Remove="Images\usericon.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Data\userAccounts.json" />
+    <Content Include="Data\userAccounts.json" />
+    <Content Include="Data\userProfiles.json" />
+    <Content Include="Data\userTasks.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -39,9 +45,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Images\sneaker.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\userTasks.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

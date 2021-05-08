@@ -37,9 +37,8 @@
             FullName = string.Join(" ", firstname, lastname);
         }
 
-        public void UpdateInfo(int profileNumber, string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country, int countryIndex, string dateCreated)
+        public void UpdateInfo(string firstname, string lastname, string eMail, string phone, string address1, string address2, string city, string zip, string country, int countryIndex, string dateCreated)
         {
-            ProfileNumber = profileNumber;
             Firstname = firstname;
             Lastname = lastname;
             EMail = eMail;
