@@ -27,6 +27,7 @@ namespace teeze_bot.Modules
                 //proxy.SslProxy = "<HOST:PORT>";
                 //options.Proxy = proxy;
                 //options.AddArgument("ignore-certificate-errors");
+
                 options.AddArgument("--disable-blink-features=AutomationControlled");
                 options.AddArgument("window-size=1280,800");
                 options.AddArgument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36");
