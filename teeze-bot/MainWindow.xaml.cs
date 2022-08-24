@@ -634,7 +634,7 @@ namespace teeze_bot
                     break;
 
                 case StoreType.Digitec:
-                    if (!kithTasks[currentTask.TaskIndex ].InProgress)
+                    if (!digitecTasks[currentTask.TaskIndex ].InProgress)
                     {
                         confirm = Confirm.DeleteSpecificTask;
                         TaskPageOptions.Visibility = Visibility.Hidden;
